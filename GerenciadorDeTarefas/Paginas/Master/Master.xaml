@@ -1,0 +1,39 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<MasterDetailPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="GerenciadorDeTarefas.Paginas.Master.Master">
+    <MasterDetailPage.Master>
+        <ContentPage Title="Gerenciador de Tarefas">
+            <StackLayout>
+                <Label>aaa</Label>
+                <Label>aaa</Label>
+                <Label>aaa</Label>
+            </StackLayout>
+        </ContentPage>
+    </MasterDetailPage.Master>
+    <MasterDetailPage.Detail>
+        <ContentPage>
+            <StackLayout Orientation="Horizontal" 
+                         VerticalOptions="Start"
+                         HorizontalOptions="FillAndExpand">
+                <StackLayout>
+                    <Label Text="Calcular: "></Label>
+                    <Entry x:Name="valor1" 
+                       Keyboard="Numeric" 
+                       Placeholder="Valor 1"></Entry>
+                    <Entry x:Name="valor2"
+                       Keyboard="Numeric" 
+                       Placeholder="Valor 2"></Entry>
+                    <Label x:Name="resultado"></Label>
+                </StackLayout>
+
+                <StackLayout>
+                    <Button Clicked="Somar" Text="+"/>
+                </StackLayout>
+            </StackLayout>
+        </ContentPage>
+    </MasterDetailPage.Detail>
+</MasterDetailPage>
