@@ -20,12 +20,10 @@ namespace GerenciadorDeTarefas.Paginas.Master
 
         private async void Somar(object sender, EventArgs args)
         {
-            Operacao operacao = Operacao.soma;
             int a = int.Parse(valor1.Text);
             int b = int.Parse(valor2.Text);
-            var c= await Calcular.Calculo(a,b,operacao);
+            var c = await App.IoCConainer.GetInstance<ICalculadora>().Somar(a, b);
             resultado.Text = (c).ToString();
-
         }
     }
 }

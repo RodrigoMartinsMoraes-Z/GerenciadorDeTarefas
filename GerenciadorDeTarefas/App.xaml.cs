@@ -1,8 +1,6 @@
 ﻿using GerenciadorDeTarefas.Scripts.Calculadora;
 using SimpleInjector;
-using System;
 using Xamarin.Forms;
-using Xamarin.Forms.Xaml;
 
 namespace GerenciadorDeTarefas
 {
@@ -10,21 +8,24 @@ namespace GerenciadorDeTarefas
     {
 
         public App()
-        {
-            Container container = new Container();
+        {            
             InitializeComponent();
-            Container(container);
+            IoCRegister();            
 
             MainPage = new NavigationPage(new Paginas.Master.Master());
         }
 
-        private void Container(Container container)
+        public static Container IoCConainer { get; set; }
+
+        private void IoCRegister()
         {
-            container.Register<ICalculadora, Calculadora>();
+            IoCConainer = new Container();
+            IoCConainer.Register<ICalculadora, Calculadora>();
         }
 
         protected override void OnStart()
         {
+
         }
 
         protected override void OnSleep()
