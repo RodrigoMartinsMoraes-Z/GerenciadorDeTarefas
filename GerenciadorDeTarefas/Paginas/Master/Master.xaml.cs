@@ -1,5 +1,6 @@
 ﻿using GerenciadorDeTarefas.Paginas.ListaDeTarefas;
 using System;
+using System.Collections.Generic;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -12,11 +13,18 @@ namespace GerenciadorDeTarefas.Paginas.Master
         public Master()
         {
             InitializeComponent();
+
+           
         }
 
         private void ChamaPaginaAFazer(object sender, EventArgs args)
         {
             Detail = new NavigationPage(new PaginaTarefasAFazer());
+        }
+
+        private void ChamaPaginaPerfil(object sender, EventArgs args)
+        {
+
         }
     }
 }

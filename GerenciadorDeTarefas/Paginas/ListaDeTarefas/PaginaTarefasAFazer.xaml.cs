@@ -17,8 +17,8 @@ namespace GerenciadorDeTarefas.Paginas.ListaDeTarefas
         {
             InitializeComponent();
 
-            List<Tarefa> tarefas = new List<Tarefa>();
-            tarefas.Add(new Tarefa
+            List<TarefaModel> tarefas = new List<TarefaModel>();
+            tarefas.Add(new TarefaModel
             {
                 Nome = "Tarefa",
                 Adicionado = DateTime.Today,
@@ -26,7 +26,7 @@ namespace GerenciadorDeTarefas.Paginas.ListaDeTarefas
                 Prioridade = Prioridade.Importante_Não_Urgente,
                 Situacao = Status.Novo
             });
-            tarefas.Add(new Tarefa
+            tarefas.Add(new TarefaModel
             {
                 Nome = "Tarefa",
                 Adicionado = DateTime.Today,
@@ -34,7 +34,7 @@ namespace GerenciadorDeTarefas.Paginas.ListaDeTarefas
                 Prioridade = Prioridade.Importante_Não_Urgente,
                 Situacao = Status.Novo
             });
-            tarefas.Add(new Tarefa
+            tarefas.Add(new TarefaModel
             {
                 Nome = "Tarefa",
                 Adicionado = DateTime.Today,
@@ -42,7 +42,7 @@ namespace GerenciadorDeTarefas.Paginas.ListaDeTarefas
                 Prioridade = Prioridade.Importante_Não_Urgente,
                 Situacao = Status.Novo
             });
-            tarefas.Add(new Tarefa
+            tarefas.Add(new TarefaModel
             {
                 Nome = "Tarefa",
                 Adicionado = DateTime.Today,
@@ -50,7 +50,7 @@ namespace GerenciadorDeTarefas.Paginas.ListaDeTarefas
                 Prioridade = Prioridade.Importante_Não_Urgente,
                 Situacao = Status.Novo
             });
-            tarefas.Add(new Tarefa
+            tarefas.Add(new TarefaModel
             {
                 Nome = "Tarefa",
                 Adicionado = DateTime.Today,

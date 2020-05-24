@@ -4,18 +4,26 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="GerenciadorDeTarefas.Paginas.Master.Master">
+             x:Class="GerenciadorDeTarefas.Paginas.Master.Master"
+             xmlns:fontawesome="clr-namespace:FontAwesome">
     <MasterDetailPage.Master>
         <ContentPage Title="Gerenciador de Tarefas">
             <StackLayout>
-                <Button Text="A fazer" Clicked="ChamaPaginaAFazer"></Button>
+                <Button Text="&#xf007; - Perfil" 
+                        FontFamily="{StaticResource FontAwesomeSolid}" 
+                        Clicked="ChamaPaginaPerfil"/>
+
+                <Button Text="&#xf0c0; - Equipes"
+                        FontFamily="{StaticResource FontAwesomeSolid}"/>
+                <StackLayout x:Name="ListaEquipes">
+                </StackLayout>
 
             </StackLayout>
         </ContentPage>
     </MasterDetailPage.Master>
     <MasterDetailPage.Detail>
         <ContentPage>
-            
+            <Label Text="Novidades"/>
         </ContentPage>
     </MasterDetailPage.Detail>
 </MasterDetailPage>

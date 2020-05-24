@@ -4,7 +4,7 @@ using System.Text;
 
 namespace GerenciadorDeTarefas.Models.Tarefas
 {
-    class Tarefa
+    class TarefaModel
     {
         public int Id { get; set; }
         public string Nome { get; set; }
