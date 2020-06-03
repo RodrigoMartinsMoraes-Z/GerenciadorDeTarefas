@@ -1,0 +1,28 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
+             xmlns:converters="clr-namespace:GerenciadorDeTarefas.Util"
+             x:Class="GerenciadorDeTarefas.Paginas.ListaDeTarefas.PaginaNovaTarefa">
+    <ContentPage.Resources>
+        <ResourceDictionary>
+            <converters:IntEnumConverter x:Key="IntEnum"/>
+        </ResourceDictionary>
+    </ContentPage.Resources>
+    <ContentPage.Content>
+        <StackLayout>
+            <Entry Placeholder="Nome da Tarefa" x:Name="NomeDaTarefa"/>
+
+            <Entry Placeholder="Detalhes" x:Name="DetalhesDaTarefa" HorizontalOptions="FillAndExpand"/>
+            
+            <Label Text="Previsão de Conclusão"/>
+            <DatePicker x:Name="PrevisaoDeConclusao"/>
+
+            <Label Text="Prioridade"/>
+            <Picker x:Name="Prioridade"/>
+
+            <Button Text="Adicionar Tarefa" Clicked="SalvarTarefa"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

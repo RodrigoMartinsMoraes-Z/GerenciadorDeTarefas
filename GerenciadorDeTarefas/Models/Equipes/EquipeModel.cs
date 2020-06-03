@@ -5,7 +5,7 @@ using System.Text;
 
 namespace GerenciadorDeTarefas.Models.Equipes
 {
-    class EquipeModel
+    public class EquipeModel
     {
         public string Nome { get; set; }
         public ICollection<TarefaModel> Tarefas { get; set; }

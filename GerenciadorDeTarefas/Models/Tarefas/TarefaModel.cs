@@ -4,14 +4,17 @@ using System.Text;
 
 namespace GerenciadorDeTarefas.Models.Tarefas
 {
-    class TarefaModel
+    public class TarefaModel
     {
         public int Id { get; set; }
         public string Nome { get; set; }
+        public string Detalhes { get; set; }
         public DateTime Adicionado { get; set; }
         public DateTime? Finalizacao { get; set; }
         public DateTime? Previsao { get; set; }
-        public Status Situacao { get; set; }
+        public Situacao Situacao { get; set; }
         public Prioridade Prioridade { get; set; }
+
+        public ICollection<TarefaModel> SubTarefas { get; set; }
     }
 }

@@ -4,9 +4,8 @@ using System.Text;
 
 namespace GerenciadorDeTarefas.Models.Tarefas
 {
-    public enum Status
+    public enum Situacao
     {
-        Invalido = 0,
         Finalizado,
         Novo,
         Adiado,

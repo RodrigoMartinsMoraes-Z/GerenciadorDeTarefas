@@ -1,4 +1,5 @@
-﻿using GerenciadorDeTarefas.Scripts.Calculadora;
+﻿using GerenciadorDeTarefas.Models.Usuarios;
+using Newtonsoft.Json;
 using SimpleInjector;
 using Xamarin.Forms;
 
@@ -10,22 +11,24 @@ namespace GerenciadorDeTarefas
         public App()
         {            
             InitializeComponent();
-            IoCRegister();            
+            IoCRegister();
+            CarregaUsuario();
 
             MainPage = new NavigationPage(new Paginas.Master.Master());
         }
 
         public static Container IoCConainer { get; set; }
+        public static Usuario Usuario { get; set; }
 
         private void IoCRegister()
         {
             IoCConainer = new Container();
-            IoCConainer.Register<ICalculadora, Calculadora>();
+           
         }
 
         protected override void OnStart()
         {
-
+            CarregaUsuario();
         }
 
         protected override void OnSleep()
@@ -34,6 +37,18 @@ namespace GerenciadorDeTarefas
 
         protected override void OnResume()
         {
+        }
+
+        void CarregaUsuario()
+        {
+            if (App.Current.Properties.ContainsKey("Usuario"))
+            {
+                Usuario = JsonConvert.DeserializeObject<Usuario>(Current.Properties["Usuario"].ToString());
+            }
+            else
+            {
+                Usuario = new Usuario();
+            }
         }
     }
 }

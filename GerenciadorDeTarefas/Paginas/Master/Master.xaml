@@ -6,15 +6,15 @@
              mc:Ignorable="d"
              x:Class="GerenciadorDeTarefas.Paginas.Master.Master"
              xmlns:fontawesome="clr-namespace:FontAwesome">
-    <MasterDetailPage.Master>
+    <MasterDetailPage.Master x:name="MenuPrincipal">
         <ContentPage Title="Gerenciador de Tarefas">
             <StackLayout>
                 <Button Text="&#xf007; - Perfil" 
                         FontFamily="{StaticResource FontAwesomeSolid}" 
                         Clicked="ChamaPaginaPerfil"/>
 
-                <Button Text="&#xf0c0; - Equipes"
-                        FontFamily="{StaticResource FontAwesomeSolid}"/>
+                <Label Text="&#xf0c0; - Equipes"
+                       FontFamily="{StaticResource FontAwesomeSolid}"/>
                 <StackLayout x:Name="ListaEquipes">
                 </StackLayout>
 

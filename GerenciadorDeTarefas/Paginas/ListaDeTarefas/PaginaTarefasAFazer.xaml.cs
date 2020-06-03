@@ -24,7 +24,7 @@ namespace GerenciadorDeTarefas.Paginas.ListaDeTarefas
                 Adicionado = DateTime.Today,
                 Previsao = DateTime.Today.AddDays(3),
                 Prioridade = Prioridade.Importante_Não_Urgente,
-                Situacao = Status.Novo
+                Situacao = Situacao.Novo
             });
             tarefas.Add(new TarefaModel
             {
@@ -32,7 +32,7 @@ namespace GerenciadorDeTarefas.Paginas.ListaDeTarefas
                 Adicionado = DateTime.Today,
                 Previsao = DateTime.Today.AddDays(3),
                 Prioridade = Prioridade.Importante_Não_Urgente,
-                Situacao = Status.Novo
+                Situacao = Situacao.Novo
             });
             tarefas.Add(new TarefaModel
             {
@@ -40,7 +40,7 @@ namespace GerenciadorDeTarefas.Paginas.ListaDeTarefas
                 Adicionado = DateTime.Today,
                 Previsao = DateTime.Today.AddDays(3),
                 Prioridade = Prioridade.Importante_Não_Urgente,
-                Situacao = Status.Novo
+                Situacao = Situacao.Novo
             });
             tarefas.Add(new TarefaModel
             {
@@ -48,7 +48,7 @@ namespace GerenciadorDeTarefas.Paginas.ListaDeTarefas
                 Adicionado = DateTime.Today,
                 Previsao = DateTime.Today.AddDays(3),
                 Prioridade = Prioridade.Importante_Não_Urgente,
-                Situacao = Status.Novo
+                Situacao = Situacao.Novo
             });
             tarefas.Add(new TarefaModel
             {
@@ -56,7 +56,7 @@ namespace GerenciadorDeTarefas.Paginas.ListaDeTarefas
                 Adicionado = DateTime.Today,
                 Previsao = DateTime.Today.AddDays(3),
                 Prioridade = Prioridade.Importante_Não_Urgente,
-                Situacao = Status.Novo
+                Situacao = Situacao.Novo
             });
 
             ListaTarefas.ItemsSource = tarefas;
