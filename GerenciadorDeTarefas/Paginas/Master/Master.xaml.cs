@@ -60,7 +60,7 @@ namespace GerenciadorDeTarefas.Paginas.Master
                     {
                         picker.Items.Add(tarefa.Nome);
                     }
-
+                 
                 StackLayout stackLayout = new StackLayout();
                 stackLayout.Children.Add(BtnMostrarEquipe);
                 stackLayout.Children.Add(stackLayoutEquipe);
