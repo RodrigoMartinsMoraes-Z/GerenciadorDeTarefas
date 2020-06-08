@@ -3,6 +3,7 @@ using GerenciadorDeTarefas.Models.Tarefas;
 using GerenciadorDeTarefas.Paginas.ListaDeTarefas;
 using System;
 using System.Collections.Generic;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -38,6 +39,24 @@ namespace GerenciadorDeTarefas.Paginas.Master
                 App.Usuario.Salvar();
             }
 #endif
+
+            AtualizarMenu();
+
+            AssinarMensagem();
+        }
+
+        private void AssinarMensagem()
+        {
+            MessagingCenter.Subscribe<Master>(this, "AtualizarMenu", (sender) => AtualizarMenu());
+        }
+
+        public Task AtualizarMenu()
+        {
+            if(ListaEquipes.Children.Count > 0)
+            {
+                ListaEquipes.Children.Clear();
+            }
+
             foreach (EquipeModel equipe in App.Usuario.Equipes)
             {
                 StackLayout stackLayoutEquipe = new StackLayout() { IsVisible = false };
@@ -60,15 +79,18 @@ namespace GerenciadorDeTarefas.Paginas.Master
                     {
                         picker.Items.Add(tarefa.Nome);
                     }
-                 
-                StackLayout stackLayout = new StackLayout();
-                stackLayout.Children.Add(BtnMostrarEquipe);
-                stackLayout.Children.Add(stackLayoutEquipe);
+
+                StackLayout layoutEquipes = new StackLayout();
+                layoutEquipes.Children.Add(BtnMostrarEquipe);
+                layoutEquipes.Children.Add(stackLayoutEquipe);
 
                 stackLayoutEquipe.Children.Add(BtnNovaTarefa);
                 stackLayoutEquipe.Children.Add(picker);
-                ListaEquipes.Children.Add(stackLayout);
+
+                ListaEquipes.Children.Add(layoutEquipes);
             }
+
+            return Task.CompletedTask;
         }
 
         private void MostrarEquipe(StackLayout stackLayoutEquipe, EquipeModel equipe)
@@ -106,6 +128,6 @@ namespace GerenciadorDeTarefas.Paginas.Master
         {
 
         }
- 
+
     }
 }

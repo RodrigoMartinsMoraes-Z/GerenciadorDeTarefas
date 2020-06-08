@@ -8,6 +8,8 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
+using GerenciadorDeTarefas.Paginas.Master;
+
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -36,7 +38,10 @@ namespace GerenciadorDeTarefas.Paginas.ListaDeTarefas
 
         private async void SalvarTarefa(object sender, EventArgs args)
         {
-            Enum.TryParse(Prioridade.SelectedItem.ToString(), out Prioridade prioridade);
+            Prioridade prioridade = Models.Tarefas.Prioridade.Sugestão;
+
+            if (Prioridade.SelectedItem != null)
+                Enum.TryParse(Prioridade.SelectedItem.ToString(), out prioridade);           
 
             TarefaModel tarefa = new TarefaModel
             {
@@ -53,6 +58,7 @@ namespace GerenciadorDeTarefas.Paginas.ListaDeTarefas
 
             await App.Usuario.Salvar();
 
+            MessagingCenter.Send(new Master.Master(), "AtualizarMenu");
         }
     }
 }
