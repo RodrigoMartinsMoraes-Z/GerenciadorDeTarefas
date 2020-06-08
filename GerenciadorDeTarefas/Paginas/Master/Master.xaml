@@ -15,8 +15,9 @@
 
                 <Label Text="&#xf0c0; - Equipes"
                        FontFamily="{StaticResource FontAwesomeSolid}"/>
-                <StackLayout x:Name="ListaEquipes">
-                </StackLayout>
+                <ScrollView VerticalScrollBarVisibility="Always">
+                    <StackLayout x:Name="ListaEquipes"/>
+                </ScrollView>
 
             </StackLayout>
         </ContentPage>

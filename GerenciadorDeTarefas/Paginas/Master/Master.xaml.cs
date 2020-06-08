@@ -18,28 +18,6 @@ namespace GerenciadorDeTarefas.Paginas.Master
         {
             InitializeComponent();
 
-#if DEBUG
-            if (App.Usuario == null)
-            {
-                List<TarefaModel> tarefas1 = new List<TarefaModel>();
-                tarefas1.Add(new TarefaModel { Nome = "aa1" });
-                tarefas1.Add(new TarefaModel { Nome = "aa2" });
-
-                List<TarefaModel> tarefas2 = new List<TarefaModel>();
-                tarefas2.Add(new TarefaModel { Nome = "bb1" });
-                tarefas2.Add(new TarefaModel { Nome = "bb2" });
-
-                List<EquipeModel> equipes = new List<EquipeModel>
-            {
-                new EquipeModel { Nome = "Equipe 1", Tarefas =  tarefas1},
-                new EquipeModel { Nome = "Equipe 2", Tarefas = tarefas2 }
-            };
-
-                App.Usuario.Equipes = equipes;
-                App.Usuario.Salvar();
-            }
-#endif
-
             AtualizarMenu();
 
             AssinarMensagem();
@@ -59,13 +37,13 @@ namespace GerenciadorDeTarefas.Paginas.Master
 
             foreach (EquipeModel equipe in App.Usuario.Equipes)
             {
-                StackLayout stackLayoutEquipe = new StackLayout() { IsVisible = false };
+                StackLayout layoutTarefas = new StackLayout() { IsVisible = false };
 
                 Button BtnMostrarEquipe = new Button
                 {
                     Text = equipe.Nome
                 };
-                BtnMostrarEquipe.Clicked += (sender, args) => MostrarEquipe(stackLayoutEquipe, equipe);
+                BtnMostrarEquipe.Clicked += (sender, args) => MostrarEquipe(layoutTarefas, equipe);
 
                 Button BtnNovaTarefa = new Button
                 {
@@ -74,18 +52,22 @@ namespace GerenciadorDeTarefas.Paginas.Master
                 BtnNovaTarefa.Clicked += (sender, args) => Detail = new NavigationPage(new PaginaNovaTarefa());
 
                 Picker picker = new Picker();
-                if (equipe.Tarefas != null && equipe.Tarefas.Count > 0)
-                    foreach (var tarefa in equipe.Tarefas)
+                if (equipe.Projetos != null && equipe.Projetos.Count > 0)
+                    foreach (var tarefa in equipe.Projetos)
                     {
                         picker.Items.Add(tarefa.Nome);
                     }
 
-                StackLayout layoutEquipes = new StackLayout();
+                StackLayout layoutEquipes = new StackLayout() {
+                    Orientation = StackOrientation.Vertical,
+                    
+                };
+                
                 layoutEquipes.Children.Add(BtnMostrarEquipe);
-                layoutEquipes.Children.Add(stackLayoutEquipe);
+                layoutEquipes.Children.Add(layoutTarefas);
 
-                stackLayoutEquipe.Children.Add(BtnNovaTarefa);
-                stackLayoutEquipe.Children.Add(picker);
+                layoutTarefas.Children.Add(BtnNovaTarefa);
+                layoutTarefas.Children.Add(picker);
 
                 ListaEquipes.Children.Add(layoutEquipes);
             }

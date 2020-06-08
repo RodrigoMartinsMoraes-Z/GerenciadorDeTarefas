@@ -54,7 +54,6 @@ namespace GerenciadorDeTarefas.Paginas.ListaDeTarefas
             };
 
             var equipe = App.Usuario.Equipes.FirstOrDefault(e => e.Nome == Master.Master.EquipeSelecionada.Nome);
-            equipe.Tarefas.Add(tarefa);
 
             await App.Usuario.Salvar();
 

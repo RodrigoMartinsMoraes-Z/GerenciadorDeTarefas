@@ -12,7 +12,7 @@ namespace GerenciadorDeTarefas
         {            
             InitializeComponent();
             IoCRegister();
-            CarregaUsuario();
+            //CarregaUsuario();
 
             MainPage = new NavigationPage(new Paginas.Master.Master());
         }
