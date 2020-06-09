@@ -57,7 +57,7 @@ namespace GerenciadorDeTarefas.Paginas.ListaDeTarefas
 
             await App.Usuario.Salvar();
 
-            MessagingCenter.Send(new Master.Master(), "AtualizarMenu");
+            await ControleMenu.AtualizarMenu();
         }
     }
 }

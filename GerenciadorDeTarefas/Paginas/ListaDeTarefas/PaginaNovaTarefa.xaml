@@ -12,9 +12,12 @@
     </ContentPage.Resources>
     <ContentPage.Content>
         <StackLayout>
-            <Entry Placeholder="Nome da Tarefa" x:Name="NomeDaTarefa"/>
+            <Entry Placeholder="Nome da Tarefa" 
+                   x:Name="NomeDaTarefa"/>
 
-            <Entry Placeholder="Detalhes" x:Name="DetalhesDaTarefa" HorizontalOptions="FillAndExpand"/>
+            <Entry Placeholder="Detalhes" 
+                   x:Name="DetalhesDaTarefa" 
+                   HorizontalOptions="FillAndExpand"/>
             
             <Label Text="Previsão de Conclusão"/>
             <DatePicker x:Name="PrevisaoDeConclusao"/>

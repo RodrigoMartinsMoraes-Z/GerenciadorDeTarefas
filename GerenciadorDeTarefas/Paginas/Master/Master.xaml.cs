@@ -2,6 +2,7 @@
 using GerenciadorDeTarefas.Models.Projetos;
 using GerenciadorDeTarefas.Models.Tarefas;
 using GerenciadorDeTarefas.Models.Usuarios;
+using GerenciadorDeTarefas.Paginas.Equipes;
 using GerenciadorDeTarefas.Paginas.ListaDeTarefas;
 using System;
 using System.Collections.Generic;
@@ -22,7 +23,7 @@ namespace GerenciadorDeTarefas.Paginas.Master
         {
             InitializeComponent();
 
-            AtualizarMenu();
+            Task.WaitAll(AtualizarMenu());
 
             AssinarMensagem();
         }
@@ -38,6 +39,11 @@ namespace GerenciadorDeTarefas.Paginas.Master
             {
                 ListaEquipes.Children.Clear();
             }
+
+            Button btnNovaEquipe = new Button { Text = "NovaEquipe" };
+            btnNovaEquipe.Clicked += (sender, args) => Detail = new NavigationPage(new PaginaNovaEquipe());
+
+            ListaEquipes.Children.Add(btnNovaEquipe);
 
             await CarregarEquipes(App.Usuario.Equipes);
         }
@@ -113,16 +119,6 @@ namespace GerenciadorDeTarefas.Paginas.Master
         {
             stackLayout.IsVisible = !stackLayout.IsVisible;
             EquipeSelecionada = equipe;
-        }
-
-        private void PaginaNovaTarefa(object sender, EventArgs args)
-        {
-            Detail = new NavigationPage(new PaginaNovaTarefa());
-        }
-
-        private void PaginaNovaEquipe(object sender, EventArgs args)
-        {
-            
         }
 
         private void ChamaPaginaPerfil(object sender, EventArgs args)

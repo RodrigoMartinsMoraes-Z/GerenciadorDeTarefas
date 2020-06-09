@@ -16,15 +16,10 @@
                 <Button Text="&#xf0c0; - Equipes"
                        FontFamily="{StaticResource FontAwesomeSolid}"
                         Clicked="ExibirEquipes"/>
-                
+
                 <ScrollView VerticalScrollBarVisibility="Always">
-                    <StackLayout x:Name="ListaEquipes"
-                                 IsVisible="False">
+                    <StackLayout x:Name="ListaEquipes"/>
 
-                        <Button Text="Nova Equipe"
-                                Clicked="PaginaNovaEquipe"/>
-
-                    </StackLayout>
                 </ScrollView>
 
             </StackLayout>

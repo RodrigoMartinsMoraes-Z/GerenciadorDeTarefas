@@ -1,4 +1,5 @@
-﻿using System;
+﻿using GerenciadorDeTarefas.Models.Equipes;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,6 +16,19 @@ namespace GerenciadorDeTarefas.Paginas.Equipes
         public PaginaNovaEquipe()
         {
             InitializeComponent();
+
+            Title = "Nova Equipe";
+            
+        }
+
+        public void AdicionarEquipe (object sender, EventArgs args)
+        {
+            EquipeModel novaEquipe = new EquipeModel { Nome = NomeEquipe.Text };
+
+            App.Usuario.Equipes.Add(novaEquipe);
+            App.Usuario.Salvar();
+
+            ControleMenu.AtualizarMenu();
         }
     }
 }
