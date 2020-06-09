@@ -13,10 +13,18 @@
                         FontFamily="{StaticResource FontAwesomeSolid}" 
                         Clicked="ChamaPaginaPerfil"/>
 
-                <Label Text="&#xf0c0; - Equipes"
-                       FontFamily="{StaticResource FontAwesomeSolid}"/>
+                <Button Text="&#xf0c0; - Equipes"
+                       FontFamily="{StaticResource FontAwesomeSolid}"
+                        Clicked="ExibirEquipes"/>
+                
                 <ScrollView VerticalScrollBarVisibility="Always">
-                    <StackLayout x:Name="ListaEquipes"/>
+                    <StackLayout x:Name="ListaEquipes"
+                                 IsVisible="False">
+
+                        <Button Text="Nova Equipe"
+                                Clicked="PaginaNovaEquipe"/>
+
+                    </StackLayout>
                 </ScrollView>
 
             </StackLayout>

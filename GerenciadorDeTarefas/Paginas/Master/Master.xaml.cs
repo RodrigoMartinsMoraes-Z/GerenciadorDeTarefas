@@ -1,8 +1,11 @@
 ﻿using GerenciadorDeTarefas.Models.Equipes;
+using GerenciadorDeTarefas.Models.Projetos;
 using GerenciadorDeTarefas.Models.Tarefas;
+using GerenciadorDeTarefas.Models.Usuarios;
 using GerenciadorDeTarefas.Paginas.ListaDeTarefas;
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -13,6 +16,7 @@ namespace GerenciadorDeTarefas.Paginas.Master
     public partial class Master : MasterDetailPage
     {
         public static EquipeModel EquipeSelecionada { get; set; }
+        public static ProjetoModel ProjetoSelecionado { get; set; }
 
         public Master()
         {
@@ -28,62 +32,87 @@ namespace GerenciadorDeTarefas.Paginas.Master
             MessagingCenter.Subscribe<Master>(this, "AtualizarMenu", (sender) => AtualizarMenu());
         }
 
-        public Task AtualizarMenu()
+        public async Task AtualizarMenu()
         {
-            if(ListaEquipes.Children.Count > 0)
+            if (ListaEquipes.Children.Count > 0)
             {
                 ListaEquipes.Children.Clear();
             }
 
+            await CarregarEquipes(App.Usuario.Equipes);
+        }
+
+        private async Task CarregarEquipes(ICollection<EquipeModel> equipes)
+        {
             foreach (EquipeModel equipe in App.Usuario.Equipes)
             {
-                StackLayout layoutTarefas = new StackLayout() { IsVisible = false };
-
-                Button BtnMostrarEquipe = new Button
+                StackLayout layoutEquipes = new StackLayout() { IsVisible = false, Margin = 10 };
+                Button btnMostrarEquipe = new Button
                 {
                     Text = equipe.Nome
                 };
-                BtnMostrarEquipe.Clicked += (sender, args) => MostrarEquipe(layoutTarefas, equipe);
+                btnMostrarEquipe.Clicked += (sender, args) => ExibirDetalhes(layoutEquipes, equipe);
 
-                Button BtnNovaTarefa = new Button
+                await CarregarProjetos(layoutEquipes, equipe.Projetos);
+
+                ListaEquipes.Children.Add(btnMostrarEquipe);
+
+                Button btnExcluirEquipe = new Button
                 {
-                    Text = "Nova Tarefa",
+                    Text = "Excluir Equipe"
                 };
-                BtnNovaTarefa.Clicked += (sender, args) => Detail = new NavigationPage(new PaginaNovaTarefa());
+                btnExcluirEquipe.Clicked += (sender, args) =>
+                {
+                    var Equipes = App.Usuario.Equipes.FirstOrDefault(e => e.Nome == equipe.Nome);
+                    equipes.Remove(equipe);
 
-                Picker picker = new Picker();
-                if (equipe.Projetos != null && equipe.Projetos.Count > 0)
-                    foreach (var tarefa in equipe.Projetos)
-                    {
-                        picker.Items.Add(tarefa.Nome);
-                    }
-
-                StackLayout layoutEquipes = new StackLayout() {
-                    Orientation = StackOrientation.Vertical,
-                    
+                    App.Usuario.Salvar();
+                    AtualizarMenu();
                 };
-                
-                layoutEquipes.Children.Add(BtnMostrarEquipe);
-                layoutEquipes.Children.Add(layoutTarefas);
-
-                layoutTarefas.Children.Add(BtnNovaTarefa);
-                layoutTarefas.Children.Add(picker);
+                layoutEquipes.Children.Add(btnExcluirEquipe);
 
                 ListaEquipes.Children.Add(layoutEquipes);
             }
-
-            return Task.CompletedTask;
         }
 
-        private void MostrarEquipe(StackLayout stackLayoutEquipe, EquipeModel equipe)
+        private async Task CarregarProjetos(StackLayout layoutEquipes, ICollection<ProjetoModel> projetos)
         {
-            stackLayoutEquipe.IsVisible = !stackLayoutEquipe.IsVisible;
+            foreach (ProjetoModel projeto in projetos)
+            {
+                StackLayout layoutProjeto = new StackLayout() { IsVisible = false, Margin = 10 };
+                Button btnMostrarProjeto = new Button
+                {
+                    Text = projeto.Nome
+                };
+                btnMostrarProjeto.Clicked += (sender, args) => Detail = new NavigationPage(new PaginaTarefas());
+
+                layoutProjeto.Children.Add(btnMostrarProjeto);
+                layoutProjeto.Children.Add(layoutProjeto);
+
+                Button btnExcluirProjeto = new Button
+                {
+                    Text = "Excluir Projeto"
+                };
+                btnExcluirProjeto.Clicked += (sender, args) =>
+                {
+                    var projetosDaEquipe = App.Usuario.Equipes.FirstOrDefault(e => e.Projetos == projetos).Projetos;
+                    projetosDaEquipe.Remove(projeto);
+
+                    App.Usuario.Salvar();
+                    AtualizarMenu();
+                };
+                layoutProjeto.Children.Add(btnExcluirProjeto);
+
+                layoutEquipes.Children.Add(layoutProjeto);
+            }
+
+            await Task.CompletedTask;
+        }
+
+        private void ExibirDetalhes(StackLayout stackLayout, EquipeModel equipe = null, ProjetoModel projeto = null)
+        {
+            stackLayout.IsVisible = !stackLayout.IsVisible;
             EquipeSelecionada = equipe;
-        }
-
-        private void ChamaPaginaAFazer(object sender, EventArgs args)
-        {
-            Detail = new NavigationPage(new PaginaTarefasAFazer());
         }
 
         private void PaginaNovaTarefa(object sender, EventArgs args)
@@ -91,19 +120,9 @@ namespace GerenciadorDeTarefas.Paginas.Master
             Detail = new NavigationPage(new PaginaNovaTarefa());
         }
 
-        private void NovaEquipe(object sender, EventArgs args)
+        private void PaginaNovaEquipe(object sender, EventArgs args)
         {
-
-        }
-
-        private void RemoverTarefa(object sender, EventArgs args)
-        {
-
-        }
-
-        private void RemoverEquipe(object sender, EventArgs args)
-        {
-
+            
         }
 
         private void ChamaPaginaPerfil(object sender, EventArgs args)
@@ -111,5 +130,9 @@ namespace GerenciadorDeTarefas.Paginas.Master
 
         }
 
+        private void ExibirEquipes(object sender, EventArgs args)
+        {
+            ListaEquipes.IsVisible = !ListaEquipes.IsVisible;
+        }
     }
 }

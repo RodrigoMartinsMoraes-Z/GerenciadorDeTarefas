@@ -18,16 +18,13 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Compile Update="Paginas\ListaDeTarefas\PaginaTarefasAFazer.xaml.cs">
-      <DependentUpon>PaginaTarefasAFazer.xaml</DependentUpon>
-    </Compile>
-  </ItemGroup>
-
-  <ItemGroup>
+    <EmbeddedResource Update="Paginas\Equipes\PaginaNovaEquipe.xaml">
+      <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
+    </EmbeddedResource>
     <EmbeddedResource Update="Paginas\ListaDeTarefas\PaginaNovaTarefa.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
-    <EmbeddedResource Update="Paginas\ListaDeTarefas\PaginaTarefasAFazer.xaml">
+    <EmbeddedResource Update="Paginas\ListaDeTarefas\PaginaTarefas.xaml">
       <Generator>MSBuild:UpdateDesignTimeXaml</Generator>
     </EmbeddedResource>
     <EmbeddedResource Update="Paginas\Master\Master.xaml">
