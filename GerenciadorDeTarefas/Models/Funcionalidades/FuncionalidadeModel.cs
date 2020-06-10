@@ -1,11 +1,11 @@
-﻿using System;
+﻿using GerenciadorDeTarefas.Models.Tarefas;
+using System;
 using System.Collections.Generic;
 
-namespace GerenciadorDeTarefas.Models.Tarefas
+namespace GerenciadorDeTarefas.Models.Funcionalidades
 {
-    public class TarefaModel
+    public class FuncionalidadeModel
     {
-        public int Id { get; set; }
         public string Nome { get; set; }
         public string Detalhes { get; set; }
         public DateTime Adicionado { get; set; }
@@ -14,6 +14,6 @@ namespace GerenciadorDeTarefas.Models.Tarefas
         public Situacao Situacao { get; set; }
         public Prioridade Prioridade { get; set; }
 
-        public ICollection<TarefaModel> SubTarefas { get; set; }
+        public ICollection<TarefaModel> Tarefas { get; set; }
     }
 }

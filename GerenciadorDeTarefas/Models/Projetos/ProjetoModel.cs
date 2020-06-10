@@ -1,7 +1,6 @@
-﻿using GerenciadorDeTarefas.Models.Tarefas;
-using System;
+﻿using GerenciadorDeTarefas.Models.Funcionalidades;
+using GerenciadorDeTarefas.Models.Tarefas;
 using System.Collections.Generic;
-using System.Text;
 
 namespace GerenciadorDeTarefas.Models.Projetos
 {
@@ -13,6 +12,7 @@ namespace GerenciadorDeTarefas.Models.Projetos
         }
 
         public string Nome { get; set; }
+        public ICollection<FuncionalidadeModel> Funcionalidades { get; set; }
         public ICollection<TarefaModel> Tarefas { get; set; }
     }
 }

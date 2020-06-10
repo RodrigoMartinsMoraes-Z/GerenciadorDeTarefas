@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-
-namespace GerenciadorDeTarefas.Models.Tarefas
+﻿namespace GerenciadorDeTarefas.Models.Tarefas
 {
     public enum Situacao
     {

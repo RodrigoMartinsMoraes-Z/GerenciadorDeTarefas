@@ -10,7 +10,7 @@ namespace GerenciadorDeTarefas
     {
 
         public App()
-        {            
+        {
             InitializeComponent();
             IoCRegister();
             CarregaUsuario();

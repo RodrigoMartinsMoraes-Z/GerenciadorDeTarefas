@@ -1,10 +1,5 @@
 ﻿using GerenciadorDeTarefas.Models.Equipes;
-using SimpleInjector.Advanced;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -21,7 +16,7 @@ namespace GerenciadorDeTarefas.Paginas.Equipes
             InitializeComponent();
 
             Title = "Nova Equipe";
-          
+
         }
 
         public async void AdicionarEquipe(object sender, EventArgs args)

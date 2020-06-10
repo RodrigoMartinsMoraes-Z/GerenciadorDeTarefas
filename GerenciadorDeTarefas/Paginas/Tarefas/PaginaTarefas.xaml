@@ -6,7 +6,7 @@
              mc:Ignorable="d"
              x:Class="GerenciadorDeTarefas.Paginas.Tarefas.PaginaTarefas">
     <ContentPage.Content>
-        <StackLayout>
+        <StackLayout Margin="5">
             <Label Text="Welcome to Xamarin.Forms!"
                 VerticalOptions="CenterAndExpand" 
                 HorizontalOptions="CenterAndExpand" />

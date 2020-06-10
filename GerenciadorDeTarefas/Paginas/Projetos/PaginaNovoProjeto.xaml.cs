@@ -1,11 +1,6 @@
 ﻿using GerenciadorDeTarefas.Models.Equipes;
 using GerenciadorDeTarefas.Models.Projetos;
-using GerenciadorDeTarefas.Models.Usuarios;
 using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Linq;
 
 using Xamarin.Forms;
@@ -32,7 +27,7 @@ namespace GerenciadorDeTarefas.Paginas.Projetos
             };
 
             EquipeModel equipe = App.Usuario.Equipes.SingleOrDefault(e => e.Nome == Equipe.Nome);
-            if(equipe != null)
+            if (equipe != null)
             {
                 equipe.Projetos.Add(projeto);
                 App.Usuario.Equipes.Remove(equipe);

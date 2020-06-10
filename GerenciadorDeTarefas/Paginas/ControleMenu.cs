@@ -1,7 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace GerenciadorDeTarefas.Paginas
@@ -10,7 +7,7 @@ namespace GerenciadorDeTarefas.Paginas
     {
         Task AtualizarListaEquipes();
     }
-    public class ControleMenu:IControleMenu
+    public class ControleMenu : IControleMenu
     {
         public Task AtualizarListaEquipes()
         {

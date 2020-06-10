@@ -1,10 +1,9 @@
-﻿using GerenciadorDeTarefas.Models.Tarefas;
+﻿using GerenciadorDeTarefas.Models.Projetos;
+using GerenciadorDeTarefas.Models.Tarefas;
 using GerenciadorDeTarefas.Util;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -15,6 +14,8 @@ namespace GerenciadorDeTarefas.Paginas.Tarefas
     public partial class PaginaNovaTarefa : ContentPage
     {
         private readonly IControleMenu _controleMenu = App.IoCConainer.GetInstance<IControleMenu>();
+
+        public ProjetoModel Projeto { get; set; }
 
         public PaginaNovaTarefa()
         {
@@ -51,8 +52,12 @@ namespace GerenciadorDeTarefas.Paginas.Tarefas
                 Situacao = Situacao.Novo
             };
 
-            var equipe = App.Usuario.Equipes.FirstOrDefault(e => e.Nome == Master.Master.EquipeSelecionada.Nome);
+            Models.Equipes.EquipeModel equipe = App.Usuario.Equipes.SingleOrDefault(e => e.Projetos.Contains(Projeto));
+            var projeto = equipe.Projetos.SingleOrDefault(p => p.Nome == Projeto.Nome);
+            projeto.Tarefas.Add(tarefa);
 
+            //App.Usuario.Equipes.Remove(equipe);
+            //App.Usuario.Equipes.Add(equipe);
             await App.Usuario.Salvar();
 
             await _controleMenu.AtualizarListaEquipes();
