@@ -4,7 +4,8 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006" 
              xmlns:converters="clr-namespace:GerenciadorDeTarefas.Util"
-             x:Class="GerenciadorDeTarefas.Paginas.ListaDeTarefas.PaginaNovaTarefa">
+             mc:Ignorable="d"
+             x:Class="GerenciadorDeTarefas.Paginas.Tarefas.PaginaNovaTarefa">
     <ContentPage.Resources>
         <ResourceDictionary>
             <converters:IntEnumConverter x:Key="IntEnum"/>
@@ -18,7 +19,7 @@
             <Entry Placeholder="Detalhes" 
                    x:Name="DetalhesDaTarefa" 
                    HorizontalOptions="FillAndExpand"/>
-            
+
             <Label Text="Previsão de Conclusão"/>
             <DatePicker x:Name="PrevisaoDeConclusao"/>
 

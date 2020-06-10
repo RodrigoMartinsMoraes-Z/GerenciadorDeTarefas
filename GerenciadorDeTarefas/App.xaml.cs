@@ -1,4 +1,5 @@
 ﻿using GerenciadorDeTarefas.Models.Usuarios;
+using GerenciadorDeTarefas.Paginas;
 using Newtonsoft.Json;
 using SimpleInjector;
 using Xamarin.Forms;
@@ -23,7 +24,7 @@ namespace GerenciadorDeTarefas
         private void IoCRegister()
         {
             IoCConainer = new Container();
-           
+            IoCConainer.Register<IControleMenu, ControleMenu>();
         }
 
         protected override void OnStart()

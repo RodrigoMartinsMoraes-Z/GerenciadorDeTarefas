@@ -1,9 +1,8 @@
 ﻿using GerenciadorDeTarefas.Models.Equipes;
 using GerenciadorDeTarefas.Models.Projetos;
-using GerenciadorDeTarefas.Models.Tarefas;
-using GerenciadorDeTarefas.Models.Usuarios;
 using GerenciadorDeTarefas.Paginas.Equipes;
-using GerenciadorDeTarefas.Paginas.ListaDeTarefas;
+using GerenciadorDeTarefas.Paginas.Projetos;
+using GerenciadorDeTarefas.Paginas.Tarefas;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -23,24 +22,24 @@ namespace GerenciadorDeTarefas.Paginas.Master
         {
             InitializeComponent();
 
-            Task.WaitAll(AtualizarMenu());
+            Task.WaitAll(AtualizarListaEquipes());
 
             AssinarMensagem();
         }
 
         private void AssinarMensagem()
         {
-            MessagingCenter.Subscribe<Master>(this, "AtualizarMenu", (sender) => AtualizarMenu());
+            MessagingCenter.Subscribe<Master>(this, "AtualizarMenu", async (sender) => await AtualizarListaEquipes());
         }
 
-        public async Task AtualizarMenu()
+        public async Task AtualizarListaEquipes()
         {
             if (ListaEquipes.Children.Count > 0)
             {
                 ListaEquipes.Children.Clear();
             }
 
-            Button btnNovaEquipe = new Button { Text = "NovaEquipe" };
+            Button btnNovaEquipe = new Button { Text = "Nova Equipe" };
             btnNovaEquipe.Clicked += (sender, args) => Detail = new NavigationPage(new PaginaNovaEquipe());
 
             ListaEquipes.Children.Add(btnNovaEquipe);
@@ -50,75 +49,66 @@ namespace GerenciadorDeTarefas.Paginas.Master
 
         private async Task CarregarEquipes(ICollection<EquipeModel> equipes)
         {
-            foreach (EquipeModel equipe in App.Usuario.Equipes)
+            foreach (EquipeModel equipe in App.Usuario.Equipes.OrderBy(e => e.Nome))
             {
-                StackLayout layoutEquipes = new StackLayout() { IsVisible = false, Margin = 10 };
+                StackLayout layoutEquipe = new StackLayout() { IsVisible = false, Margin = 10 };
                 Button btnMostrarEquipe = new Button
                 {
                     Text = equipe.Nome
                 };
-                btnMostrarEquipe.Clicked += (sender, args) => ExibirDetalhes(layoutEquipes, equipe);
-
-                await CarregarProjetos(layoutEquipes, equipe.Projetos);
-
+                btnMostrarEquipe.Clicked += (sender, args) => ExibirDetalhes(layoutEquipe);
                 ListaEquipes.Children.Add(btnMostrarEquipe);
+
+                Button btnNovoProjeto = new Button
+                {
+                    Text = "Novo Projeto"
+                };
+                btnNovoProjeto.Clicked += (sender, args) =>
+                {
+                    PaginaNovoProjeto.Equipe = equipe;
+                    Detail = new NavigationPage(new PaginaNovoProjeto());
+                };
+                layoutEquipe.Children.Add(btnNovoProjeto);
+
+                StackLayout layoutProjeto = new StackLayout();
+                foreach (ProjetoModel projeto in equipe.Projetos.OrderBy(e => e.Nome))
+                {
+                    Button btnMostrarProjeto = new Button
+                    {
+                        Text = projeto.Nome
+                    };
+                    btnMostrarProjeto.Clicked += (object sender, EventArgs args) =>
+                    {
+                        PaginaTarefas.Projeto = projeto;
+                        Detail = new NavigationPage(new PaginaTarefas());
+                    };
+
+                    layoutProjeto.Children.Add(btnMostrarProjeto);
+                }
+
+                layoutEquipe.Children.Add(layoutProjeto);
 
                 Button btnExcluirEquipe = new Button
                 {
                     Text = "Excluir Equipe"
                 };
-                btnExcluirEquipe.Clicked += (sender, args) =>
+                btnExcluirEquipe.Clicked += async (sender, args) =>
                 {
                     var Equipes = App.Usuario.Equipes.FirstOrDefault(e => e.Nome == equipe.Nome);
                     equipes.Remove(equipe);
 
-                    App.Usuario.Salvar();
-                    AtualizarMenu();
+                    await App.Usuario.Salvar();
+                    await AtualizarListaEquipes();
                 };
-                layoutEquipes.Children.Add(btnExcluirEquipe);
+                layoutEquipe.Children.Add(btnExcluirEquipe);
 
-                ListaEquipes.Children.Add(layoutEquipes);
+                ListaEquipes.Children.Add(layoutEquipe);
             }
         }
 
-        private async Task CarregarProjetos(StackLayout layoutEquipes, ICollection<ProjetoModel> projetos)
-        {
-            foreach (ProjetoModel projeto in projetos)
-            {
-                StackLayout layoutProjeto = new StackLayout() { IsVisible = false, Margin = 10 };
-                Button btnMostrarProjeto = new Button
-                {
-                    Text = projeto.Nome
-                };
-                btnMostrarProjeto.Clicked += (sender, args) => Detail = new NavigationPage(new PaginaTarefas());
-
-                layoutProjeto.Children.Add(btnMostrarProjeto);
-                layoutProjeto.Children.Add(layoutProjeto);
-
-                Button btnExcluirProjeto = new Button
-                {
-                    Text = "Excluir Projeto"
-                };
-                btnExcluirProjeto.Clicked += (sender, args) =>
-                {
-                    var projetosDaEquipe = App.Usuario.Equipes.FirstOrDefault(e => e.Projetos == projetos).Projetos;
-                    projetosDaEquipe.Remove(projeto);
-
-                    App.Usuario.Salvar();
-                    AtualizarMenu();
-                };
-                layoutProjeto.Children.Add(btnExcluirProjeto);
-
-                layoutEquipes.Children.Add(layoutProjeto);
-            }
-
-            await Task.CompletedTask;
-        }
-
-        private void ExibirDetalhes(StackLayout stackLayout, EquipeModel equipe = null, ProjetoModel projeto = null)
+        private void ExibirDetalhes(StackLayout stackLayout)
         {
             stackLayout.IsVisible = !stackLayout.IsVisible;
-            EquipeSelecionada = equipe;
         }
 
         private void ChamaPaginaPerfil(object sender, EventArgs args)

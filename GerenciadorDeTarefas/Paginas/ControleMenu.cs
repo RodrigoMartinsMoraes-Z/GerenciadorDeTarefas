@@ -6,9 +6,13 @@ using Xamarin.Forms;
 
 namespace GerenciadorDeTarefas.Paginas
 {
-    public class ControleMenu
+    public interface IControleMenu
     {
-        public static Task AtualizarMenu()
+        Task AtualizarListaEquipes();
+    }
+    public class ControleMenu:IControleMenu
+    {
+        public Task AtualizarListaEquipes()
         {
             MessagingCenter.Send(new Master.Master(), "AtualizarMenu");
 

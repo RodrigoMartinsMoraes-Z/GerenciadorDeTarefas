@@ -4,21 +4,19 @@
              xmlns:d="http://xamarin.com/schemas/2014/forms/design"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
              mc:Ignorable="d"
-             x:Class="GerenciadorDeTarefas.Paginas.Equipes.PaginaNovaEquipe">
+             x:Class="GerenciadorDeTarefas.Paginas.Projetos.PaginaNovoProjeto">
     <ContentPage.Content>
-        <StackLayout Orientation="Vertical"
-                     Margin="10">
-
-            <Label Text="Nome da Equipe"
+        <StackLayout>
+            <Label Text="Nome do Projeto"
                    IsVisible="False"
-                   x:Name="NomeEquipeLbl"/>
-            <Entry x:Name="NomeEquipe"
-                   Placeholder="Nome da Equipe"
+                   x:Name="NomeProjetoLbl"/>
+            <Entry x:Name="NomeProjeto"
+                   Placeholder="Nome do Projeto"
                    HorizontalOptions="FillAndExpand"
-                   TextChanged="NomeEquipe_TextChanged"/>
+                   TextChanged="NomeProjeto_TextChanged"/>
 
             <Button Text="Adicionar"
-                    Clicked="AdicionarEquipe"/>
+                    Clicked="AdicionarProjeto"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
