@@ -1,6 +1,4 @@
-﻿using GerenciadorDeTarefas.Models.Equipes;
-using GerenciadorDeTarefas.Models.Tarefas;
-using GerenciadorDeTarefas.Models.Usuarios;
+﻿using GerenciadorDeTarefas.Models.Tarefas;
 using GerenciadorDeTarefas.Util;
 using System;
 using System.Collections.Generic;
@@ -11,11 +9,13 @@ using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
-namespace GerenciadorDeTarefas.Paginas.ListaDeTarefas
+namespace GerenciadorDeTarefas.Paginas.Tarefas
 {
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class PaginaNovaTarefa : ContentPage
     {
+        private readonly IControleMenu _controleMenu = App.IoCConainer.GetInstance<IControleMenu>();
+
         public PaginaNovaTarefa()
         {
             InitializeComponent();
@@ -36,7 +36,10 @@ namespace GerenciadorDeTarefas.Paginas.ListaDeTarefas
 
         private async void SalvarTarefa(object sender, EventArgs args)
         {
-            Enum.TryParse(Prioridade.SelectedItem.ToString(), out Prioridade prioridade);
+            Prioridade prioridade = Models.Tarefas.Prioridade.Sugestão;
+
+            if (Prioridade.SelectedItem != null)
+                Enum.TryParse(Prioridade.SelectedItem.ToString(), out prioridade);
 
             TarefaModel tarefa = new TarefaModel
             {
@@ -49,10 +52,10 @@ namespace GerenciadorDeTarefas.Paginas.ListaDeTarefas
             };
 
             var equipe = App.Usuario.Equipes.FirstOrDefault(e => e.Nome == Master.Master.EquipeSelecionada.Nome);
-            equipe.Tarefas.Add(tarefa);
 
             await App.Usuario.Salvar();
 
+            await _controleMenu.AtualizarListaEquipes();
         }
     }
 }

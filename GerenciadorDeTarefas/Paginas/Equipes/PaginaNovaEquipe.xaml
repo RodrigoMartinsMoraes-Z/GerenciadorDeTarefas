@@ -1,0 +1,24 @@
+﻿<?xml version="1.0" encoding="utf-8" ?>
+<ContentPage xmlns="http://xamarin.com/schemas/2014/forms"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:d="http://xamarin.com/schemas/2014/forms/design"
+             xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+             mc:Ignorable="d"
+             x:Class="GerenciadorDeTarefas.Paginas.Equipes.PaginaNovaEquipe">
+    <ContentPage.Content>
+        <StackLayout Orientation="Vertical"
+                     Margin="10">
+
+            <Label Text="Nome da Equipe"
+                   IsVisible="False"
+                   x:Name="NomeEquipeLbl"/>
+            <Entry x:Name="NomeEquipe"
+                   Placeholder="Nome da Equipe"
+                   HorizontalOptions="FillAndExpand"
+                   TextChanged="NomeEquipe_TextChanged"/>
+
+            <Button Text="Adicionar"
+                    Clicked="AdicionarEquipe"/>
+        </StackLayout>
+    </ContentPage.Content>
+</ContentPage>

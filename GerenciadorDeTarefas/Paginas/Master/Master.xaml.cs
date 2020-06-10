@@ -1,8 +1,12 @@
 ﻿using GerenciadorDeTarefas.Models.Equipes;
-using GerenciadorDeTarefas.Models.Tarefas;
-using GerenciadorDeTarefas.Paginas.ListaDeTarefas;
+using GerenciadorDeTarefas.Models.Projetos;
+using GerenciadorDeTarefas.Paginas.Equipes;
+using GerenciadorDeTarefas.Paginas.Projetos;
+using GerenciadorDeTarefas.Paginas.Tarefas;
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -12,100 +16,109 @@ namespace GerenciadorDeTarefas.Paginas.Master
     public partial class Master : MasterDetailPage
     {
         public static EquipeModel EquipeSelecionada { get; set; }
+        public static ProjetoModel ProjetoSelecionado { get; set; }
 
         public Master()
         {
             InitializeComponent();
 
-#if DEBUG
-            if (App.Usuario == null)
+            Task.WaitAll(AtualizarListaEquipes());
+
+            AssinarMensagem();
+        }
+
+        private void AssinarMensagem()
+        {
+            MessagingCenter.Subscribe<Master>(this, "AtualizarMenu", async (sender) => await AtualizarListaEquipes());
+        }
+
+        public async Task AtualizarListaEquipes()
+        {
+            if (ListaEquipes.Children.Count > 0)
             {
-                List<TarefaModel> tarefas1 = new List<TarefaModel>();
-                tarefas1.Add(new TarefaModel { Nome = "aa1" });
-                tarefas1.Add(new TarefaModel { Nome = "aa2" });
-
-                List<TarefaModel> tarefas2 = new List<TarefaModel>();
-                tarefas2.Add(new TarefaModel { Nome = "bb1" });
-                tarefas2.Add(new TarefaModel { Nome = "bb2" });
-
-                List<EquipeModel> equipes = new List<EquipeModel>
-            {
-                new EquipeModel { Nome = "Equipe 1", Tarefas =  tarefas1},
-                new EquipeModel { Nome = "Equipe 2", Tarefas = tarefas2 }
-            };
-
-                App.Usuario.Equipes = equipes;
-                App.Usuario.Salvar();
+                ListaEquipes.Children.Clear();
             }
-#endif
-            foreach (EquipeModel equipe in App.Usuario.Equipes)
-            {
-                StackLayout stackLayoutEquipe = new StackLayout() { IsVisible = false };
 
-                Button BtnMostrarEquipe = new Button
+            Button btnNovaEquipe = new Button { Text = "Nova Equipe" };
+            btnNovaEquipe.Clicked += (sender, args) => Detail = new NavigationPage(new PaginaNovaEquipe());
+
+            ListaEquipes.Children.Add(btnNovaEquipe);
+
+            await CarregarEquipes(App.Usuario.Equipes);
+        }
+
+        private async Task CarregarEquipes(ICollection<EquipeModel> equipes)
+        {
+            foreach (EquipeModel equipe in App.Usuario.Equipes.OrderBy(e => e.Nome))
+            {
+                StackLayout layoutEquipe = new StackLayout() { IsVisible = false, Margin = 10 };
+                Button btnMostrarEquipe = new Button
                 {
                     Text = equipe.Nome
                 };
-                BtnMostrarEquipe.Clicked += (sender, args) => MostrarEquipe(stackLayoutEquipe, equipe);
+                btnMostrarEquipe.Clicked += (sender, args) => ExibirDetalhes(layoutEquipe);
+                ListaEquipes.Children.Add(btnMostrarEquipe);
 
-                Button BtnNovaTarefa = new Button
+                Button btnNovoProjeto = new Button
                 {
-                    Text = "Nova Tarefa",
+                    Text = "Novo Projeto"
                 };
-                BtnNovaTarefa.Clicked += (sender, args) => Detail = new NavigationPage(new PaginaNovaTarefa());
+                btnNovoProjeto.Clicked += (sender, args) =>
+                {
+                    PaginaNovoProjeto.Equipe = equipe;
+                    Detail = new NavigationPage(new PaginaNovoProjeto());
+                };
+                layoutEquipe.Children.Add(btnNovoProjeto);
 
-                Picker picker = new Picker();
-                if (equipe.Tarefas != null && equipe.Tarefas.Count > 0)
-                    foreach (var tarefa in equipe.Tarefas)
+                StackLayout layoutProjeto = new StackLayout();
+                foreach (ProjetoModel projeto in equipe.Projetos.OrderBy(e => e.Nome))
+                {
+                    Button btnMostrarProjeto = new Button
                     {
-                        picker.Items.Add(tarefa.Nome);
-                    }
+                        Text = projeto.Nome
+                    };
+                    btnMostrarProjeto.Clicked += (object sender, EventArgs args) =>
+                    {
+                        PaginaTarefas.Projeto = projeto;
+                        Detail = new NavigationPage(new PaginaTarefas());
+                    };
 
-                StackLayout stackLayout = new StackLayout();
-                stackLayout.Children.Add(BtnMostrarEquipe);
-                stackLayout.Children.Add(stackLayoutEquipe);
+                    layoutProjeto.Children.Add(btnMostrarProjeto);
+                }
 
-                stackLayoutEquipe.Children.Add(BtnNovaTarefa);
-                stackLayoutEquipe.Children.Add(picker);
-                ListaEquipes.Children.Add(stackLayout);
+                layoutEquipe.Children.Add(layoutProjeto);
+
+                Button btnExcluirEquipe = new Button
+                {
+                    Text = "Excluir Equipe"
+                };
+                btnExcluirEquipe.Clicked += async (sender, args) =>
+                {
+                    var Equipes = App.Usuario.Equipes.FirstOrDefault(e => e.Nome == equipe.Nome);
+                    equipes.Remove(equipe);
+
+                    await App.Usuario.Salvar();
+                    await AtualizarListaEquipes();
+                };
+                layoutEquipe.Children.Add(btnExcluirEquipe);
+
+                ListaEquipes.Children.Add(layoutEquipe);
             }
         }
 
-        private void MostrarEquipe(StackLayout stackLayoutEquipe, EquipeModel equipe)
+        private void ExibirDetalhes(StackLayout stackLayout)
         {
-            stackLayoutEquipe.IsVisible = !stackLayoutEquipe.IsVisible;
-            EquipeSelecionada = equipe;
-        }
-
-        private void ChamaPaginaAFazer(object sender, EventArgs args)
-        {
-            Detail = new NavigationPage(new PaginaTarefasAFazer());
-        }
-
-        private void PaginaNovaTarefa(object sender, EventArgs args)
-        {
-            Detail = new NavigationPage(new PaginaNovaTarefa());
-        }
-
-        private void NovaEquipe(object sender, EventArgs args)
-        {
-
-        }
-
-        private void RemoverTarefa(object sender, EventArgs args)
-        {
-
-        }
-
-        private void RemoverEquipe(object sender, EventArgs args)
-        {
-
+            stackLayout.IsVisible = !stackLayout.IsVisible;
         }
 
         private void ChamaPaginaPerfil(object sender, EventArgs args)
         {
 
         }
- 
+
+        private void ExibirEquipes(object sender, EventArgs args)
+        {
+            ListaEquipes.IsVisible = !ListaEquipes.IsVisible;
+        }
     }
 }
