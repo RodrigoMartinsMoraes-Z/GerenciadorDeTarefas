@@ -6,6 +6,7 @@
              mc:Ignorable="d"
              x:Class="GerenciadorDeTarefas.Paginas.Master.Master"
              xmlns:fontawesome="clr-namespace:FontAwesome">
+
     <MasterDetailPage.Master x:name="MenuPrincipal">
         <ContentPage Title="Gerenciador de Tarefas">
             <StackLayout>
@@ -25,9 +26,4 @@
             </StackLayout>
         </ContentPage>
     </MasterDetailPage.Master>
-    <MasterDetailPage.Detail>
-        <ContentPage>
-            <Label Text="Novidades"/>
-        </ContentPage>
-    </MasterDetailPage.Detail>
 </MasterDetailPage>

@@ -1,6 +1,7 @@
 ﻿using GerenciadorDeTarefas.Models.Equipes;
 using GerenciadorDeTarefas.Models.Projetos;
 using GerenciadorDeTarefas.Paginas.Equipes;
+using GerenciadorDeTarefas.Paginas.Novidades;
 using GerenciadorDeTarefas.Paginas.Projetos;
 using GerenciadorDeTarefas.Paginas.Tarefas;
 using System;
@@ -21,6 +22,8 @@ namespace GerenciadorDeTarefas.Paginas.Master
         public Master()
         {
             InitializeComponent();
+            Title = "Tarefeiro";
+            Detail = new NavigationPage(new PaginaNovidades());
 
             Task.WaitAll(AtualizarListaEquipes());
 
@@ -44,10 +47,10 @@ namespace GerenciadorDeTarefas.Paginas.Master
 
             ListaEquipes.Children.Add(btnNovaEquipe);
 
-            await CarregarEquipes(App.Usuario.Equipes);
+            CarregarEquipes(App.Usuario.Equipes);
         }
 
-        private async Task CarregarEquipes(ICollection<EquipeModel> equipes)
+        private void CarregarEquipes(ICollection<EquipeModel> equipes)
         {
             foreach (EquipeModel equipe in App.Usuario.Equipes.OrderBy(e => e.Nome))
             {
@@ -67,6 +70,7 @@ namespace GerenciadorDeTarefas.Paginas.Master
                 {
                     PaginaNovoProjeto.Equipe = equipe;
                     Detail = new NavigationPage(new PaginaNovoProjeto());
+                    
                 };
                 layoutEquipe.Children.Add(btnNovoProjeto);
 

@@ -15,7 +15,7 @@ namespace GerenciadorDeTarefas
             IoCRegister();
             CarregaUsuario();
 
-            MainPage = new NavigationPage(new Paginas.Master.Master());
+            MainPage = new Paginas.Master.Master();
         }
 
         public static Container IoCConainer { get; set; }
