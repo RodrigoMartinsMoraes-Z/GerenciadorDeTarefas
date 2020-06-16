@@ -7,6 +7,7 @@ using GerenciadorDeTarefas.Paginas.Tarefas;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Reflection;
 using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
@@ -25,17 +26,17 @@ namespace GerenciadorDeTarefas.Paginas.Master
             Title = "Tarefeiro";
             Detail = new NavigationPage(new PaginaNovidades());
 
-            Task.WaitAll(AtualizarListaEquipes());
+            AtualizarListaEquipes();
 
             AssinarMensagem();
         }
 
         private void AssinarMensagem()
         {
-            MessagingCenter.Subscribe<Master>(this, "AtualizarMenu", async (sender) => await AtualizarListaEquipes());
+            MessagingCenter.Subscribe<Master>(this, "AtualizarMenu", async (sender) => AtualizarListaEquipes());
         }
 
-        public async Task AtualizarListaEquipes()
+        public void AtualizarListaEquipes()
         {
             if (ListaEquipes.Children.Count > 0)
             {
@@ -43,10 +44,14 @@ namespace GerenciadorDeTarefas.Paginas.Master
             }
 
             Button btnNovaEquipe = new Button { Text = "Nova Equipe" };
-            btnNovaEquipe.Clicked += (sender, args) => Detail = new NavigationPage(new PaginaNovaEquipe());
+            btnNovaEquipe.Clicked += (sender, args) =>
+            {
+                Detail = new NavigationPage(new PaginaNovaEquipe());
+                IsPresented = false;
+            };
 
             ListaEquipes.Children.Add(btnNovaEquipe);
-
+            
             CarregarEquipes(App.Usuario.Equipes);
         }
 
@@ -70,7 +75,7 @@ namespace GerenciadorDeTarefas.Paginas.Master
                 {
                     PaginaNovoProjeto.Equipe = equipe;
                     Detail = new NavigationPage(new PaginaNovoProjeto());
-                    
+                    IsPresented = false;
                 };
                 layoutEquipe.Children.Add(btnNovoProjeto);
 
@@ -85,6 +90,7 @@ namespace GerenciadorDeTarefas.Paginas.Master
                     {
                         PaginaTarefas.Projeto = projeto;
                         Detail = new NavigationPage(new PaginaTarefas());
+                        IsPresented = false;
                     };
 
                     layoutProjeto.Children.Add(btnMostrarProjeto);
@@ -102,7 +108,7 @@ namespace GerenciadorDeTarefas.Paginas.Master
                     equipes.Remove(equipe);
 
                     await App.Usuario.Salvar();
-                    await AtualizarListaEquipes();
+                    AtualizarListaEquipes();
                 };
                 layoutEquipe.Children.Add(btnExcluirEquipe);
 
