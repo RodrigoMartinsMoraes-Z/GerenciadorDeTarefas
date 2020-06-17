@@ -19,7 +19,9 @@
                         Clicked="ExibirEquipes"/>
 
                 <ScrollView VerticalScrollBarVisibility="Always">
-                    <StackLayout x:Name="ListaEquipes"/>
+                    <StackLayout x:Name="ListaEquipes"
+                                 Padding="30,0,10,0"
+                                 BackgroundColor="LightGray"/>
 
                 </ScrollView>
 

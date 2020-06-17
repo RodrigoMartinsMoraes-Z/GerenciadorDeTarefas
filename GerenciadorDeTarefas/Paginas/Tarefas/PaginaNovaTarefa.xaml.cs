@@ -1,4 +1,5 @@
-﻿using GerenciadorDeTarefas.Models.Projetos;
+﻿using GerenciadorDeTarefas.Models.Equipes;
+using GerenciadorDeTarefas.Models.Projetos;
 using GerenciadorDeTarefas.Models.Tarefas;
 using GerenciadorDeTarefas.Util;
 using System;
@@ -15,7 +16,7 @@ namespace GerenciadorDeTarefas.Paginas.Tarefas
     {
         private readonly IControleMenu _controleMenu = App.IoCConainer.GetInstance<IControleMenu>();
 
-        public ProjetoModel Projeto { get; set; }
+        public static ProjetoModel Projeto { get; set; }
 
         public PaginaNovaTarefa()
         {
@@ -52,15 +53,22 @@ namespace GerenciadorDeTarefas.Paginas.Tarefas
                 Situacao = Situacao.Novo
             };
 
-            Models.Equipes.EquipeModel equipe = App.Usuario.Equipes.SingleOrDefault(e => e.Projetos.Contains(Projeto));
-            var projeto = equipe.Projetos.SingleOrDefault(p => p.Nome == Projeto.Nome);
-            projeto.Tarefas.Add(tarefa);
+            try
+            {
+                EquipeModel equipe = App.Usuario.Equipes.SingleOrDefault(e => e.Projetos.Any(p => p.Nome == Projeto.Nome));
+                ProjetoModel projeto = equipe.Projetos.SingleOrDefault(p => p.Nome == Projeto.Nome);
+                projeto.Tarefas.Add(tarefa);
 
-            //App.Usuario.Equipes.Remove(equipe);
-            //App.Usuario.Equipes.Add(equipe);
-            await App.Usuario.Salvar();
+                App.Usuario.Equipes.Remove(equipe);
+                App.Usuario.Equipes.Add(equipe);
+                await App.Usuario.Salvar();
+                await _controleMenu.AtualizarListaEquipes();
+            }
+            catch (Exception e)
+            {
+                await DisplayAlert("Erro!", e.ToString(), "OK");
+            }
 
-            await _controleMenu.AtualizarListaEquipes();
         }
     }
 }

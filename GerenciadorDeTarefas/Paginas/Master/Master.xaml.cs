@@ -33,7 +33,7 @@ namespace GerenciadorDeTarefas.Paginas.Master
 
         private void AssinarMensagem()
         {
-            MessagingCenter.Subscribe<Master>(this, "AtualizarMenu", async (sender) => AtualizarListaEquipes());
+            MessagingCenter.Subscribe<Master>(this, "AtualizarMenu", (sender) => AtualizarListaEquipes());
         }
 
         public void AtualizarListaEquipes()
@@ -48,6 +48,7 @@ namespace GerenciadorDeTarefas.Paginas.Master
             {
                 Detail = new NavigationPage(new PaginaNovaEquipe());
                 IsPresented = false;
+                
             };
 
             ListaEquipes.Children.Add(btnNovaEquipe);

@@ -6,10 +6,10 @@
              mc:Ignorable="d"
              x:Class="GerenciadorDeTarefas.Paginas.Tarefas.PaginaTarefas">
     <ContentPage.Content>
-        <StackLayout Margin="5">
-            <Label Text="Welcome to Xamarin.Forms!"
-                VerticalOptions="CenterAndExpand" 
-                HorizontalOptions="CenterAndExpand" />
+        <StackLayout Margin="5"
+                     x:Name="layoutTarefas">
+            <Button Text="Nova Tarefa"
+                    Clicked="AddNovaTarefa"/>
         </StackLayout>
     </ContentPage.Content>
 </ContentPage>
