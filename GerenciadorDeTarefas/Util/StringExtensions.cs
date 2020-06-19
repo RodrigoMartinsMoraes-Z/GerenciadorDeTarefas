@@ -10,7 +10,7 @@ namespace GerenciadorDeTarefas.Util
                 Regex.Replace(
                     str,
                     @"(\P{Ll})(\P{Ll}\p{Ll})",
-                    "$1 $2"
+                    "$1$2"
                 ),
                 @"(\p{Ll})(\P{Ll})",
                 "$1 $2"

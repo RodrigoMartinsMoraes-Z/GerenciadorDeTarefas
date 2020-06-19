@@ -2,6 +2,7 @@
 using GerenciadorDeTarefas.Paginas;
 using Newtonsoft.Json;
 using SimpleInjector;
+using System.Threading.Tasks;
 using Xamarin.Forms;
 
 namespace GerenciadorDeTarefas
@@ -12,19 +13,27 @@ namespace GerenciadorDeTarefas
         public App()
         {
             InitializeComponent();
-            IoCRegister();
-            CarregaUsuario();
+            Task.WaitAll(
+                IoCRegister(),
+                CarregaUsuario(),
+                CarregaFontAwesome()
+            );
 
             MainPage = new Paginas.Master.Master();
         }
 
         public static Container IoCConainer { get; set; }
         public static Usuario Usuario { get; set; }
+        public static string FontAwesomeBrands { get; set; }
+        public static string FontAwesomeSolid { get; set; }
+        public static string FontAwesomeRegular { get; set; }
 
-        private void IoCRegister()
+        private Task IoCRegister()
         {
             IoCConainer = new Container();
             IoCConainer.Register<IControleMenu, ControleMenu>();
+
+            return Task.CompletedTask;
         }
 
         protected override void OnStart()
@@ -40,7 +49,7 @@ namespace GerenciadorDeTarefas
         {
         }
 
-        void CarregaUsuario()
+        private Task CarregaUsuario()
         {
             if (App.Current.Properties.ContainsKey("Usuario"))
             {
@@ -50,6 +59,36 @@ namespace GerenciadorDeTarefas
             {
                 Usuario = new Usuario();
             }
+
+            return Task.CompletedTask;
         }
+
+        private Task CarregaFontAwesome()
+        {
+            switch (Device.RuntimePlatform)
+            {
+                case Device.Android:
+                    FontAwesomeRegular = "FontAwesome5Regular.otf#Regular";
+                    FontAwesomeSolid = "FontAwesome5Solid.otf#Regular";
+                    FontAwesomeBrands = "FontAwesome5Brands.otf#Regular";
+                    break;
+
+                case Device.UWP:
+                    FontAwesomeRegular = "/Assets/FontAwesome5Regular.otf#Font Awesome 5 Free";
+                    FontAwesomeSolid = "/Assets/FontAwesome5Solid.otf#Font Awesome 5 Free";
+                    FontAwesomeBrands = "/Assets/FontAwesome5Brands.otf#Font Awesome 5 Brands";
+                    break;
+
+                case Device.iOS:
+                    FontAwesomeRegular = "FontAwesome5Brands-Regular";
+                    FontAwesomeSolid = "FontAwesome5Free-Solid";
+                    FontAwesomeBrands = "FontAwesome5Free-Regular";
+                    break;
+            }
+
+
+            return Task.CompletedTask;
+        }
+
     }
 }

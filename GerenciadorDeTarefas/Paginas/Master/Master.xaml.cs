@@ -7,8 +7,6 @@ using GerenciadorDeTarefas.Paginas.Tarefas;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Reflection;
-using System.Threading.Tasks;
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 
@@ -48,11 +46,11 @@ namespace GerenciadorDeTarefas.Paginas.Master
             {
                 Detail = new NavigationPage(new PaginaNovaEquipe());
                 IsPresented = false;
-                
+
             };
 
             ListaEquipes.Children.Add(btnNovaEquipe);
-            
+
             CarregarEquipes(App.Usuario.Equipes);
         }
 
@@ -105,7 +103,7 @@ namespace GerenciadorDeTarefas.Paginas.Master
                 };
                 btnExcluirEquipe.Clicked += async (sender, args) =>
                 {
-                    var Equipes = App.Usuario.Equipes.FirstOrDefault(e => e.Nome == equipe.Nome);
+                    EquipeModel Equipes = App.Usuario.Equipes.FirstOrDefault(e => e.Nome == equipe.Nome);
                     equipes.Remove(equipe);
 
                     await App.Usuario.Salvar();

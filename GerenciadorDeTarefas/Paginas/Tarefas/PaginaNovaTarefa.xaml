@@ -14,14 +14,17 @@
     <ContentPage.Content>
         <StackLayout>
             <Entry Placeholder="Nome da Tarefa" 
-                   x:Name="NomeDaTarefa"/>
+                   x:Name="NomeDaTarefa"
+                   ClearButtonVisibility = "WhileEditing"/>
 
             <Entry Placeholder="Detalhes" 
                    x:Name="DetalhesDaTarefa" 
-                   HorizontalOptions="FillAndExpand"/>
+                   HorizontalOptions="FillAndExpand"
+                   ClearButtonVisibility = "WhileEditing"/>
 
             <Label Text="Previsão de Conclusão"/>
-            <DatePicker x:Name="PrevisaoDeConclusao"/>
+            <DatePicker x:Name="PrevisaoDeConclusao"
+                        Format="dd/MM/yyyy"/>
 
             <Label Text="Prioridade"/>
             <Picker x:Name="Prioridade"/>

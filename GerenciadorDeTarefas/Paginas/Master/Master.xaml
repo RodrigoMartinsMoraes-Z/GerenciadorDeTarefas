@@ -24,7 +24,6 @@
                                  BackgroundColor="LightGray"/>
 
                 </ScrollView>
-
             </StackLayout>
         </ContentPage>
     </MasterDetailPage.Master>

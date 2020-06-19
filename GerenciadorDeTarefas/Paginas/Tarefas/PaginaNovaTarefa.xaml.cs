@@ -22,26 +22,31 @@ namespace GerenciadorDeTarefas.Paginas.Tarefas
         {
             InitializeComponent();
 
-            foreach (var prioridade in Prioridades)
+            foreach (string prioridade in Prioridades)
             {
                 Prioridade.Items.Add(prioridade);
             }
         }
 
-        public List<string> Prioridades
-        {
-            get
-            {
-                return Enum.GetNames(typeof(Prioridade)).Select(b => b.SplitCamelCase()).ToList();
-            }
-        }
+        public List<string> Prioridades => Enum.GetNames(typeof(Prioridade)).Select(b => b.SplitCamelCase()).ToList();
 
         private async void SalvarTarefa(object sender, EventArgs args)
         {
+            if (NomeDaTarefa.Text == null || NomeDaTarefa.Text.Length <= 0)
+            {
+                await DisplayAlert("Erro!", "O nome datarefa deve conter mais que 0 caracteres!", "OK");
+                return;
+            }
+
             Prioridade prioridade = Models.Tarefas.Prioridade.Sugestão;
 
             if (Prioridade.SelectedItem != null)
                 Enum.TryParse(Prioridade.SelectedItem.ToString(), out prioridade);
+            else
+            {
+                await DisplayAlert("Erro!", "Selecione a prioridade da tarefa.", "OK");
+                return;
+            }
 
             TarefaModel tarefa = new TarefaModel
             {
