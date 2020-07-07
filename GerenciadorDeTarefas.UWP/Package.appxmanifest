@@ -7,15 +7,15 @@
   IgnorableNamespaces="uap mp">
 
   <Identity
-    Name="2ff5f60d-1fed-4994-a8cb-e08eac6fe5ed"
-    Publisher="CN=a9f1e74d-8a5f-4ed0-b428-aad1b1544518"
-    Version="1.0.0.0" />
+    Name="Tarefeiro"
+    Publisher="CN=StarlightTecnologia"
+    Version="1.0.7.0" />
 
   <mp:PhoneIdentity PhoneProductId="ec0cc741-fd3e-485c-81be-68815c480690" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 
   <Properties>
     <DisplayName>GerenciadorDeTarefas.UWP</DisplayName>
-    <PublisherDisplayName>a9f1e74d-8a5f-4ed0-b428-aad1b1544518</PublisherDisplayName>
+    <PublisherDisplayName>StarlightTecnologia</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
 
@@ -45,11 +45,12 @@
           </uap:ShowNameOnTiles>
         </uap:DefaultTile>
         <uap:SplashScreen Image="Assets\SplashScreen.png" />
+        <uap:InitialRotationPreference>
+          <uap:Rotation Preference="landscape"/>
+          <uap:Rotation Preference="portrait"/>
+          <uap:Rotation Preference="landscapeFlipped"/>
+          <uap:Rotation Preference="portraitFlipped"/></uap:InitialRotationPreference>
       </uap:VisualElements>
     </Application>
   </Applications>
-
-  <Capabilities>
-    <Capability Name="internetClient" />
-  </Capabilities>
 </Package>
