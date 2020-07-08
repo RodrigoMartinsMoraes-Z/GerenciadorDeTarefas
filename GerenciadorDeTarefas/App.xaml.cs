@@ -90,5 +90,17 @@ namespace GerenciadorDeTarefas
             return Task.CompletedTask;
         }
 
+        public Task SalvarUsuario()
+        {
+            string json = JsonConvert.SerializeObject(this);
+
+            if (App.Current.Properties.ContainsKey("Usuario"))
+                App.Current.Properties.Remove("Usuario");
+
+            App.Current.Properties.Add("Usuario", json);
+
+            return Task.CompletedTask;
+        }
+
     }
 }
