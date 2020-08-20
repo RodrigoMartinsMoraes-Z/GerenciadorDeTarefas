@@ -1,21 +1,15 @@
-﻿using GerenciadorDeTarefas.Domain.Projetos;
+﻿using GerenciadorDeTarefas.Domain.ManyToMany;
+using GerenciadorDeTarefas.Domain.Projetos;
 using GerenciadorDeTarefas.Domain.Usuarios;
-using System;
 using System.Collections.Generic;
-using System.Text;
 
 namespace GerenciadorDeTarefas.Domain.Equipes
 {
     public class Equipe
     {
-        public Equipe()
-        {
-            Projetos = new List<Projeto>();
-            Usuarios = new List<Usuario>();
-        }
-
+        public int Id { get; set; }
         public string Nome { get; set; }
-        public ICollection<Projeto> Projetos { get; set; }
-        public ICollection<Usuario> Usuarios { get; set; }
+        public virtual ICollection<Projeto> Projetos { get; set; }
+        public virtual ICollection<EquipeUsuario> Usuarios { get; set; }
     }
 }

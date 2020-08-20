@@ -4,16 +4,13 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 using GerenciadorDeTarefas.Domain.Equipes;
+using GerenciadorDeTarefas.Domain.ManyToMany;
+using GerenciadorDeTarefas.Domain.Pessoas;
 
 namespace GerenciadorDeTarefas.Domain.Usuarios
 {
     public class Usuario
     {
-        public Usuario()
-        {
-            Equipes = new List<Equipe>();
-        }
-
         public int Id { get; set; }
         public string Login { get; set; }
 
@@ -29,7 +26,9 @@ namespace GerenciadorDeTarefas.Domain.Usuarios
             senha = EncriptarSenha(value);
         }
 
-        public virtual ICollection<Equipe> Equipes { get; set; }
+        public Pessoa Pessoa{ get; set; }
+
+        public virtual ICollection<EquipeUsuario> Equipes { get; set; }
 
         private string EncriptarSenha(string value)
         {
