@@ -28,6 +28,19 @@ namespace GerenciadorDeTarefas
         public static string FontAwesomeSolid { get; set; }
         public static string FontAwesomeRegular { get; set; }
 
+        private static bool isInDebug;
+
+        public static bool GetIsInDebug()
+        {
+#if DEBUG
+            return true;
+#endif
+#if RELEASE
+            return false;
+#endif
+        }
+
+
         private Task IoCRegister()
         {
             IoCConainer = new Container();
