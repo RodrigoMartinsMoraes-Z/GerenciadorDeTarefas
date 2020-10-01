@@ -91,7 +91,7 @@ namespace GerenciadorDeTarefas.Paginas.Tarefas
             };
 
 
-
+            await Task.CompletedTask;
 
             //if (tarefa.SubTarefas != null && tarefa.SubTarefas.Count > 0)
             //{

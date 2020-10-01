@@ -1,4 +1,5 @@
-﻿using GerenciadorDeTarefas.Domain.Tarefas;
+﻿using GerenciadorDeTarefas.Domain.Equipes;
+using GerenciadorDeTarefas.Domain.Tarefas;
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -16,6 +17,6 @@ namespace GerenciadorDeTarefas.Domain.Funcionalidades
         public Situacao Situacao { get; set; }
         public Prioridade Prioridade { get; set; }
 
-        public ICollection<Tarefa> Tarefas { get; set; }
+        public virtual ICollection<Tarefa> Tarefas { get; set; }
     }
 }

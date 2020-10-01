@@ -27,7 +27,7 @@
     <AppxBundle>Always</AppxBundle>
     <AppxBundlePlatforms>x86|x64|arm</AppxBundlePlatforms>
     <HoursBetweenUpdateChecks>0</HoursBetweenUpdateChecks>
-    <PackageCertificateThumbprint>11091C9474C85B6A70CE33B912AB83A97CD18655</PackageCertificateThumbprint>
+    <PackageCertificateThumbprint>DFB3E2FE1310CD51841E5B295D67B4C1429D38D3</PackageCertificateThumbprint>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Debug|ARM'">
     <DebugSymbols>true</DebugSymbols>

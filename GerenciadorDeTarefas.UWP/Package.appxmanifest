@@ -8,8 +8,8 @@
 
   <Identity
     Name="Tarefeiro"
-    Publisher="CN=StarlightTecnologia"
-    Version="1.0.7.0" />
+    Publisher="CN=Rodrigo"
+    Version="1.0.8.0" />
 
   <mp:PhoneIdentity PhoneProductId="ec0cc741-fd3e-485c-81be-68815c480690" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
 

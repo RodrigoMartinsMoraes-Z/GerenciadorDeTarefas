@@ -27,8 +27,7 @@ namespace GerenciadorDeTarefas
         public static string FontAwesomeBrands { get; set; }
         public static string FontAwesomeSolid { get; set; }
         public static string FontAwesomeRegular { get; set; }
-
-        private static bool isInDebug;
+        public static bool IsInDebug { get => GetIsInDebug(); }
 
         public static bool GetIsInDebug()
         {

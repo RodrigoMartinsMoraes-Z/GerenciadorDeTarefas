@@ -20,6 +20,7 @@ namespace GerenciadorDeTarefas.Domain.Tarefas
         public Situacao Situacao { get; set; }
         public Prioridade Prioridade { get; set; }
 
-        public ICollection<Tarefa> SubTarefas { get; set; }
+        public virtual ICollection<Tarefa> SubTarefas { get; set; }
+
     }
 }
