@@ -3,6 +3,7 @@ using GerenciadorDeTarefas.Domain;
 
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
+using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
@@ -13,11 +14,11 @@ namespace GerenciadorDeTarefas.WebApi
 {
     public class Startup
     {
-        private Container _container = new Container();
+        private readonly Container _container = new Container();
 
-        private readonly WebApiInjectionConfig webApiInjectionConfig = new WebApiInjectionConfig();
-        private readonly DomainInjectionConfig domainInjectionConfig = new DomainInjectionConfig();
-        private readonly ContextInjectionConfig contextInjectionConfig = new ContextInjectionConfig();
+        private readonly WebApiInjectionConfig _webApiInjectionConfig = new WebApiInjectionConfig();
+        private readonly DomainInjectionConfig _domainInjectionConfig = new DomainInjectionConfig();
+        private readonly ContextInjectionConfig _contextInjectionConfig = new ContextInjectionConfig();
 
         public Startup(IConfiguration configuration)
         {
@@ -31,7 +32,7 @@ namespace GerenciadorDeTarefas.WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ContextoDeDados>(ServiceLifetime.Transient);
+            services.AddEntityFrameworkNpgsql().AddDbContext<ContextoDeDados>(options => options.UseNpgsql(Configuration.GetConnectionString("GerenciadorDeTarefas")));
 
             services.AddControllers();
 
@@ -55,9 +56,9 @@ namespace GerenciadorDeTarefas.WebApi
 
         private void InitializeContainer()
         {
-            webApiInjectionConfig.Register(_container);
-            domainInjectionConfig.Register(_container);
-            contextInjectionConfig.Register(_container);
+            _webApiInjectionConfig.Register(_container);
+            _domainInjectionConfig.Register(_container);
+            _contextInjectionConfig.Register(_container);
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
