@@ -1,7 +1,6 @@
 ﻿using GerenciadorDeTarefas.Domain.Contexto;
-using System;
-using System.Collections.Generic;
-using System.Text;
+
+using SimpleInjector;
 
 namespace GerenciadorDeTarefas.Context
 {
