@@ -16,6 +16,8 @@ namespace GerenciadorDeTarefas.Context.Migrations
             {
                 var context = serviceScope.ServiceProvider.GetRequiredService<ContextoDeDados>();
                 context.Database.EnsureCreated();
+
+                
             }
         }
     }

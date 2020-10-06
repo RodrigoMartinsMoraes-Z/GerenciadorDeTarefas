@@ -10,9 +10,9 @@ using System.Text;
 
 namespace GerenciadorDeTarefas.Context
 {
-    class ContextoDeDados : DbContext, IContextoDeDados
+    public class ContextoDeDados : DbContext, IContextoDeDados
     {
-        public ContextoDeDados(DbContextOptions options) : base(options)
+        public ContextoDeDados(DbContextOptions<ContextoDeDados> options) : base(options)
         {
         }
 
