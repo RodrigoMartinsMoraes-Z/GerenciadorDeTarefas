@@ -3,7 +3,9 @@ using GerenciadorDeTarefas.Context.Types.ManyToMany;
 using GerenciadorDeTarefas.Domain.Contexto;
 using GerenciadorDeTarefas.Domain.Equipes;
 using GerenciadorDeTarefas.Domain.Funcionalidades;
+
 using Microsoft.EntityFrameworkCore;
+
 using System;
 using System.Collections.Generic;
 using System.Text;
@@ -27,6 +29,7 @@ namespace GerenciadorDeTarefas.Context
 
             //Funcionalidade
             builder.ApplyConfiguration(new FuncionalidadeTypeConfiguration());
+
         }
     }
 }

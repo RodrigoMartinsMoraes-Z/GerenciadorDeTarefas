@@ -14,23 +14,23 @@ namespace GerenciadorDeTarefas.Domain.Usuarios
         public int Id { get; set; }
         public string Login { get; set; }
 
-        private string senha;
+        private string Senha;
 
         public string GetSenha()
         {
-            return senha;
+            return Senha;
         }
 
         public void SetSenha(string value)
         {
-            senha = EncriptarSenha(value);
+            Senha = EncriptarSenha(value);
         }
 
         public Pessoa Pessoa{ get; set; }
 
         public virtual ICollection<EquipeUsuario> Equipes { get; set; }
 
-        private string EncriptarSenha(string value)
+        public string EncriptarSenha(string value)
         {
             byte[] salt = Encoding.UTF8.GetBytes(Login);
             byte[] senhaByte = Encoding.UTF8.GetBytes(value);
