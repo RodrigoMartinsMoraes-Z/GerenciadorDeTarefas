@@ -11,7 +11,7 @@ namespace GerenciadorDeTarefas.Domain.Usuarios
 {
     public class Usuario
     {
-        public int Id { get; set; }
+        public int IdPessoa { get; set; }
         public string Login { get; set; }
 
         private string Senha;
@@ -26,7 +26,7 @@ namespace GerenciadorDeTarefas.Domain.Usuarios
             Senha = EncriptarSenha(value);
         }
 
-        public Pessoa Pessoa{ get; set; }
+        public virtual Pessoa Pessoa{ get; set; }
 
         public virtual ICollection<EquipeUsuario> Equipes { get; set; }
 

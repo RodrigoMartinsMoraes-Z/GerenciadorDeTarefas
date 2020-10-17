@@ -1,11 +1,16 @@
-﻿using GerenciadorDeTarefas.Common.Models.Tarefas;
+﻿using GerenciadorDeTarefas.Domain.Equipes;
+using GerenciadorDeTarefas.Domain.Projetos;
+using GerenciadorDeTarefas.Domain.Tarefas;
+
 using System;
 using System.Collections.Generic;
+using System.Text;
 
-namespace GerenciadorDeTarefas.Common.Models.Funcionalidades
+namespace GerenciadorDeTarefas.Domain.Funcionalidades
 {
-    public class FuncionalidadeModel
+    public class Objetivo
     {
+        public int Id { get; set; }
         public string Nome { get; set; }
         public string Detalhes { get; set; }
         public DateTime Adicionado { get; set; }
@@ -14,6 +19,7 @@ namespace GerenciadorDeTarefas.Common.Models.Funcionalidades
         public Situacao Situacao { get; set; }
         public Prioridade Prioridade { get; set; }
 
-        public ICollection<TarefaModel> Tarefas { get; set; }
+        public virtual Projeto Projeto { get; set; }
+        public virtual ICollection<Tarefa> Tarefas { get; set; }
     }
 }

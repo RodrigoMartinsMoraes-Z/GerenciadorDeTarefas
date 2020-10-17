@@ -7,9 +7,9 @@ using System.Text;
 
 namespace GerenciadorDeTarefas.Context.Types
 {
-    class FuncionalidadeTypeConfiguration : IEntityTypeConfiguration<Funcionalidade>
+    class ObjetivoTypeConfiguration : IEntityTypeConfiguration<Objetivo>
     {
-        public void Configure(EntityTypeBuilder<Funcionalidade> builder)
+        public void Configure(EntityTypeBuilder<Objetivo> builder)
         {
             builder.HasKey(e => e.Id);
 

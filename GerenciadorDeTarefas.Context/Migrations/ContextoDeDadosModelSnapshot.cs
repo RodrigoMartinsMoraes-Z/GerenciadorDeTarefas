@@ -103,9 +103,14 @@ namespace GerenciadorDeTarefas.Context.Migrations
                     b.Property<string>("Nome")
                         .HasColumnType("text");
 
+                    b.Property<int?>("UsuarioIdPessoa")
+                        .HasColumnType("integer");
+
                     b.HasKey("Id");
 
-                    b.ToTable("Pessoa");
+                    b.HasIndex("UsuarioIdPessoa");
+
+                    b.ToTable("Pessoas");
                 });
 
             modelBuilder.Entity("GerenciadorDeTarefas.Domain.Projetos.Projeto", b =>
@@ -118,15 +123,13 @@ namespace GerenciadorDeTarefas.Context.Migrations
 
                     b.HasKey("Id");
 
-                    b.ToTable("Projeto");
+                    b.ToTable("Projetos");
                 });
 
             modelBuilder.Entity("GerenciadorDeTarefas.Domain.Tarefas.Tarefa", b =>
                 {
                     b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+                        .HasColumnType("integer");
 
                     b.Property<DateTime>("Adicionado")
                         .HasColumnType("timestamp without time zone");
@@ -149,44 +152,27 @@ namespace GerenciadorDeTarefas.Context.Migrations
                     b.Property<int>("Prioridade")
                         .HasColumnType("integer");
 
-                    b.Property<int?>("ProjetoId")
-                        .HasColumnType("integer");
-
                     b.Property<int>("Situacao")
-                        .HasColumnType("integer");
-
-                    b.Property<int?>("TarefaId")
                         .HasColumnType("integer");
 
                     b.HasKey("Id");
 
                     b.HasIndex("FuncionalidadeId");
 
-                    b.HasIndex("ProjetoId");
-
-                    b.HasIndex("TarefaId");
-
-                    b.ToTable("Tarefa");
+                    b.ToTable("Tarefas");
                 });
 
             modelBuilder.Entity("GerenciadorDeTarefas.Domain.Usuarios.Usuario", b =>
                 {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+                    b.Property<int>("IdPessoa")
+                        .HasColumnType("integer");
 
                     b.Property<string>("Login")
                         .HasColumnType("text");
 
-                    b.Property<int?>("PessoaId")
-                        .HasColumnType("integer");
+                    b.HasKey("IdPessoa");
 
-                    b.HasKey("Id");
-
-                    b.HasIndex("PessoaId");
-
-                    b.ToTable("Usuario");
+                    b.ToTable("Usuarios");
                 });
 
             modelBuilder.Entity("GerenciadorDeTarefas.Domain.Funcionalidades.Funcionalidade", b =>
@@ -211,6 +197,13 @@ namespace GerenciadorDeTarefas.Context.Migrations
                         .IsRequired();
                 });
 
+            modelBuilder.Entity("GerenciadorDeTarefas.Domain.Pessoas.Pessoa", b =>
+                {
+                    b.HasOne("GerenciadorDeTarefas.Domain.Usuarios.Usuario", "Usuario")
+                        .WithMany()
+                        .HasForeignKey("UsuarioIdPessoa");
+                });
+
             modelBuilder.Entity("GerenciadorDeTarefas.Domain.Projetos.Projeto", b =>
                 {
                     b.HasOne("GerenciadorDeTarefas.Domain.Equipes.Equipe", "Equipe")
@@ -226,20 +219,26 @@ namespace GerenciadorDeTarefas.Context.Migrations
                         .WithMany("Tarefas")
                         .HasForeignKey("FuncionalidadeId");
 
-                    b.HasOne("GerenciadorDeTarefas.Domain.Projetos.Projeto", null)
+                    b.HasOne("GerenciadorDeTarefas.Domain.Projetos.Projeto", "Projeto")
                         .WithMany("Tarefas")
-                        .HasForeignKey("ProjetoId");
+                        .HasForeignKey("Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
-                    b.HasOne("GerenciadorDeTarefas.Domain.Tarefas.Tarefa", null)
+                    b.HasOne("GerenciadorDeTarefas.Domain.Tarefas.Tarefa", "TarefaPrincipal")
                         .WithMany("SubTarefas")
-                        .HasForeignKey("TarefaId");
+                        .HasForeignKey("Id")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("GerenciadorDeTarefas.Domain.Usuarios.Usuario", b =>
                 {
                     b.HasOne("GerenciadorDeTarefas.Domain.Pessoas.Pessoa", "Pessoa")
                         .WithMany()
-                        .HasForeignKey("PessoaId");
+                        .HasForeignKey("IdPessoa")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 #pragma warning restore 612, 618
         }

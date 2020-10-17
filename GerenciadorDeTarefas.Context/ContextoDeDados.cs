@@ -3,6 +3,10 @@ using GerenciadorDeTarefas.Context.Types.ManyToMany;
 using GerenciadorDeTarefas.Domain.Contexto;
 using GerenciadorDeTarefas.Domain.Equipes;
 using GerenciadorDeTarefas.Domain.Funcionalidades;
+using GerenciadorDeTarefas.Domain.Pessoas;
+using GerenciadorDeTarefas.Domain.Projetos;
+using GerenciadorDeTarefas.Domain.Tarefas;
+using GerenciadorDeTarefas.Domain.Usuarios;
 
 using Microsoft.EntityFrameworkCore;
 
@@ -19,7 +23,11 @@ namespace GerenciadorDeTarefas.Context
         }
 
         public DbSet<Equipe> Equipes { get; set; }
-        public DbSet<Funcionalidade> Funcionalidades { get; set; }
+        public DbSet<Objetivo> Funcionalidades { get; set; }
+        public DbSet<Pessoa> Pessoas { get; set; }
+        public DbSet<Projeto> Projetos { get; set; }
+        public DbSet<Tarefa> Tarefas { get; set; }
+        public DbSet<Usuario> Usuarios { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -27,9 +35,14 @@ namespace GerenciadorDeTarefas.Context
             builder.ApplyConfiguration(new EquipeTypeConfiguration());
             builder.ApplyConfiguration(new EquipeUsuarioTypeConfiguration());
 
-            //Funcionalidade
-            builder.ApplyConfiguration(new FuncionalidadeTypeConfiguration());
+            //Pessoa
+            builder.ApplyConfiguration(new PessoaTypeConfiguration());
+            builder.ApplyConfiguration(new UsuarioTypeConfiguration());
 
+            //Projeto
+            builder.ApplyConfiguration(new ProjetoTypeConfiguration());
+            builder.ApplyConfiguration(new ObjetivoTypeConfiguration());
+            builder.ApplyConfiguration(new TarefaTypeConfiguration());
         }
     }
 }
