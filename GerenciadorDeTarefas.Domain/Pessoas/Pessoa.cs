@@ -1,8 +1,6 @@
 ﻿using GerenciadorDeTarefas.Domain.Usuarios;
 
 using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace GerenciadorDeTarefas.Domain.Pessoas
 {

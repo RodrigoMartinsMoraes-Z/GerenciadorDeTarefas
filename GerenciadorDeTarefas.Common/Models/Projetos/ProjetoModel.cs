@@ -1,5 +1,6 @@
 ﻿using GerenciadorDeTarefas.Common.Models.Objetivos;
 using GerenciadorDeTarefas.Common.Models.Tarefas;
+
 using System.Collections.Generic;
 
 namespace GerenciadorDeTarefas.Common.Models.Projetos

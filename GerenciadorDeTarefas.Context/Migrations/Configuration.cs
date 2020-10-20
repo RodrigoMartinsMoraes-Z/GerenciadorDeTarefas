@@ -2,9 +2,6 @@
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace GerenciadorDeTarefas.Context.Migrations
 {
@@ -15,7 +12,7 @@ namespace GerenciadorDeTarefas.Context.Migrations
             using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
             {
                 var context = serviceScope.ServiceProvider.GetRequiredService<ContextoDeDados>();
-                context.Database.EnsureCreated();                
+                context.Database.EnsureCreated();
             }
         }
     }

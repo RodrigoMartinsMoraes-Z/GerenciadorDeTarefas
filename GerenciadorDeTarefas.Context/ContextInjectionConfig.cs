@@ -1,7 +1,5 @@
 ﻿using GerenciadorDeTarefas.Domain.Contexto;
 
-using SimpleInjector;
-
 namespace GerenciadorDeTarefas.Context
 {
     public class ContextInjectionConfig

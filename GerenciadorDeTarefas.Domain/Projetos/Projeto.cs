@@ -1,9 +1,8 @@
 ﻿using GerenciadorDeTarefas.Domain.Equipes;
 using GerenciadorDeTarefas.Domain.Funcionalidades;
 using GerenciadorDeTarefas.Domain.Tarefas;
-using System;
+
 using System.Collections.Generic;
-using System.Text;
 
 namespace GerenciadorDeTarefas.Domain.Projetos
 {

@@ -3,11 +3,6 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
-using System;
-using System.Collections.Generic;
-using System.IO;
-using System.Text;
-
 namespace GerenciadorDeTarefas.Context.Types
 {
     public class TarefaTypeConfiguration : IEntityTypeConfiguration<Tarefa>

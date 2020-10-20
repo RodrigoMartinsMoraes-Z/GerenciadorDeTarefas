@@ -1,11 +1,11 @@
-﻿using System;
+﻿using GerenciadorDeTarefas.Domain.ManyToMany;
+using GerenciadorDeTarefas.Domain.Pessoas;
+
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
-using GerenciadorDeTarefas.Domain.Equipes;
-using GerenciadorDeTarefas.Domain.ManyToMany;
-using GerenciadorDeTarefas.Domain.Pessoas;
 
 namespace GerenciadorDeTarefas.Domain.Usuarios
 {
@@ -26,7 +26,7 @@ namespace GerenciadorDeTarefas.Domain.Usuarios
             Senha = EncriptarSenha(value);
         }
 
-        public virtual Pessoa Pessoa{ get; set; }
+        public virtual Pessoa Pessoa { get; set; }
 
         public virtual ICollection<EquipeUsuario> Equipes { get; set; }
 

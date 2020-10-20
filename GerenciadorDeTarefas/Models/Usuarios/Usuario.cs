@@ -1,5 +1,7 @@
 ﻿using GerenciadorDeTarefas.Models.Equipes;
+
 using Newtonsoft.Json;
+
 using System.Collections.Generic;
 using System.Threading.Tasks;
 

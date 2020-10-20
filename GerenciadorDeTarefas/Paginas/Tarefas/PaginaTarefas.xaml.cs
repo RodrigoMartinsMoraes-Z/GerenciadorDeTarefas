@@ -1,9 +1,12 @@
 ﻿using FontAwesome;
+
 using GerenciadorDeTarefas.Models.Projetos;
 using GerenciadorDeTarefas.Models.Tarefas;
+
 using System;
 using System.Collections.Generic;
 using System.Threading.Tasks;
+
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 

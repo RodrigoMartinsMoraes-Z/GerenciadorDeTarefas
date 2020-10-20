@@ -1,8 +1,12 @@
 ﻿using GerenciadorDeTarefas.Models.Usuarios;
 using GerenciadorDeTarefas.Paginas;
+
 using Newtonsoft.Json;
+
 using SimpleInjector;
+
 using System.Threading.Tasks;
+
 using Xamarin.Forms;
 
 namespace GerenciadorDeTarefas

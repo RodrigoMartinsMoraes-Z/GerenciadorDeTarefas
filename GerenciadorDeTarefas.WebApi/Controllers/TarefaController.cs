@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using GerenciadorDeTarefas.Domain.Contexto;
+
 using System.Threading.Tasks;
 using System.Web.Http;
-
-using GerenciadorDeTarefas.Domain.Contexto;
-
-using Microsoft.AspNetCore.Http;
 
 namespace GerenciadorDeTarefas.WebApi.Controllers
 {
@@ -21,7 +16,7 @@ namespace GerenciadorDeTarefas.WebApi.Controllers
         }
 
         [HttpGet, Route("{id}")]
-        public async Task<IHttpActionResult> Buscar (int id)
+        public async Task<IHttpActionResult> Buscar(int id)
         {
             return Ok();
         }

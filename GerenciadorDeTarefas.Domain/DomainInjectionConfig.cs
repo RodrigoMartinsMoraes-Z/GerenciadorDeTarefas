@@ -2,7 +2,7 @@
 
 namespace GerenciadorDeTarefas.Domain
 {
-   public class DomainInjectionConfig
+    public class DomainInjectionConfig
     {
         public void Register(Container container)
         {

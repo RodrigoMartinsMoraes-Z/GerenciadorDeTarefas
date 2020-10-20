@@ -1,5 +1,6 @@
 ﻿using GerenciadorDeTarefas.Models.Funcionalidades;
 using GerenciadorDeTarefas.Models.Tarefas;
+
 using System.Collections.Generic;
 
 namespace GerenciadorDeTarefas.Models.Projetos

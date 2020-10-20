@@ -1,6 +1,6 @@
 ﻿using GerenciadorDeTarefas.Domain.ManyToMany;
 using GerenciadorDeTarefas.Domain.Projetos;
-using GerenciadorDeTarefas.Domain.Usuarios;
+
 using System.Collections.Generic;
 
 namespace GerenciadorDeTarefas.Domain.Equipes

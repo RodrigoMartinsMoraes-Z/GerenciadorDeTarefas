@@ -1,5 +1,4 @@
-﻿using GerenciadorDeTarefas.Domain.Pessoas;
-using GerenciadorDeTarefas.Domain.Usuarios;
+﻿using GerenciadorDeTarefas.Domain.Usuarios;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;

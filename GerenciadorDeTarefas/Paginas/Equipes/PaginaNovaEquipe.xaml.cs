@@ -1,4 +1,5 @@
 ﻿using GerenciadorDeTarefas.Models.Equipes;
+
 using System;
 
 using Xamarin.Forms;

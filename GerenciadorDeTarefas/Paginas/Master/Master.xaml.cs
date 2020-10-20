@@ -4,9 +4,11 @@ using GerenciadorDeTarefas.Paginas.Equipes;
 using GerenciadorDeTarefas.Paginas.Novidades;
 using GerenciadorDeTarefas.Paginas.Projetos;
 using GerenciadorDeTarefas.Paginas.Tarefas;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
+
 using Xamarin.Forms;
 using Xamarin.Forms.Xaml;
 

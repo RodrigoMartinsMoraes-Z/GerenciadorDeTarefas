@@ -1,9 +1,7 @@
 ﻿using GerenciadorDeTarefas.Domain.Funcionalidades;
+
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
-using System;
-using System.Collections.Generic;
-using System.Text;
 
 namespace GerenciadorDeTarefas.Context.Types
 {

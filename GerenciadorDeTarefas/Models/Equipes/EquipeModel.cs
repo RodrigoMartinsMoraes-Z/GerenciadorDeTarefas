@@ -1,5 +1,6 @@
 ﻿using GerenciadorDeTarefas.Models.Projetos;
 using GerenciadorDeTarefas.Models.Usuarios;
+
 using System.Collections.Generic;
 
 namespace GerenciadorDeTarefas.Models.Equipes
