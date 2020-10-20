@@ -32,7 +32,11 @@ namespace GerenciadorDeTarefas.WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddEntityFrameworkNpgsql().AddDbContext<ContextoDeDados>(options => options.UseNpgsql(Configuration.GetConnectionString("GerenciadorDeTarefas")));
+            services.AddDbContext<ContextoDeDados>(options =>
+                    options.UseNpgsql(
+                        Configuration.GetConnectionString("GerenciadorDeTarefas")),
+                        ServiceLifetime.Scoped
+                        );
 
             services.AddControllers();
 
@@ -41,14 +45,8 @@ namespace GerenciadorDeTarefas.WebApi
                 // AddAspNetCore() wraps web requests in a Simple Injector scope and
                 // allows request-scoped framework services to be resolved.
                 options.AddAspNetCore()
-
-                    // Ensure activation of a specific framework type to be created by
-                    // Simple Injector instead of the built-in configuration system.
-                    // All calls are optional. You can enable what you need. For instance,
-                    // ViewComponents, PageModels, and TagHelpers are not needed when you
-                    // build a Web API.
                     .AddControllerActivation();
-                
+
             });
 
             InitializeContainer();

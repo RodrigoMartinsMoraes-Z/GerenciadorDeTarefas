@@ -15,6 +15,7 @@ namespace GerenciadorDeTarefas.Domain.Projetos
             Tarefas = new List<Tarefa>();
         }
         public int Id { get; set; }
+        public int IdProjeto { get; set; }
         public string Nome { get; set; }
 
         public virtual Equipe Equipe { get; set; }

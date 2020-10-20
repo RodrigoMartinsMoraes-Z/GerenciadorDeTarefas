@@ -9,6 +9,7 @@ using GerenciadorDeTarefas.Domain.Tarefas;
 using GerenciadorDeTarefas.Domain.Usuarios;
 
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.Infrastructure.Internal;
 
 using System;
 using System.Collections.Generic;

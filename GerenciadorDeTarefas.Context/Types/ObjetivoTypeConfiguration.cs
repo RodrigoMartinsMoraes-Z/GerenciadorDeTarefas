@@ -13,7 +13,7 @@ namespace GerenciadorDeTarefas.Context.Types
         {
             builder.HasKey(e => e.Id);
 
-            builder.HasMany(e => e.Tarefas);
+            builder.HasMany(e => e.Tarefas).WithOne(t => t.Objetivo).HasForeignKey(e => e.IdObjetivo); ;
         }
     }
 }
