@@ -1,5 +1,5 @@
 ﻿using GerenciadorDeTarefas.Domain.Equipes;
-using GerenciadorDeTarefas.Domain.Funcionalidades;
+using GerenciadorDeTarefas.Domain.Objetivos;
 using GerenciadorDeTarefas.Domain.Tarefas;
 
 using System.Collections.Generic;

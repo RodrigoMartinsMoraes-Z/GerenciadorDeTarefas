@@ -4,7 +4,7 @@ using GerenciadorDeTarefas.Domain.Tarefas;
 using System;
 using System.Collections.Generic;
 
-namespace GerenciadorDeTarefas.Domain.Funcionalidades
+namespace GerenciadorDeTarefas.Domain.Objetivos
 {
     public class Objetivo
     {

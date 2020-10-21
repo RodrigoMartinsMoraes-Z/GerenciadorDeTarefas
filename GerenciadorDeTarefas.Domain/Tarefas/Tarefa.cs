@@ -1,4 +1,4 @@
-﻿using GerenciadorDeTarefas.Domain.Funcionalidades;
+﻿using GerenciadorDeTarefas.Domain.Objetivos;
 using GerenciadorDeTarefas.Domain.Projetos;
 
 using System;

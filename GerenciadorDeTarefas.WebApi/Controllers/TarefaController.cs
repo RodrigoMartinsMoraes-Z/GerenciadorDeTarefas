@@ -1,4 +1,5 @@
-﻿using GerenciadorDeTarefas.Domain.Contexto;
+﻿using GerenciadorDeTarefas.Common.Models.Tarefas;
+using GerenciadorDeTarefas.Domain.Contexto;
 
 using System.Threading.Tasks;
 using System.Web.Http;
@@ -19,6 +20,12 @@ namespace GerenciadorDeTarefas.WebApi.Controllers
         public async Task<IHttpActionResult> Buscar(int id)
         {
             return Ok();
+        }
+
+        [HttpPut, Route]
+        public async Task<IHttpActionResult> AtualizarTarefa(TarefaModel model)
+        {
+
         }
     }
 }

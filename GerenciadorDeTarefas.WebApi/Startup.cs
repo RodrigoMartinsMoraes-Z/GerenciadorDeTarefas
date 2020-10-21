@@ -19,6 +19,7 @@ namespace GerenciadorDeTarefas.WebApi
         private readonly WebApiInjectionConfig _webApiInjectionConfig = new WebApiInjectionConfig();
         private readonly DomainInjectionConfig _domainInjectionConfig = new DomainInjectionConfig();
         private readonly ContextInjectionConfig _contextInjectionConfig = new ContextInjectionConfig();
+        public IConfiguration Configuration { get; }
 
         public Startup(IConfiguration configuration)
         {
@@ -27,7 +28,6 @@ namespace GerenciadorDeTarefas.WebApi
             Configuration = configuration;
         }
 
-        public IConfiguration Configuration { get; }
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
@@ -62,7 +62,6 @@ namespace GerenciadorDeTarefas.WebApi
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();

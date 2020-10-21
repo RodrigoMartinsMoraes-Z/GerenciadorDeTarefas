@@ -1,4 +1,5 @@
 ﻿using GerenciadorDeTarefas.Common.Models.Equipes;
+using GerenciadorDeTarefas.Common.Models.Pessoas;
 
 using System.Collections.Generic;
 
@@ -10,8 +11,12 @@ namespace GerenciadorDeTarefas.Common.Models.Usuarios
         {
             Equipes = new List<EquipeModel>();
         }
+        public int IdPessoa { get; set; }
+        public string Login { get; set; }
+        private string Senha { get; set; }
 
-        public ICollection<EquipeModel> Equipes { get; set; }
+        public virtual PessoaModel Pessoa { get; set; }
+        public virtual ICollection<EquipeModel> Equipes { get; set; }
 
     }
 }

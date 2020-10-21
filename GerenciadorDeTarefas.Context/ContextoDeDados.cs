@@ -2,7 +2,7 @@
 using GerenciadorDeTarefas.Context.Types.ManyToMany;
 using GerenciadorDeTarefas.Domain.Contexto;
 using GerenciadorDeTarefas.Domain.Equipes;
-using GerenciadorDeTarefas.Domain.Funcionalidades;
+using GerenciadorDeTarefas.Domain.Objetivos;
 using GerenciadorDeTarefas.Domain.Pessoas;
 using GerenciadorDeTarefas.Domain.Projetos;
 using GerenciadorDeTarefas.Domain.Tarefas;

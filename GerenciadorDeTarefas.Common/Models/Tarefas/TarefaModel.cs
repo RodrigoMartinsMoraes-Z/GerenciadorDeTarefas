@@ -1,4 +1,7 @@
-﻿using System;
+﻿using GerenciadorDeTarefas.Common.Models.Objetivos;
+using GerenciadorDeTarefas.Common.Models.Projetos;
+
+using System;
 using System.Collections.Generic;
 
 namespace GerenciadorDeTarefas.Common.Models.Tarefas
@@ -11,6 +14,9 @@ namespace GerenciadorDeTarefas.Common.Models.Tarefas
         }
 
         public int Id { get; set; }
+        public int IdProjeto { get; set; }
+        public int IdTarefaPrincipal { get; set; }
+        public int IdObjetivo { get; set; }
         public string Nome { get; set; }
         public string Detalhes { get; set; }
         public DateTime Adicionado { get; set; }
@@ -18,6 +24,10 @@ namespace GerenciadorDeTarefas.Common.Models.Tarefas
         public DateTime? Previsao { get; set; }
         public Situacao Situacao { get; set; }
         public Prioridade Prioridade { get; set; }
+
+        public virtual ProjetoModel Projeto { get; set; }
+        public virtual TarefaModel TarefaPrincipal { get; set; }
+        public virtual ObjetivoModel Objetivo { get; set; }
 
         public ICollection<TarefaModel> SubTarefas { get; set; }
     }
