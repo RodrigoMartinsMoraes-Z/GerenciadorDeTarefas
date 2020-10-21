@@ -19,13 +19,15 @@ namespace GerenciadorDeTarefas.WebApi.Controllers
         [HttpGet, Route("{id}")]
         public async Task<IHttpActionResult> Buscar(int id)
         {
+            
+
             return Ok();
         }
 
         [HttpPut, Route]
         public async Task<IHttpActionResult> AtualizarTarefa(TarefaModel model)
         {
-
+            return Ok();
         }
     }
 }
