@@ -12,7 +12,7 @@ namespace GerenciadorDeTarefas.Domain.Contexto
     public interface IContextoDeDados
     {
         DbSet<Equipe> Equipes { get; }
-        DbSet<Objetivo> Funcionalidades { get; }
+        DbSet<Objetivo> Objetivos { get; }
         DbSet<Pessoa> Pessoas { get; }
         DbSet<Projeto> Projetos { get; }
         DbSet<Tarefa> Tarefas { get; }

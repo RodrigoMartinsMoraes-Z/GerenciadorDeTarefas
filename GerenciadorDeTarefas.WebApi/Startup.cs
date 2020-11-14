@@ -1,3 +1,5 @@
+using AutoMapper;
+
 using GerenciadorDeTarefas.Context;
 using GerenciadorDeTarefas.Domain;
 
@@ -50,6 +52,17 @@ namespace GerenciadorDeTarefas.WebApi
             });
 
             InitializeContainer();
+
+            // Auto Mapper Configurations
+            var mapperConfig = new MapperConfiguration(mc =>
+            {
+                mc.AddProfile(new WebApiAutoMapperConfig());
+            });
+
+            IMapper mapper = mapperConfig.CreateMapper();
+            services.AddSingleton(mapper);
+
+            services.AddMvc();
         }
 
         private void InitializeContainer()

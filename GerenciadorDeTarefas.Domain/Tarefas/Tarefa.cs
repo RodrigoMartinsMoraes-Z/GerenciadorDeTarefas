@@ -3,6 +3,8 @@ using GerenciadorDeTarefas.Domain.Projetos;
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Threading.Tasks;
 
 namespace GerenciadorDeTarefas.Domain.Tarefas
 {
@@ -15,7 +17,7 @@ namespace GerenciadorDeTarefas.Domain.Tarefas
 
         public int Id { get; set; }
         public int IdProjeto { get; set; }
-        public int IdTarefaPrincipal { get; set; }
+        public int? IdTarefaPrincipal { get; set; }
         public int IdObjetivo { get; set; }
         public string Nome { get; set; }
         public string Detalhes { get; set; }

@@ -19,7 +19,7 @@ namespace GerenciadorDeTarefas.Context
         }
 
         public DbSet<Equipe> Equipes { get; set; }
-        public DbSet<Objetivo> Funcionalidades { get; set; }
+        public DbSet<Objetivo> Objetivos { get; set; }
         public DbSet<Pessoa> Pessoas { get; set; }
         public DbSet<Projeto> Projetos { get; set; }
         public DbSet<Tarefa> Tarefas { get; set; }
