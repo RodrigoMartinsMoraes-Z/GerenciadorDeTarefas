@@ -1,4 +1,6 @@
-﻿using GerenciadorDeTarefas.Domain.Equipes;
+﻿
+
+using GerenciadorDeTarefas.Domain.Equipes;
 using GerenciadorDeTarefas.Domain.Objetivos;
 using GerenciadorDeTarefas.Domain.Pessoas;
 using GerenciadorDeTarefas.Domain.Projetos;
@@ -7,9 +9,11 @@ using GerenciadorDeTarefas.Domain.Usuarios;
 
 using Microsoft.EntityFrameworkCore;
 
+using Starlight.Core.DbHelper;
+
 namespace GerenciadorDeTarefas.Domain.Contexto
 {
-    public interface IContextoDeDados
+    public interface IContextoDeDados : IDbContext
     {
         DbSet<Equipe> Equipes { get; }
         DbSet<Objetivo> Objetivos { get; }

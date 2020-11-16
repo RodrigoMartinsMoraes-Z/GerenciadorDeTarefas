@@ -3,7 +3,6 @@ using GerenciadorDeTarefas.Common.Models.Projetos;
 
 using System;
 using System.Collections.Generic;
-using System.Threading.Tasks;
 
 namespace GerenciadorDeTarefas.Common.Models.Tarefas
 {

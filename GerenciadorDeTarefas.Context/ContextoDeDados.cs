@@ -9,6 +9,13 @@ using GerenciadorDeTarefas.Domain.Tarefas;
 using GerenciadorDeTarefas.Domain.Usuarios;
 
 using Microsoft.EntityFrameworkCore;
+using Microsoft.EntityFrameworkCore.ChangeTracking;
+
+using Starlight.Core.DbHelper;
+
+using System;
+using System.Threading;
+using System.Threading.Tasks;
 
 namespace GerenciadorDeTarefas.Context
 {
@@ -39,6 +46,36 @@ namespace GerenciadorDeTarefas.Context
             builder.ApplyConfiguration(new ProjetoTypeConfiguration());
             builder.ApplyConfiguration(new ObjetivoTypeConfiguration());
             builder.ApplyConfiguration(new TarefaTypeConfiguration());
+        }
+
+        Task<EntityEntry> IDbContext.AddAsync(object entity, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<EntityEntry<TEntity>> IDbContext.AddAsync<TEntity>(TEntity entity, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<TEntity> IDbContext.FindAsync<TEntity>(params object[] keyValues)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<object> IDbContext.FindAsync(Type entityType, object[] keyValues, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<TEntity> IDbContext.FindAsync<TEntity>(object[] keyValues, CancellationToken cancellationToken)
+        {
+            throw new NotImplementedException();
+        }
+
+        Task<object> IDbContext.FindAsync(Type entityType, params object[] keyValues)
+        {
+            throw new NotImplementedException();
         }
     }
 }

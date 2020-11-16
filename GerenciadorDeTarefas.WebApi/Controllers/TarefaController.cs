@@ -3,11 +3,9 @@
 using GerenciadorDeTarefas.Common.Models.Tarefas;
 using GerenciadorDeTarefas.Domain.Contexto;
 using GerenciadorDeTarefas.Domain.Objetivos;
+using GerenciadorDeTarefas.Domain.Projetos;
 using GerenciadorDeTarefas.Domain.Tarefas;
 
-using Microsoft.EntityFrameworkCore.Query.SqlExpressions;
-
-using System;
 using System.Threading.Tasks;
 using System.Web.Http;
 
@@ -38,26 +36,41 @@ namespace GerenciadorDeTarefas.WebApi.Controllers
         [HttpPut, Route]
         public async Task<IHttpActionResult> AtualizarTarefa(TarefaModel model)
         {
-            if (model.Objetivo == null || model.Projeto == null)
+            if (model.IdObjetivo < 0 || model.IdProjeto < 0)
                 return BadRequest("Objetivo ou Projeto não expecificado.");
 
-            Tarefa existente = null;
+            Tarefa tarefa = _mapper.Map<Tarefa>(model);
+            Tarefa existente = _contexto.Tarefas.Find(model.Id);
 
-            if (model.Objetivo != null)
+            if (existente != null)
+                _contexto.Tarefas.Update(tarefa);
+            else
+                _contexto.Tarefas.Add(tarefa);
+
+            await _contexto.SaveChangesAsync();
+
+            return Ok();
+        }
+
+        [HttpDelete, Route("{id}")]
+        public async Task<IHttpActionResult> DeletarTarefa ([FromUri]int id)
+        {
+            Tarefa tarefa = _contexto.Tarefas.Find(id);
+
+            if (tarefa == null)
+                return NotFound();
+
+            if(tarefa.SubTarefas.Count > 0)
             {
-                Objetivo objetivo = _contexto.Objetivos.Find(model.Objetivo.Id);
-
-                if(model.Id > 0)
+                foreach(Tarefa subTarefa in tarefa.SubTarefas)
                 {
-                    existente = _contexto.Tarefas.Find(model.Id);
+                    _contexto.Tarefas.Remove(subTarefa);
                 }
-
-                if(existente != null)
-                {
-
-                }
-                
             }
+
+            _contexto.Tarefas.Remove(tarefa);
+
+            await _contexto.SaveChangesAsync();
 
             return Ok();
         }
