@@ -11,20 +11,11 @@ namespace GerenciadorDeTarefas.Domain.Usuarios
 {
     public class Usuario
     {
+        private string _senha;
+
         public int IdPessoa { get; set; }
         public string Login { get; set; }
-
-        private string Senha;
-
-        public string GetSenha()
-        {
-            return Senha;
-        }
-
-        public void SetSenha(string value)
-        {
-            Senha = EncriptarSenha(value);
-        }
+        public string Senha { get => _senha; set => _senha = EncriptarSenha(value); }
 
         public virtual Pessoa Pessoa { get; set; }
 

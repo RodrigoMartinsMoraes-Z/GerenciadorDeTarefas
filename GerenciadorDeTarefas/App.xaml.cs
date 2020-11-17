@@ -1,4 +1,4 @@
-﻿using GerenciadorDeTarefas.Models.Usuarios;
+﻿using GerenciadorDeTarefas.Common.Models.Usuarios;
 using GerenciadorDeTarefas.Paginas;
 
 using Newtonsoft.Json;
@@ -27,7 +27,7 @@ namespace GerenciadorDeTarefas
         }
 
         public static Container IoCConainer { get; set; }
-        public static Usuario Usuario { get; set; }
+        public static UsuarioModel Usuario { get; set; }
         public static string FontAwesomeBrands { get; set; }
         public static string FontAwesomeSolid { get; set; }
         public static string FontAwesomeRegular { get; set; }
@@ -69,11 +69,11 @@ namespace GerenciadorDeTarefas
         {
             if (App.Current.Properties.ContainsKey("Usuario"))
             {
-                Usuario = JsonConvert.DeserializeObject<Usuario>(Current.Properties["Usuario"].ToString());
+                Usuario = JsonConvert.DeserializeObject<UsuarioModel>(Current.Properties["Usuario"].ToString());
             }
             else
             {
-                Usuario = new Usuario();
+                Usuario = new UsuarioModel();
             }
 
             return Task.CompletedTask;

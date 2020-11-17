@@ -1,7 +1,7 @@
 ﻿using FontAwesome;
 
-using GerenciadorDeTarefas.Models.Projetos;
-using GerenciadorDeTarefas.Models.Tarefas;
+using GerenciadorDeTarefas.Common.Models.Projetos;
+using GerenciadorDeTarefas.Common.Models.Tarefas;
 
 using System;
 using System.Collections.Generic;

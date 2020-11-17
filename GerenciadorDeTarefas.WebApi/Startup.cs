@@ -11,6 +11,9 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 
 using SimpleInjector;
+using SimpleInjector.Integration.WebApi;
+
+using System.Web.Http;
 
 namespace GerenciadorDeTarefas.WebApi
 {
@@ -46,8 +49,7 @@ namespace GerenciadorDeTarefas.WebApi
             {
                 // AddAspNetCore() wraps web requests in a Simple Injector scope and
                 // allows request-scoped framework services to be resolved.
-                options.AddAspNetCore()
-                    .AddControllerActivation();
+                options.AddAspNetCore();
 
             });
 
@@ -62,7 +64,7 @@ namespace GerenciadorDeTarefas.WebApi
             IMapper mapper = mapperConfig.CreateMapper();
             services.AddSingleton(mapper);
 
-            services.AddMvc();
+            //services.AddMvc();
         }
 
         private void InitializeContainer()
@@ -75,12 +77,14 @@ namespace GerenciadorDeTarefas.WebApi
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
+            app.UseSimpleInjector(_container);
+
             if (env.IsDevelopment())
             {
                 app.UseDeveloperExceptionPage();
             }
 
-            app.UseHttpsRedirection();
+            //app.UseHttpsRedirection();
 
             app.UseRouting();
 

@@ -1,4 +1,5 @@
-﻿using GerenciadorDeTarefas.Models.Equipes;
+﻿
+using GerenciadorDeTarefas.Common.Models.Equipes;
 
 using System;
 
@@ -25,7 +26,7 @@ namespace GerenciadorDeTarefas.Paginas.Equipes
             EquipeModel novaEquipe = new EquipeModel { Nome = NomeEquipe.Text };
 
             App.Usuario.Equipes.Add(novaEquipe);
-            await App.Usuario.Salvar();
+            //await App.Usuario.Salvar();
 
             await _controleMenu.AtualizarListaEquipes();
         }

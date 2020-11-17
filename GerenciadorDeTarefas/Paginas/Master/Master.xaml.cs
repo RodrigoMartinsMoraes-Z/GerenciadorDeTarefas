@@ -1,5 +1,5 @@
-﻿using GerenciadorDeTarefas.Models.Equipes;
-using GerenciadorDeTarefas.Models.Projetos;
+﻿using GerenciadorDeTarefas.Common.Models.Equipes;
+using GerenciadorDeTarefas.Common.Models.Projetos;
 using GerenciadorDeTarefas.Paginas.Equipes;
 using GerenciadorDeTarefas.Paginas.Novidades;
 using GerenciadorDeTarefas.Paginas.Projetos;
@@ -108,7 +108,7 @@ namespace GerenciadorDeTarefas.Paginas.Master
                     EquipeModel Equipes = App.Usuario.Equipes.FirstOrDefault(e => e.Nome == equipe.Nome);
                     equipes.Remove(equipe);
 
-                    await App.Usuario.Salvar();
+                    //await App.Usuario.Salvar();
                     AtualizarListaEquipes();
                 };
                 layoutEquipe.Children.Add(btnExcluirEquipe);

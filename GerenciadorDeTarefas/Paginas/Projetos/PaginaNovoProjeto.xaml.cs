@@ -1,5 +1,6 @@
-﻿using GerenciadorDeTarefas.Models.Equipes;
-using GerenciadorDeTarefas.Models.Projetos;
+﻿
+using GerenciadorDeTarefas.Common.Models.Equipes;
+using GerenciadorDeTarefas.Common.Models.Projetos;
 
 using System;
 using System.Linq;
@@ -33,7 +34,7 @@ namespace GerenciadorDeTarefas.Paginas.Projetos
                 equipe.Projetos.Add(projeto);
                 App.Usuario.Equipes.Remove(equipe);
                 App.Usuario.Equipes.Add(equipe);
-                App.Usuario.Salvar();
+                //App.Usuario.Salvar();
                 _controleMenu.AtualizarListaEquipes();
             }
             else

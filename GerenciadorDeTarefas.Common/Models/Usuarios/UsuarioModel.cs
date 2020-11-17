@@ -13,7 +13,7 @@ namespace GerenciadorDeTarefas.Common.Models.Usuarios
         }
         public int IdPessoa { get; set; }
         public string Login { get; set; }
-        private string Senha { get; set; }
+        public string Senha { get; set; }
 
         public virtual PessoaModel Pessoa { get; set; }
         public virtual ICollection<EquipeModel> Equipes { get; set; }

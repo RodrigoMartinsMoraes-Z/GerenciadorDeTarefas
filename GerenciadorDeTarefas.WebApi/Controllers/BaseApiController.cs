@@ -1,8 +1,11 @@
-﻿using System.Web.Http;
+﻿using Microsoft.AspNetCore.Mvc;
+
+using System.Web.Http;
 
 namespace GerenciadorDeTarefas.WebApi.Controllers
 {
-    public class BaseApiController : ApiController
+    [ApiController]
+    public class BaseApiController : ControllerBase
     {
     }
 }

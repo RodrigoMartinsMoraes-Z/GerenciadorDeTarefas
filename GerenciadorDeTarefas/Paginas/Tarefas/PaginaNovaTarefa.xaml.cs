@@ -1,6 +1,6 @@
-﻿using GerenciadorDeTarefas.Models.Equipes;
-using GerenciadorDeTarefas.Models.Projetos;
-using GerenciadorDeTarefas.Models.Tarefas;
+﻿using GerenciadorDeTarefas.Common.Models.Equipes;
+using GerenciadorDeTarefas.Common.Models.Projetos;
+using GerenciadorDeTarefas.Common.Models.Tarefas;
 using GerenciadorDeTarefas.Util;
 
 using System;
@@ -39,7 +39,7 @@ namespace GerenciadorDeTarefas.Paginas.Tarefas
                 return;
             }
 
-            Prioridade prioridade = Models.Tarefas.Prioridade.Sugestão;
+            Prioridade prioridade = Common.Models.Tarefas.Prioridade.Sugestão;
 
             if (Prioridade.SelectedItem != null)
                 Enum.TryParse(Prioridade.SelectedItem.ToString(), out prioridade);
@@ -67,7 +67,7 @@ namespace GerenciadorDeTarefas.Paginas.Tarefas
 
                 App.Usuario.Equipes.Remove(equipe);
                 App.Usuario.Equipes.Add(equipe);
-                await App.Usuario.Salvar();
+                //await App.Usuario.Salvar();
                 await _controleMenu.AtualizarListaEquipes();
             }
             catch (Exception e)
