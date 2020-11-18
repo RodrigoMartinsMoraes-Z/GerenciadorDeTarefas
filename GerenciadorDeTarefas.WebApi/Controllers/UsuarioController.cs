@@ -4,6 +4,7 @@ using GerenciadorDeTarefas.Common.Models.Usuarios;
 using GerenciadorDeTarefas.Domain.Contexto;
 using GerenciadorDeTarefas.Domain.Usuarios;
 
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
@@ -91,6 +92,7 @@ namespace GerenciadorDeTarefas.WebApi.Controllers
         }
 
         [HttpPost]
+        [AllowAnonymous]
         public async Task<ActionResult> NovoUsuario([FromBody] UsuarioModel usuarioModel)
         {
             if (usuarioModel.Login == null)
