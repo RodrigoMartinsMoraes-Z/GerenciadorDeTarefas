@@ -94,6 +94,8 @@ namespace GerenciadorDeTarefas.WebApi.Controllers
                 _contexto.Usuarios.Add(usuario);
             }
 
+            await Task.CompletedTask;
+
             _contexto.SaveChanges();
 
             return Ok();
@@ -119,8 +121,6 @@ namespace GerenciadorDeTarefas.WebApi.Controllers
 
             Usuario usuario = _mapper.Map<Usuario>(usuarioModel);
 
-            //_contexto.Add(usuario.Pessoa);
-            //usuario.IdPessoa = usuario.Pessoa.Id;
             _contexto.Add(usuario);
             _contexto.SaveChanges();
 
