@@ -1,8 +1,6 @@
-﻿using Microsoft.EntityFrameworkCore.Migrations;
-
+﻿using System;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
-
-using System;
 
 namespace GerenciadorDeTarefas.Context.Migrations
 {
@@ -14,9 +12,9 @@ namespace GerenciadorDeTarefas.Context.Migrations
                 name: "Equipes",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Nome = table.Column<string>(nullable: true)
+                    Nome = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -27,11 +25,11 @@ namespace GerenciadorDeTarefas.Context.Migrations
                 name: "Pessoas",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    Nome = table.Column<string>(nullable: true),
-                    Nascimento = table.Column<DateTime>(nullable: false),
-                    Email = table.Column<string>(nullable: true)
+                    Nome = table.Column<string>(type: "text", nullable: true),
+                    Nascimento = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    Email = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -42,10 +40,10 @@ namespace GerenciadorDeTarefas.Context.Migrations
                 name: "Projetos",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    IdProjeto = table.Column<int>(nullable: false),
-                    Nome = table.Column<string>(nullable: true)
+                    IdProjeto = table.Column<int>(type: "integer", nullable: false),
+                    Nome = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -62,8 +60,9 @@ namespace GerenciadorDeTarefas.Context.Migrations
                 name: "Usuarios",
                 columns: table => new
                 {
-                    IdPessoa = table.Column<int>(nullable: false),
-                    Login = table.Column<string>(nullable: true)
+                    IdPessoa = table.Column<int>(type: "integer", nullable: false),
+                    Login = table.Column<string>(type: "text", nullable: true),
+                    Senha = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -77,25 +76,25 @@ namespace GerenciadorDeTarefas.Context.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Funcionalidades",
+                name: "Objetivos",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    IdProjeto = table.Column<int>(nullable: false),
-                    Nome = table.Column<string>(nullable: true),
-                    Detalhes = table.Column<string>(nullable: true),
-                    Adicionado = table.Column<DateTime>(nullable: false),
-                    Finalizacao = table.Column<DateTime>(nullable: true),
-                    Previsao = table.Column<DateTime>(nullable: true),
-                    Situacao = table.Column<int>(nullable: false),
-                    Prioridade = table.Column<int>(nullable: false)
+                    IdProjeto = table.Column<int>(type: "integer", nullable: false),
+                    Nome = table.Column<string>(type: "text", nullable: true),
+                    Detalhes = table.Column<string>(type: "text", nullable: true),
+                    Adicionado = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    Finalizacao = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
+                    Previsao = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
+                    Situacao = table.Column<int>(type: "integer", nullable: false),
+                    Prioridade = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
-                    table.PrimaryKey("PK_Funcionalidades", x => x.Id);
+                    table.PrimaryKey("PK_Objetivos", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Funcionalidades_Projetos_IdProjeto",
+                        name: "FK_Objetivos_Projetos_IdProjeto",
                         column: x => x.IdProjeto,
                         principalTable: "Projetos",
                         principalColumn: "Id",
@@ -106,8 +105,8 @@ namespace GerenciadorDeTarefas.Context.Migrations
                 name: "EquipeUsuario",
                 columns: table => new
                 {
-                    IdEquipe = table.Column<int>(nullable: false),
-                    IdUsuario = table.Column<int>(nullable: false)
+                    IdEquipe = table.Column<int>(type: "integer", nullable: false),
+                    IdUsuario = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -130,26 +129,26 @@ namespace GerenciadorDeTarefas.Context.Migrations
                 name: "Tarefas",
                 columns: table => new
                 {
-                    Id = table.Column<int>(nullable: false)
+                    Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    IdProjeto = table.Column<int>(nullable: false),
-                    IdTarefaPrincipal = table.Column<int>(nullable: false),
-                    IdObjetivo = table.Column<int>(nullable: false),
-                    Nome = table.Column<string>(nullable: true),
-                    Detalhes = table.Column<string>(nullable: true),
-                    Adicionado = table.Column<DateTime>(nullable: false),
-                    Finalizacao = table.Column<DateTime>(nullable: true),
-                    Previsao = table.Column<DateTime>(nullable: true),
-                    Situacao = table.Column<int>(nullable: false),
-                    Prioridade = table.Column<int>(nullable: false)
+                    IdProjeto = table.Column<int>(type: "integer", nullable: false),
+                    IdTarefaPrincipal = table.Column<int>(type: "integer", nullable: true),
+                    IdObjetivo = table.Column<int>(type: "integer", nullable: false),
+                    Nome = table.Column<string>(type: "text", nullable: true),
+                    Detalhes = table.Column<string>(type: "text", nullable: true),
+                    Adicionado = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
+                    Finalizacao = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
+                    Previsao = table.Column<DateTime>(type: "timestamp without time zone", nullable: true),
+                    Situacao = table.Column<int>(type: "integer", nullable: false),
+                    Prioridade = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Tarefas", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Tarefas_Funcionalidades_IdObjetivo",
+                        name: "FK_Tarefas_Objetivos_IdObjetivo",
                         column: x => x.IdObjetivo,
-                        principalTable: "Funcionalidades",
+                        principalTable: "Objetivos",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
@@ -163,7 +162,7 @@ namespace GerenciadorDeTarefas.Context.Migrations
                         column: x => x.IdTarefaPrincipal,
                         principalTable: "Tarefas",
                         principalColumn: "Id",
-                        onDelete: ReferentialAction.Cascade);
+                        onDelete: ReferentialAction.Restrict);
                 });
 
             migrationBuilder.CreateIndex(
@@ -172,8 +171,8 @@ namespace GerenciadorDeTarefas.Context.Migrations
                 column: "IdUsuario");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Funcionalidades_IdProjeto",
-                table: "Funcionalidades",
+                name: "IX_Objetivos_IdProjeto",
+                table: "Objetivos",
                 column: "IdProjeto");
 
             migrationBuilder.CreateIndex(
@@ -221,7 +220,7 @@ namespace GerenciadorDeTarefas.Context.Migrations
                 name: "Usuarios");
 
             migrationBuilder.DropTable(
-                name: "Funcionalidades");
+                name: "Objetivos");
 
             migrationBuilder.DropTable(
                 name: "Pessoas");

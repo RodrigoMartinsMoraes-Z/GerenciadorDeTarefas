@@ -10,23 +10,23 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace GerenciadorDeTarefas.Context.Migrations
 {
     [DbContext(typeof(ContextoDeDados))]
-    [Migration("20201020141339_BancoInicial")]
+    [Migration("20201119022236_BancoInicial")]
     partial class BancoInicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder
-                .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn)
-                .HasAnnotation("ProductVersion", "3.1.8")
-                .HasAnnotation("Relational:MaxIdentifierLength", 63);
+                .UseIdentityByDefaultColumns()
+                .HasAnnotation("Relational:MaxIdentifierLength", 63)
+                .HasAnnotation("ProductVersion", "5.0.0");
 
             modelBuilder.Entity("GerenciadorDeTarefas.Domain.Equipes.Equipe", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+                        .UseIdentityByDefaultColumn();
 
                     b.Property<string>("Nome")
                         .HasColumnType("text");
@@ -36,12 +36,27 @@ namespace GerenciadorDeTarefas.Context.Migrations
                     b.ToTable("Equipes");
                 });
 
-            modelBuilder.Entity("GerenciadorDeTarefas.Domain.Funcionalidades.Objetivo", b =>
+            modelBuilder.Entity("GerenciadorDeTarefas.Domain.ManyToMany.EquipeUsuario", b =>
+                {
+                    b.Property<int>("IdEquipe")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("IdUsuario")
+                        .HasColumnType("integer");
+
+                    b.HasKey("IdEquipe", "IdUsuario");
+
+                    b.HasIndex("IdUsuario");
+
+                    b.ToTable("EquipeUsuario");
+                });
+
+            modelBuilder.Entity("GerenciadorDeTarefas.Domain.Objetivos.Objetivo", b =>
                 {
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+                        .UseIdentityByDefaultColumn();
 
                     b.Property<DateTime>("Adicionado")
                         .HasColumnType("timestamp without time zone");
@@ -71,22 +86,7 @@ namespace GerenciadorDeTarefas.Context.Migrations
 
                     b.HasIndex("IdProjeto");
 
-                    b.ToTable("Funcionalidades");
-                });
-
-            modelBuilder.Entity("GerenciadorDeTarefas.Domain.ManyToMany.EquipeUsuario", b =>
-                {
-                    b.Property<int>("IdEquipe")
-                        .HasColumnType("integer");
-
-                    b.Property<int>("IdUsuario")
-                        .HasColumnType("integer");
-
-                    b.HasKey("IdEquipe", "IdUsuario");
-
-                    b.HasIndex("IdUsuario");
-
-                    b.ToTable("EquipeUsuario");
+                    b.ToTable("Objetivos");
                 });
 
             modelBuilder.Entity("GerenciadorDeTarefas.Domain.Pessoas.Pessoa", b =>
@@ -94,7 +94,7 @@ namespace GerenciadorDeTarefas.Context.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+                        .UseIdentityByDefaultColumn();
 
                     b.Property<string>("Email")
                         .HasColumnType("text");
@@ -118,7 +118,7 @@ namespace GerenciadorDeTarefas.Context.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+                        .UseIdentityByDefaultColumn();
 
                     b.Property<int>("IdProjeto")
                         .HasColumnType("integer");
@@ -138,7 +138,7 @@ namespace GerenciadorDeTarefas.Context.Migrations
                     b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("integer")
-                        .HasAnnotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn);
+                        .UseIdentityByDefaultColumn();
 
                     b.Property<DateTime>("Adicionado")
                         .HasColumnType("timestamp without time zone");
@@ -155,7 +155,7 @@ namespace GerenciadorDeTarefas.Context.Migrations
                     b.Property<int>("IdProjeto")
                         .HasColumnType("integer");
 
-                    b.Property<int>("IdTarefaPrincipal")
+                    b.Property<int?>("IdTarefaPrincipal")
                         .HasColumnType("integer");
 
                     b.Property<string>("Nome")
@@ -189,21 +189,15 @@ namespace GerenciadorDeTarefas.Context.Migrations
                     b.Property<string>("Login")
                         .HasColumnType("text");
 
+                    b.Property<string>("Senha")
+                        .HasColumnType("text");
+
                     b.HasKey("IdPessoa");
 
                     b.HasIndex("Login")
                         .IsUnique();
 
                     b.ToTable("Usuarios");
-                });
-
-            modelBuilder.Entity("GerenciadorDeTarefas.Domain.Funcionalidades.Objetivo", b =>
-                {
-                    b.HasOne("GerenciadorDeTarefas.Domain.Projetos.Projeto", "Projeto")
-                        .WithMany("Funcionalidades")
-                        .HasForeignKey("IdProjeto")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
                 });
 
             modelBuilder.Entity("GerenciadorDeTarefas.Domain.ManyToMany.EquipeUsuario", b =>
@@ -219,6 +213,21 @@ namespace GerenciadorDeTarefas.Context.Migrations
                         .HasForeignKey("IdUsuario")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Equipe");
+
+                    b.Navigation("Usuario");
+                });
+
+            modelBuilder.Entity("GerenciadorDeTarefas.Domain.Objetivos.Objetivo", b =>
+                {
+                    b.HasOne("GerenciadorDeTarefas.Domain.Projetos.Projeto", "Projeto")
+                        .WithMany("Funcionalidades")
+                        .HasForeignKey("IdProjeto")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Projeto");
                 });
 
             modelBuilder.Entity("GerenciadorDeTarefas.Domain.Projetos.Projeto", b =>
@@ -228,11 +237,13 @@ namespace GerenciadorDeTarefas.Context.Migrations
                         .HasForeignKey("IdProjeto")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Equipe");
                 });
 
             modelBuilder.Entity("GerenciadorDeTarefas.Domain.Tarefas.Tarefa", b =>
                 {
-                    b.HasOne("GerenciadorDeTarefas.Domain.Funcionalidades.Objetivo", "Objetivo")
+                    b.HasOne("GerenciadorDeTarefas.Domain.Objetivos.Objetivo", "Objetivo")
                         .WithMany("Tarefas")
                         .HasForeignKey("IdObjetivo")
                         .OnDelete(DeleteBehavior.Cascade)
@@ -246,18 +257,53 @@ namespace GerenciadorDeTarefas.Context.Migrations
 
                     b.HasOne("GerenciadorDeTarefas.Domain.Tarefas.Tarefa", "TarefaPrincipal")
                         .WithMany("SubTarefas")
-                        .HasForeignKey("IdTarefaPrincipal")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .HasForeignKey("IdTarefaPrincipal");
+
+                    b.Navigation("Objetivo");
+
+                    b.Navigation("Projeto");
+
+                    b.Navigation("TarefaPrincipal");
                 });
 
             modelBuilder.Entity("GerenciadorDeTarefas.Domain.Usuarios.Usuario", b =>
                 {
                     b.HasOne("GerenciadorDeTarefas.Domain.Pessoas.Pessoa", "Pessoa")
-                        .WithOne("Usuario")
-                        .HasForeignKey("GerenciadorDeTarefas.Domain.Usuarios.Usuario", "IdPessoa")
+                        .WithMany()
+                        .HasForeignKey("IdPessoa")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
+
+                    b.Navigation("Pessoa");
+                });
+
+            modelBuilder.Entity("GerenciadorDeTarefas.Domain.Equipes.Equipe", b =>
+                {
+                    b.Navigation("Projetos");
+
+                    b.Navigation("Usuarios");
+                });
+
+            modelBuilder.Entity("GerenciadorDeTarefas.Domain.Objetivos.Objetivo", b =>
+                {
+                    b.Navigation("Tarefas");
+                });
+
+            modelBuilder.Entity("GerenciadorDeTarefas.Domain.Projetos.Projeto", b =>
+                {
+                    b.Navigation("Funcionalidades");
+
+                    b.Navigation("Tarefas");
+                });
+
+            modelBuilder.Entity("GerenciadorDeTarefas.Domain.Tarefas.Tarefa", b =>
+                {
+                    b.Navigation("SubTarefas");
+                });
+
+            modelBuilder.Entity("GerenciadorDeTarefas.Domain.Usuarios.Usuario", b =>
+                {
+                    b.Navigation("Equipes");
                 });
 #pragma warning restore 612, 618
         }

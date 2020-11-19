@@ -30,7 +30,7 @@ namespace GerenciadorDeTarefas.WebApi.Controllers
         [HttpGet, Route("{id}")]
         public async Task<ActionResult> BuscarUsuarioPorId(int id)
         {
-            var usuario = _contexto.Usuarios.Find(id);
+            Usuario usuario = _contexto.Usuarios.Find(id);
 
             await Task.CompletedTask;
 
@@ -38,7 +38,7 @@ namespace GerenciadorDeTarefas.WebApi.Controllers
         }
 
         [HttpGet]
-        public async Task<ActionResult> BuscarUsuarioPorEmail (string email)
+        public async Task<ActionResult> BuscarUsuarioPorEmail(string email)
         {
             var usuario = _contexto.Usuarios.FirstOrDefault(u => u.Pessoa.Email == email);
 
@@ -54,8 +54,8 @@ namespace GerenciadorDeTarefas.WebApi.Controllers
         public Task<bool> VerificaEmail(string email)
         {
             return Task.FromResult(_contexto.Pessoas.Any(p => p.Email == email));
-        }        
-        
+        }
+
         [HttpGet, Route("verifica/login")]
         public Task<bool> VerificaLogin(string login)
         {
@@ -63,7 +63,7 @@ namespace GerenciadorDeTarefas.WebApi.Controllers
         }
 
         [HttpPut]
-        public async Task<ActionResult> AtualizarUsuario ([FromBody] UsuarioModel usuarioModel)
+        public async Task<ActionResult> AtualizarUsuario([FromBody] UsuarioModel usuarioModel)
         {
             Usuario usuario = _mapper.Map<Usuario>(usuarioModel);
 
@@ -75,24 +75,31 @@ namespace GerenciadorDeTarefas.WebApi.Controllers
 
             Usuario existente = _contexto.Usuarios.FirstOrDefault(u => u.Login == usuario.Login);
 
-            if(existente != null)
+            if (existente != null)
             {
+                //existente.Pessoa = _contexto.Pessoas.Find(existente.IdPessoa);
+
                 usuario.Senha = existente.Senha;
+                if (usuario.Pessoa != null && usuario.Pessoa.Email != existente.Pessoa.Email)
+                    if (_contexto.Pessoas.Any(p => p.Email == usuario.Pessoa.Email))
+                        return BadRequest("Este email já está sendo utilizado.");
+
+                usuario.IdPessoa = existente.IdPessoa;
+                usuario.Pessoa.Id = existente.IdPessoa;
 
                 _contexto.Usuarios.Update(usuario);
             }
             else
             {
-                await _contexto.Usuarios.AddAsync(usuario);
+                _contexto.Usuarios.Add(usuario);
             }
 
-            await _contexto.SaveChangesAsync();
+            _contexto.SaveChanges();
 
             return Ok();
         }
 
         [HttpPost]
-        [AllowAnonymous]
         public async Task<ActionResult> NovoUsuario([FromBody] UsuarioModel usuarioModel)
         {
             if (usuarioModel.Login == null)
@@ -101,19 +108,21 @@ namespace GerenciadorDeTarefas.WebApi.Controllers
             if (usuarioModel.Senha == null)
                 return BadRequest("A senha não deve ser nula!");
 
-            if (usuarioModel.Pessoa.Email == null)
+            if (usuarioModel.Pessoa == null || usuarioModel.Pessoa.Email == null)
                 return BadRequest("Email não deve ser nulo!");
 
             if (_contexto.Usuarios.Any(u => u.Login == usuarioModel.Login))
                 return BadRequest("Este login já está sendo utilizado.");
 
-            if (_contexto.Pessoas.Any(p => p.Email == usuarioModel.Pessoa.Email))
+            if (usuarioModel.Pessoa == null || _contexto.Pessoas.Any(p => p.Email == usuarioModel.Pessoa.Email))
                 return BadRequest("Este email já está sendo utilizado.");
 
             Usuario usuario = _mapper.Map<Usuario>(usuarioModel);
 
-            await _contexto.AddAsync(usuario);
-            await _contexto.SaveChangesAsync();
+            //_contexto.Add(usuario.Pessoa);
+            //usuario.IdPessoa = usuario.Pessoa.Id;
+            _contexto.Add(usuario);
+            _contexto.SaveChanges();
 
             return Ok();
         }

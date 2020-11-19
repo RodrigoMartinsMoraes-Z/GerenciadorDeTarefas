@@ -2,6 +2,7 @@ using AutoMapper;
 
 using GerenciadorDeTarefas.Context;
 using GerenciadorDeTarefas.Domain;
+using GerenciadorDeTarefas.Domain.Contexto;
 
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
@@ -37,9 +38,11 @@ namespace GerenciadorDeTarefas.WebApi
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            services.AddDbContext<ContextoDeDados>(options =>
-                    options.UseNpgsql(
-                        Configuration.GetConnectionString("GerenciadorDeTarefas")),
+            services.AddDbContext<IContextoDeDados, ContextoDeDados>(options =>
+                     options
+                     .UseLazyLoadingProxies()
+                     .UseNpgsql(
+                         Configuration.GetConnectionString("GerenciadorDeTarefas")),
                         ServiceLifetime.Scoped
                         );
 

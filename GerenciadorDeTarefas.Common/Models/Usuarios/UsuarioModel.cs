@@ -9,6 +9,7 @@ namespace GerenciadorDeTarefas.Common.Models.Usuarios
     {
         public UsuarioModel()
         {
+            Pessoa = new PessoaModel();
             Equipes = new List<EquipeModel>();
         }
         public int IdPessoa { get; set; }

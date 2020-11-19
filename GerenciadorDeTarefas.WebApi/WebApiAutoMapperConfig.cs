@@ -40,7 +40,7 @@ namespace GerenciadorDeTarefas.WebApi
             CreateMap<TarefaModel, Tarefa>();
 
             //Usuarios
-            CreateMap<Usuario, UsuarioModel>().ForSourceMember(u=>u.Senha, opt => opt.DoNotValidate());
+            CreateMap<Usuario, UsuarioModel>().ForSourceMember(u => u.Senha, opt => opt.DoNotValidate());
             CreateMap<UsuarioModel, Usuario>();
         }
     }

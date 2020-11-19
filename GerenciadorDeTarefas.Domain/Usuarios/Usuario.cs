@@ -12,7 +12,10 @@ namespace GerenciadorDeTarefas.Domain.Usuarios
     public class Usuario
     {
         private string _senha;
-
+        public Usuario()
+        {
+            Equipes = new List<EquipeUsuario>();
+        }
         public int IdPessoa { get; set; }
         public string Login { get; set; }
         public string Senha { get => _senha; set => _senha = EncriptarSenha(value); }

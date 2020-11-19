@@ -12,6 +12,8 @@ namespace GerenciadorDeTarefas.Context.Types
             builder.HasKey(t => t.Id);
 
             builder.HasMany(t => t.SubTarefas).WithOne(t => t.TarefaPrincipal).HasForeignKey(t => t.IdTarefaPrincipal);
+
+            builder.HasOne(t => t.Objetivo).WithMany(t => t.Tarefas).HasForeignKey(t => t.IdObjetivo);
         }
     }
 }

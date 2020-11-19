@@ -12,6 +12,7 @@ namespace GerenciadorDeTarefas.Context.Types
             builder.HasKey(p => p.Id);
 
             builder.HasIndex(p => p.Email).IsUnique();
+
         }
     }
 }

@@ -11,6 +11,5 @@ namespace GerenciadorDeTarefas.Domain.Pessoas
         public DateTime Nascimento { get; set; }
         public string Email { get; set; }
 
-        public virtual Usuario Usuario { get; set; }
     }
 }

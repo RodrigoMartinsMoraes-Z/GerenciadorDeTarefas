@@ -1,4 +1,5 @@
-﻿using GerenciadorDeTarefas.Domain.Contexto;
+﻿using GerenciadorDeTarefas.Context.Migrations;
+using GerenciadorDeTarefas.Domain.Contexto;
 
 using SimpleInjector;
 
@@ -6,9 +7,9 @@ namespace GerenciadorDeTarefas.Context
 {
     public class ContextInjectionConfig
     {
-        public void Register(SimpleInjector.Container container)
+        public void Register(Container container)
         {
-            container.Register<IContextoDeDados, ContextoDeDados>(Lifestyle.Scoped);
+            //container.Register<IContextoDeDados, ContextoDeDados>(Lifestyle.Scoped);
         }
     }
 }
