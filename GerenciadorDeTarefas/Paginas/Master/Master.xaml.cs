@@ -103,7 +103,7 @@ namespace GerenciadorDeTarefas.Paginas.Master
                 {
                     Text = "Excluir Equipe"
                 };
-                btnExcluirEquipe.Clicked += async (sender, args) =>
+                btnExcluirEquipe.Clicked += (sender, args) =>
                 {
                     EquipeModel Equipes = App.Usuario.Equipes.FirstOrDefault(e => e.Nome == equipe.Nome);
                     equipes.Remove(equipe);

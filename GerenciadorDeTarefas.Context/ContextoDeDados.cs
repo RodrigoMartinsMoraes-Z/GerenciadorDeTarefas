@@ -2,6 +2,7 @@
 using GerenciadorDeTarefas.Context.Types.ManyToMany;
 using GerenciadorDeTarefas.Domain.Contexto;
 using GerenciadorDeTarefas.Domain.Equipes;
+using GerenciadorDeTarefas.Domain.ManyToMany;
 using GerenciadorDeTarefas.Domain.Objetivos;
 using GerenciadorDeTarefas.Domain.Pessoas;
 using GerenciadorDeTarefas.Domain.Projetos;
@@ -31,6 +32,7 @@ namespace GerenciadorDeTarefas.Context
         public DbSet<Projeto> Projetos { get; set; }
         public DbSet<Tarefa> Tarefas { get; set; }
         public DbSet<Usuario> Usuarios { get; set; }
+        public DbSet<EquipeUsuario> EquipeUsuario { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {
@@ -46,36 +48,6 @@ namespace GerenciadorDeTarefas.Context
             builder.ApplyConfiguration(new ProjetoTypeConfiguration());
             builder.ApplyConfiguration(new ObjetivoTypeConfiguration());
             builder.ApplyConfiguration(new TarefaTypeConfiguration());
-        }
-
-        Task<EntityEntry> IDbContext.AddAsync(object entity, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
-
-        Task<EntityEntry<TEntity>> IDbContext.AddAsync<TEntity>(TEntity entity, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
-
-        Task<TEntity> IDbContext.FindAsync<TEntity>(params object[] keyValues)
-        {
-            throw new NotImplementedException();
-        }
-
-        Task<object> IDbContext.FindAsync(Type entityType, object[] keyValues, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
-
-        Task<TEntity> IDbContext.FindAsync<TEntity>(object[] keyValues, CancellationToken cancellationToken)
-        {
-            throw new NotImplementedException();
-        }
-
-        Task<object> IDbContext.FindAsync(Type entityType, params object[] keyValues)
-        {
-            throw new NotImplementedException();
         }
     }
 }

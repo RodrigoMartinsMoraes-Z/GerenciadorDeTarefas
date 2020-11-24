@@ -28,7 +28,7 @@ namespace GerenciadorDeTarefas.WebApi.Controllers
             Tarefa tarefa = _contexto.Tarefas.Find(id);
 
             await Task.CompletedTask;
-           
+
             return _mapper.Map<TarefaModel>(tarefa);
         }
 
@@ -46,22 +46,24 @@ namespace GerenciadorDeTarefas.WebApi.Controllers
             else
                 _contexto.Tarefas.Add(tarefa);
 
-            await _contexto.SaveChangesAsync();
+            _contexto.SaveChanges();
+
+            await Task.CompletedTask;
 
             return Ok();
         }
 
         [HttpDelete, Route("{id}")]
-        public async Task<ActionResult> DeletarTarefa (int id)
+        public async Task<ActionResult> DeletarTarefa(int id)
         {
             Tarefa tarefa = _contexto.Tarefas.Find(id);
 
             if (tarefa == null)
                 return NotFound();
 
-            if(tarefa.SubTarefas.Count > 0)
+            if (tarefa.SubTarefas.Count > 0)
             {
-                foreach(Tarefa subTarefa in tarefa.SubTarefas)
+                foreach (Tarefa subTarefa in tarefa.SubTarefas)
                 {
                     _contexto.Tarefas.Remove(subTarefa);
                 }
@@ -69,8 +71,9 @@ namespace GerenciadorDeTarefas.WebApi.Controllers
 
             _contexto.Tarefas.Remove(tarefa);
 
-            await _contexto.SaveChangesAsync();
+            _contexto.SaveChanges();
 
+            await Task.CompletedTask;
             return Ok();
         }
     }

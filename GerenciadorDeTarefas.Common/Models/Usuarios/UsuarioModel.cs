@@ -12,7 +12,6 @@ namespace GerenciadorDeTarefas.Common.Models.Usuarios
             Pessoa = new PessoaModel();
             Equipes = new List<EquipeModel>();
         }
-        public int IdPessoa { get; set; }
         public string Login { get; set; }
         public string Senha { get; set; }
 

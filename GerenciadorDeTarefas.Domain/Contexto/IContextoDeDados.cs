@@ -1,6 +1,7 @@
 ﻿
 
 using GerenciadorDeTarefas.Domain.Equipes;
+using GerenciadorDeTarefas.Domain.ManyToMany;
 using GerenciadorDeTarefas.Domain.Objetivos;
 using GerenciadorDeTarefas.Domain.Pessoas;
 using GerenciadorDeTarefas.Domain.Projetos;
@@ -21,5 +22,6 @@ namespace GerenciadorDeTarefas.Domain.Contexto
         DbSet<Projeto> Projetos { get; }
         DbSet<Tarefa> Tarefas { get; }
         DbSet<Usuario> Usuarios { get; }
+        DbSet<EquipeUsuario> EquipeUsuario { get;}
     }
 }
