@@ -14,6 +14,7 @@ namespace GerenciadorDeTarefas.Common.Models.Usuarios
         }
         public string Login { get; set; }
         public string Senha { get; set; }
+        public Permissao Permissao { get; set; }
 
         public virtual PessoaModel Pessoa { get; set; }
         public virtual ICollection<EquipeModel> Equipes { get; set; }

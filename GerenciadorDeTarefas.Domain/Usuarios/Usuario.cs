@@ -19,6 +19,7 @@ namespace GerenciadorDeTarefas.Domain.Usuarios
         public int IdPessoa { get; set; }
         public string Login { get; set; }
         public string Senha { get => _senha; set => _senha = EncriptarSenha(value); }
+        public Permissao Permissao{ get; set; }
 
         public virtual Pessoa Pessoa { get; set; }
 
