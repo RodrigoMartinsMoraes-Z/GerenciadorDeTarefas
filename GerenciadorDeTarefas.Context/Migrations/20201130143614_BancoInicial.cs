@@ -42,15 +42,15 @@ namespace GerenciadorDeTarefas.Context.Migrations
                 {
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
-                    IdProjeto = table.Column<int>(type: "integer", nullable: false),
+                    IdEquipe = table.Column<int>(type: "integer", nullable: false),
                     Nome = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Projetos", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_Projetos_Equipes_IdProjeto",
-                        column: x => x.IdProjeto,
+                        name: "FK_Projetos_Equipes_IdEquipe",
+                        column: x => x.IdEquipe,
                         principalTable: "Equipes",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -62,7 +62,8 @@ namespace GerenciadorDeTarefas.Context.Migrations
                 {
                     IdPessoa = table.Column<int>(type: "integer", nullable: false),
                     Login = table.Column<string>(type: "text", nullable: true),
-                    Senha = table.Column<string>(type: "text", nullable: true)
+                    Senha = table.Column<string>(type: "text", nullable: true),
+                    Permissao = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -182,9 +183,9 @@ namespace GerenciadorDeTarefas.Context.Migrations
                 unique: true);
 
             migrationBuilder.CreateIndex(
-                name: "IX_Projetos_IdProjeto",
+                name: "IX_Projetos_IdEquipe",
                 table: "Projetos",
-                column: "IdProjeto");
+                column: "IdEquipe");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Tarefas_IdObjetivo",

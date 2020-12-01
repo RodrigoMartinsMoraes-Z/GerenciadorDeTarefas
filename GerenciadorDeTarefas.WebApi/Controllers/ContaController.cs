@@ -32,22 +32,25 @@ namespace GerenciadorDeTarefas.WebApi.Controllers
         [HttpPost, Route("logar"), AllowAnonymous]
         public async Task<ActionResult> Logar(UsuarioModel model)
         {
-            model.Senha = EncriptarSenha(model.Senha);
+            model.Senha = EncriptarSenha(model);
 
-            var user = _contexto.Usuarios.FirstOrDefault(u => u.Login == model.Login && u.Senha == model.Senha);
+            Domain.Usuarios.Usuario user = _contexto.Usuarios.FirstOrDefault(u => u.Login == model.Login && u.Senha == model.Senha);
 
             if (user == null)
                 return NotFound();
 
+            UsuarioModel usuarioModel = _mapper.Map<UsuarioModel>(user);
+            usuarioModel.Token = TokenService.GenerateToken(usuarioModel);
+
             await Task.CompletedTask;
 
-            return Ok(_mapper.Map<UsuarioModel>(user));
+            return Ok(usuarioModel);
         }
 
-        public string EncriptarSenha(string value)
+        public string EncriptarSenha(UsuarioModel usuario)
         {
-            byte[] salt = Encoding.UTF8.GetBytes(value);
-            byte[] senhaByte = Encoding.UTF8.GetBytes(value);
+            byte[] salt = Encoding.UTF8.GetBytes(usuario.Login);
+            byte[] senhaByte = Encoding.UTF8.GetBytes(usuario.Senha);
             byte[] sha256 = new SHA256Managed().ComputeHash(senhaByte.Concat(salt).ToArray());
             return Convert.ToBase64String(sha256);
         }

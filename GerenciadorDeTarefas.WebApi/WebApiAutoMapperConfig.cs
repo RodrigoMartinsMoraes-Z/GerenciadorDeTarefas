@@ -54,7 +54,7 @@ namespace GerenciadorDeTarefas.WebApi
             //    s => s.Equipes.Where(
             //        eu => eu.IdUsuario == s.IdPessoa).Select(u => u.Equipe).ToList()));
             CreateMap<UsuarioModel, Usuario>()
-                .ForMember(u => u.Equipes, dest => dest.Ignore()); 
+                .ForMember(u => u.Equipes, dest => dest.Ignore());
         }
     }
 }

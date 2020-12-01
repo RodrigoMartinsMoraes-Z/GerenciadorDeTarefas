@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace GerenciadorDeTarefas.Context.Migrations
 {
     [DbContext(typeof(ContextoDeDados))]
-    [Migration("20201119022236_BancoInicial")]
+    [Migration("20201130143614_BancoInicial")]
     partial class BancoInicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -120,7 +120,7 @@ namespace GerenciadorDeTarefas.Context.Migrations
                         .HasColumnType("integer")
                         .UseIdentityByDefaultColumn();
 
-                    b.Property<int>("IdProjeto")
+                    b.Property<int>("IdEquipe")
                         .HasColumnType("integer");
 
                     b.Property<string>("Nome")
@@ -128,7 +128,7 @@ namespace GerenciadorDeTarefas.Context.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("IdProjeto");
+                    b.HasIndex("IdEquipe");
 
                     b.ToTable("Projetos");
                 });
@@ -189,6 +189,9 @@ namespace GerenciadorDeTarefas.Context.Migrations
                     b.Property<string>("Login")
                         .HasColumnType("text");
 
+                    b.Property<int>("Permissao")
+                        .HasColumnType("integer");
+
                     b.Property<string>("Senha")
                         .HasColumnType("text");
 
@@ -222,7 +225,7 @@ namespace GerenciadorDeTarefas.Context.Migrations
             modelBuilder.Entity("GerenciadorDeTarefas.Domain.Objetivos.Objetivo", b =>
                 {
                     b.HasOne("GerenciadorDeTarefas.Domain.Projetos.Projeto", "Projeto")
-                        .WithMany("Funcionalidades")
+                        .WithMany("Objetivos")
                         .HasForeignKey("IdProjeto")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
@@ -234,7 +237,7 @@ namespace GerenciadorDeTarefas.Context.Migrations
                 {
                     b.HasOne("GerenciadorDeTarefas.Domain.Equipes.Equipe", "Equipe")
                         .WithMany("Projetos")
-                        .HasForeignKey("IdProjeto")
+                        .HasForeignKey("IdEquipe")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
 
@@ -291,7 +294,7 @@ namespace GerenciadorDeTarefas.Context.Migrations
 
             modelBuilder.Entity("GerenciadorDeTarefas.Domain.Projetos.Projeto", b =>
                 {
-                    b.Navigation("Funcionalidades");
+                    b.Navigation("Objetivos");
 
                     b.Navigation("Tarefas");
                 });

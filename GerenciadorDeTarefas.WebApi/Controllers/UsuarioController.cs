@@ -5,11 +5,9 @@ using GerenciadorDeTarefas.Domain.Contexto;
 using GerenciadorDeTarefas.Domain.Usuarios;
 
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 using System;
-using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
@@ -101,7 +99,7 @@ namespace GerenciadorDeTarefas.WebApi.Controllers
             return Ok();
         }
 
-        [HttpPost]
+        [HttpPost, AllowAnonymous]
         public async Task<ActionResult> NovoUsuario([FromBody] UsuarioModel usuarioModel)
         {
             if (usuarioModel.Login == null)
@@ -123,6 +121,8 @@ namespace GerenciadorDeTarefas.WebApi.Controllers
 
             _contexto.Add(usuario);
             _contexto.SaveChanges();
+
+            await Task.CompletedTask;
 
             return Ok();
         }

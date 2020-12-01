@@ -1,11 +1,11 @@
-﻿using Microsoft.AspNetCore.Mvc;
-
-using System.Web.Http;
+﻿using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace GerenciadorDeTarefas.WebApi.Controllers
 {
-    [ApiController]
+    [ApiController, Authorize]
     public class BaseApiController : ControllerBase
     {
+        
     }
 }
