@@ -9,5 +9,6 @@ namespace GerenciadorDeTarefas.Domain.ManyToMany
         public virtual Equipe Equipe { get; set; }
         public int IdUsuario { get; set; }
         public virtual Usuario Usuario { get; set; }
+        public Permissao PermissaoUsuario { get; set; }
     }
 }
