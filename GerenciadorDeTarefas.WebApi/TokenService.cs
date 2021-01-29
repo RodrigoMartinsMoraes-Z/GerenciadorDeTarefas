@@ -23,7 +23,6 @@ namespace GerenciadorDeTarefas.WebApi
                     new Claim(ClaimTypes.Name, usuario.Login.ToString()),
                     new Claim(ClaimTypes.Role, usuario.Permissao.ToString())
                 }),
-                Expires = null,
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
             var token = tokenHandler.CreateToken(tokenDescriptor);

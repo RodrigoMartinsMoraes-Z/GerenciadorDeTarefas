@@ -13,6 +13,7 @@ namespace GerenciadorDeTarefas.Common.Models.Equipes
             Usuarios = new List<UsuarioModel>();
         }
 
+        public int Id { get; }
         public string Nome { get; set; }
         public ICollection<ProjetoModel> Projetos { get; set; }
 

@@ -31,17 +31,17 @@ namespace GerenciadorDeTarefas.WebApi.Controllers
         }
 
         [HttpGet, Route("{id}")]
-        public async Task<ActionResult> BuscarEquipe(int id)
+        public async Task<EquipeModel> BuscarEquipe(int id)
         {
             Equipe equipe = _contexto.Equipes.Find(id);
 
             await Task.CompletedTask;
 
-            return Ok(_mapper.Map<EquipeModel>(equipe));
+            return _mapper.Map<EquipeModel>(equipe);
         }
 
         [HttpGet, Route("usuarios/{idEquipe}")]
-        public async Task<ActionResult> UsuariosDaEquipe(int idEquipe)
+        public async Task<List<UsuarioModel>> UsuariosDaEquipe(int idEquipe)
         {
             List<Usuario> usuarios = _contexto.EquipeUsuario
                 .Where(eu => eu.IdEquipe == idEquipe)
@@ -58,11 +58,11 @@ namespace GerenciadorDeTarefas.WebApi.Controllers
             }
 
             await Task.CompletedTask;
-            return Ok(models);
+            return models;
         }
 
         [HttpGet, Route("projetos/{idEquipe}")]
-        public async Task<ActionResult> ProjetosDaEquipe(int idEquipe)
+        public async Task<List<ProjetoModel>> ProjetosDaEquipe(int idEquipe)
         {
             var projetos = _contexto.Projetos.Where(p => p.IdEquipe == idEquipe);
 
@@ -74,7 +74,7 @@ namespace GerenciadorDeTarefas.WebApi.Controllers
                 models.Add(model);
             }
 
-            return Ok(models);
+            return models;
         }
 
         [HttpPut, Route("adicionar/usuario/{idEquipe}")]
@@ -102,15 +102,17 @@ namespace GerenciadorDeTarefas.WebApi.Controllers
         [HttpPut]
         public async Task<ActionResult> AtualizarEquipe([FromBody] EquipeModel equipeModel)
         {
-            //Equipe equipe = _contexto.Equipes.FirstOrDefault(e=>e.)
+            Equipe equipe = _contexto.Equipes.FirstOrDefault(e => e.Id == equipeModel.Id);
 
-            //if (equipe.Id <= 0)
-            //{
-            //    return NotFound();
-            //}
-            //_contexto.Update(equipe);
-            //_contexto.SaveChanges();
+            if (equipe == null)
+            {
+                return NotFound();
+            }
 
+            equipe.Nome = equipeModel.Nome;
+
+            _contexto.Update(equipe);
+            _contexto.SaveChanges();
 
             await Task.CompletedTask;
 
@@ -147,6 +149,21 @@ namespace GerenciadorDeTarefas.WebApi.Controllers
             _contexto.Update(equipe);
             _contexto.SaveChanges();
 
+            return Ok();
+        }
+
+        [HttpDelete, Route("{idEquipe}/{idUsuario}")]
+        public async Task<ActionResult> ExcluirEquipe(int idEquipe, int idUsuario)
+        {
+            Equipe equipe = _contexto.Equipes.Find(idEquipe);
+            EquipeUsuario usuario = equipe.Usuarios.FirstOrDefault(u => u.IdUsuario == idUsuario);
+
+            if (equipe == null || usuario == null)
+                return NotFound();
+
+            if(usuario.)
+
+            await Task.CompletedTask;
             return Ok();
         }
 

@@ -87,6 +87,8 @@ namespace GerenciadorDeTarefas.WebApi
             IMapper mapper = mapperConfig.CreateMapper();
             services.AddSingleton(mapper);
 
+            services.AddSwaggerGen();
+
             //services.AddMvc();
         }
 
@@ -112,6 +114,14 @@ namespace GerenciadorDeTarefas.WebApi
             app.UseAuthentication();
             app.UseAuthorization();
 
+            app.UseSwagger();
+
+            app.UseSwaggerUI(c =>
+            {
+                c.SwaggerEndpoint("/swagger/v1/swagger.json", "API Gerenciador De Tarefas");
+                c.RoutePrefix = string.Empty;
+            });
+
             app.UseRouting();
 
             app.UseAuthorization();
@@ -120,6 +130,7 @@ namespace GerenciadorDeTarefas.WebApi
             {
                 endpoints.MapControllers();
             });
+
 
             _container.Verify();
         }
