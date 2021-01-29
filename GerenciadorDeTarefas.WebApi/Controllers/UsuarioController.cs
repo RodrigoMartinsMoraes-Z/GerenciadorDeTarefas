@@ -2,6 +2,7 @@
 
 using GerenciadorDeTarefas.Common.Models.Usuarios;
 using GerenciadorDeTarefas.Domain.Contexto;
+using GerenciadorDeTarefas.Domain.ManyToMany;
 using GerenciadorDeTarefas.Domain.Usuarios;
 
 using Microsoft.AspNetCore.Authorization;
@@ -58,6 +59,22 @@ namespace GerenciadorDeTarefas.WebApi.Controllers
         public Task<bool> VerificaLogin(string login)
         {
             return Task.FromResult(_contexto.Usuarios.Any(u => u.Login == login));
+        }
+
+        [HttpGet, Route("permissao/{idUsuario}/{idEquipe}")]
+        public async Task<ActionResult> PermissaoUsuario(int idUsuario, int idEquipe)
+        {
+            EquipeUsuario equipeUsuario = _contexto.EquipeUsuario.FirstOrDefault(eu => eu.IdUsuario == idUsuario && eu.IdEquipe == idEquipe);
+
+            if (equipeUsuario == null)
+                return NotFound();
+
+            UsuarioModel usuarioModel = _mapper.Map<UsuarioModel>(equipeUsuario.Usuario);
+            usuarioModel.Permissao = (Common.Permissao?)equipeUsuario.PermissaoUsuario;
+
+            await Task.CompletedTask;
+
+            return Ok(usuarioModel);
         }
 
         [HttpPut]

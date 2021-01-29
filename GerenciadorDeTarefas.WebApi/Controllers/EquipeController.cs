@@ -88,7 +88,8 @@ namespace GerenciadorDeTarefas.WebApi.Controllers
                 Equipe = equipe,
                 IdEquipe = equipe.Id,
                 IdUsuario = usuario.IdPessoa,
-                Usuario = usuario
+                Usuario = usuario,
+                PermissaoUsuario = (Permissao)usuarioModel.Permissao
             };
 
             equipe.Usuarios.Add(equipeUsuario);
@@ -119,27 +120,28 @@ namespace GerenciadorDeTarefas.WebApi.Controllers
             return Ok();
         }
 
-        [HttpPost, Route("{idUsuario}")]
-        public async Task<ActionResult> CadastrarEquipe([FromBody] EquipeModel equipeModel, int idUsuario)
+        [HttpPost]
+        public async Task<ActionResult> CadastrarEquipe([FromBody] EquipeModel equipeModel)
         {
-            if (idUsuario <= 0)
-                return NotFound("Usuario inválido");
 
             Equipe equipe = _mapper.Map<Equipe>(equipeModel);
 
             await equipe.Validate();
 
-            Usuario usuario = _contexto.Usuarios.Find(idUsuario);
+            Usuario usuario = _contexto.Usuarios.FirstOrDefault(u => u.Login == User.Identity.Name);
 
             _contexto.Add(equipe);
             _contexto.SaveChanges();
+
+
 
             EquipeUsuario equipeUsuario = new EquipeUsuario
             {
                 Usuario = usuario,
                 IdUsuario = usuario.IdPessoa,
                 Equipe = equipe,
-                IdEquipe = equipe.Id
+                IdEquipe = equipe.Id,
+                PermissaoUsuario = Permissao.Administrador
             };
 
             usuario.Equipes.Add(equipeUsuario);
