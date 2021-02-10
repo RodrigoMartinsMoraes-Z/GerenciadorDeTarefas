@@ -64,7 +64,11 @@ namespace GerenciadorDeTarefas.WebApi.Controllers
         [HttpGet, Route("projetos/{idEquipe}")]
         public async Task<List<ProjetoModel>> ProjetosDaEquipe(int idEquipe)
         {
-            var projetos = _contexto.Projetos.Where(p => p.IdEquipe == idEquipe);
+            Equipe equipe = _contexto.Equipes.Find(idEquipe);
+
+            UsuarioPertenceEquipe(idEquipe);
+
+            IQueryable<Domain.Projetos.Projeto> projetos = _contexto.Projetos.Where(p => p.IdEquipe == idEquipe);
 
             List<ProjetoModel> models = new List<ProjetoModel>();
 
@@ -82,6 +86,13 @@ namespace GerenciadorDeTarefas.WebApi.Controllers
         {
             Equipe equipe = _contexto.Equipes.Find(idEquipe);
             Usuario usuario = _contexto.Usuarios.FirstOrDefault(u => u.Login == usuarioModel.Login);
+
+            await UsuarioPertenceEquipe(idEquipe);
+
+            var permissao = _contexto.EquipeUsuario.FirstOrDefault(eu => eu.IdEquipe == idEquipe && eu.IdUsuario == _usuarioLogado.IdPessoa).PermissaoUsuario;
+
+            if (permissao == Permissao.Usuario)
+                return Unauthorized();
 
             EquipeUsuario equipeUsuario = new EquipeUsuario
             {
@@ -110,6 +121,11 @@ namespace GerenciadorDeTarefas.WebApi.Controllers
                 return NotFound();
             }
 
+            var permissao = _contexto.EquipeUsuario.FirstOrDefault(eu => eu.IdEquipe == equipeModel.Id && eu.IdUsuario == _usuarioLogado.IdPessoa).PermissaoUsuario;
+
+            if (permissao == Permissao.Usuario)
+                return Unauthorized();
+
             equipe.Nome = equipeModel.Nome;
 
             _contexto.Update(equipe);
@@ -133,8 +149,6 @@ namespace GerenciadorDeTarefas.WebApi.Controllers
             _contexto.Add(equipe);
             _contexto.SaveChanges();
 
-
-
             EquipeUsuario equipeUsuario = new EquipeUsuario
             {
                 Usuario = usuario,
@@ -155,20 +169,28 @@ namespace GerenciadorDeTarefas.WebApi.Controllers
         }
 
         [HttpDelete, Route("{idEquipe}/{idUsuario}")]
-        public async Task<ActionResult> ExcluirEquipe(int idEquipe, int idUsuario)
+        public async Task<ActionResult> ExcluirEquipe(int idEquipe)
         {
             Equipe equipe = _contexto.Equipes.Find(idEquipe);
-            EquipeUsuario usuario = equipe.Usuarios.FirstOrDefault(u => u.IdUsuario == idUsuario);
 
-            if (equipe == null || usuario == null)
+            if (equipe == null)
                 return NotFound();
 
-            if(usuario.)
+            await UsuarioPertenceEquipe(idEquipe);
+
+            var permissao = _contexto.EquipeUsuario.FirstOrDefault(eu => eu.IdEquipe == idEquipe && eu.IdUsuario == _usuarioLogado.IdPessoa).PermissaoUsuario;
+
+            if (permissao != Permissao.Administrador)
+                return Unauthorized();
 
             await Task.CompletedTask;
             return Ok();
         }
 
+        private Task<bool> UsuarioPertenceEquipe(int idEquipe)
+        {
+            return _contexto.EquipeUsuario.Any(e => e.IdEquipe == idEquipe && e.IdUsuario == _usuarioLogado.IdPessoa) ? Task.FromResult(true) : throw new Exception("Usuario não pertence a equipe.");
+        }
 
     }
 }

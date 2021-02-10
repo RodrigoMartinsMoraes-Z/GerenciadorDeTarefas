@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace GerenciadorDeTarefas.Context.Migrations
 {
     [DbContext(typeof(ContextoDeDados))]
-    [Migration("20201130143614_BancoInicial")]
+    [Migration("20210210203810_BancoInicial")]
     partial class BancoInicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -42,6 +42,9 @@ namespace GerenciadorDeTarefas.Context.Migrations
                         .HasColumnType("integer");
 
                     b.Property<int>("IdUsuario")
+                        .HasColumnType("integer");
+
+                    b.Property<int>("PermissaoUsuario")
                         .HasColumnType("integer");
 
                     b.HasKey("IdEquipe", "IdUsuario");
@@ -188,9 +191,6 @@ namespace GerenciadorDeTarefas.Context.Migrations
 
                     b.Property<string>("Login")
                         .HasColumnType("text");
-
-                    b.Property<int>("Permissao")
-                        .HasColumnType("integer");
 
                     b.Property<string>("Senha")
                         .HasColumnType("text");

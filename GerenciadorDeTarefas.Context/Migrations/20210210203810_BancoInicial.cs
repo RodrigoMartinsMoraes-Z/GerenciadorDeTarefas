@@ -62,8 +62,7 @@ namespace GerenciadorDeTarefas.Context.Migrations
                 {
                     IdPessoa = table.Column<int>(type: "integer", nullable: false),
                     Login = table.Column<string>(type: "text", nullable: true),
-                    Senha = table.Column<string>(type: "text", nullable: true),
-                    Permissao = table.Column<int>(type: "integer", nullable: false)
+                    Senha = table.Column<string>(type: "text", nullable: true)
                 },
                 constraints: table =>
                 {
@@ -107,7 +106,8 @@ namespace GerenciadorDeTarefas.Context.Migrations
                 columns: table => new
                 {
                     IdEquipe = table.Column<int>(type: "integer", nullable: false),
-                    IdUsuario = table.Column<int>(type: "integer", nullable: false)
+                    IdUsuario = table.Column<int>(type: "integer", nullable: false),
+                    PermissaoUsuario = table.Column<int>(type: "integer", nullable: false)
                 },
                 constraints: table =>
                 {
