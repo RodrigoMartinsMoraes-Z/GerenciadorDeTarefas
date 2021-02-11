@@ -10,7 +10,7 @@ using Npgsql.EntityFrameworkCore.PostgreSQL.Metadata;
 namespace GerenciadorDeTarefas.Context.Migrations
 {
     [DbContext(typeof(ContextoDeDados))]
-    [Migration("20210210203810_BancoInicial")]
+    [Migration("20210211194528_BancoInicial")]
     partial class BancoInicial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -99,9 +99,6 @@ namespace GerenciadorDeTarefas.Context.Migrations
                         .HasColumnType("integer")
                         .UseIdentityByDefaultColumn();
 
-                    b.Property<string>("Email")
-                        .HasColumnType("text");
-
                     b.Property<DateTime>("Nascimento")
                         .HasColumnType("timestamp without time zone");
 
@@ -109,9 +106,6 @@ namespace GerenciadorDeTarefas.Context.Migrations
                         .HasColumnType("text");
 
                     b.HasKey("Id");
-
-                    b.HasIndex("Email")
-                        .IsUnique();
 
                     b.ToTable("Pessoas");
                 });
@@ -189,6 +183,9 @@ namespace GerenciadorDeTarefas.Context.Migrations
                     b.Property<int>("IdPessoa")
                         .HasColumnType("integer");
 
+                    b.Property<string>("Email")
+                        .HasColumnType("text");
+
                     b.Property<string>("Login")
                         .HasColumnType("text");
 
@@ -196,6 +193,9 @@ namespace GerenciadorDeTarefas.Context.Migrations
                         .HasColumnType("text");
 
                     b.HasKey("IdPessoa");
+
+                    b.HasIndex("Email")
+                        .IsUnique();
 
                     b.HasIndex("Login")
                         .IsUnique();

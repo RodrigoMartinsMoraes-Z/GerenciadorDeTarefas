@@ -28,8 +28,7 @@ namespace GerenciadorDeTarefas.Context.Migrations
                     Id = table.Column<int>(type: "integer", nullable: false)
                         .Annotation("Npgsql:ValueGenerationStrategy", NpgsqlValueGenerationStrategy.IdentityByDefaultColumn),
                     Nome = table.Column<string>(type: "text", nullable: true),
-                    Nascimento = table.Column<DateTime>(type: "timestamp without time zone", nullable: false),
-                    Email = table.Column<string>(type: "text", nullable: true)
+                    Nascimento = table.Column<DateTime>(type: "timestamp without time zone", nullable: false)
                 },
                 constraints: table =>
                 {
@@ -61,6 +60,7 @@ namespace GerenciadorDeTarefas.Context.Migrations
                 columns: table => new
                 {
                     IdPessoa = table.Column<int>(type: "integer", nullable: false),
+                    Email = table.Column<string>(type: "text", nullable: true),
                     Login = table.Column<string>(type: "text", nullable: true),
                     Senha = table.Column<string>(type: "text", nullable: true)
                 },
@@ -177,12 +177,6 @@ namespace GerenciadorDeTarefas.Context.Migrations
                 column: "IdProjeto");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Pessoas_Email",
-                table: "Pessoas",
-                column: "Email",
-                unique: true);
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Projetos_IdEquipe",
                 table: "Projetos",
                 column: "IdEquipe");
@@ -201,6 +195,12 @@ namespace GerenciadorDeTarefas.Context.Migrations
                 name: "IX_Tarefas_IdTarefaPrincipal",
                 table: "Tarefas",
                 column: "IdTarefaPrincipal");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Usuarios_Email",
+                table: "Usuarios",
+                column: "Email",
+                unique: true);
 
             migrationBuilder.CreateIndex(
                 name: "IX_Usuarios_Login",
