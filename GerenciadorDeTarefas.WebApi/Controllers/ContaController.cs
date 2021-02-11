@@ -30,7 +30,8 @@ namespace GerenciadorDeTarefas.WebApi.Controllers
         }
 
         [HttpPost, Route("logar"), AllowAnonymous]
-        public async Task<UsuarioModel> Logar(string login, string senha)
+        [ProducesResponseType(typeof(UsuarioModel), 200)]
+        public async Task<ActionResult> Logar(string login, string senha)
         {
             senha = EncriptarSenha(login, senha);
 
@@ -39,14 +40,14 @@ namespace GerenciadorDeTarefas.WebApi.Controllers
             _usuarioLogado = user;
 
             if (user == null)
-                throw new Exception("user not found.");
+                return NotFound();
 
             UsuarioModel usuarioModel = _mapper.Map<UsuarioModel>(user);
             usuarioModel.Token = TokenService.GenerateToken(usuarioModel);
 
             await Task.CompletedTask;
 
-            return usuarioModel;
+            return Ok(usuarioModel);
         }
 
         private static string EncriptarSenha(string login, string senha)

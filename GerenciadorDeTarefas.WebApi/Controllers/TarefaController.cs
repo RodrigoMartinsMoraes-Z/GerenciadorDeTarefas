@@ -24,13 +24,17 @@ namespace GerenciadorDeTarefas.WebApi.Controllers
         }
 
         [HttpGet, Route("{id}")]
-        public async Task<TarefaModel> Buscar(int id)
+        [ProducesResponseType(typeof(TarefaModel), 200)]
+        public async Task<ActionResult> Buscar(int id)
         {
             Tarefa tarefa = _contexto.Tarefas.Find(id);
 
+            if (tarefa == null)
+                return NotFound();
+
             await Task.CompletedTask;
 
-            return _mapper.Map<TarefaModel>(tarefa);
+            return Ok(_mapper.Map<TarefaModel>(tarefa));
         }
 
         [HttpPut]

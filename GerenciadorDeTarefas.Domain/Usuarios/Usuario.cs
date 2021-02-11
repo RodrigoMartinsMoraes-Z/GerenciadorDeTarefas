@@ -18,6 +18,7 @@ namespace GerenciadorDeTarefas.Domain.Usuarios
             Equipes = new List<EquipeUsuario>();
         }
         public int IdPessoa { get; set; }
+        public string Email { get; set; }
         public string Login { get; set; }
         public string Senha { get => _senha; set => _senha = EncriptarSenha(value); }
         public virtual Pessoa Pessoa { get; set; }

@@ -12,10 +12,11 @@ namespace GerenciadorDeTarefas.Common.Models.Usuarios
             Pessoa = new PessoaModel();
             Equipes = new List<EquipeModel>();
         }
+        public string Email { get; set; }
         public string Login { get; set; }
         public string Senha { get; set; }
-        public Permissao? Permissao { get; set; }
         public string Token { get; set; }
+        public Permissao? Permissao { get; set; }
 
         public virtual PessoaModel Pessoa { get; set; }
         public virtual ICollection<EquipeModel> Equipes { get; set; }

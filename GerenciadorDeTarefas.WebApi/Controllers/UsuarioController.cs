@@ -27,6 +27,7 @@ namespace GerenciadorDeTarefas.WebApi.Controllers
         }
 
         [HttpGet, Route("{id}")]
+        [ProducesResponseType(typeof(UsuarioModel), 200)]
         public async Task<ActionResult> BuscarUsuarioPorId(int id)
         {
             Usuario usuario = _contexto.Usuarios.Find(id);
@@ -37,9 +38,10 @@ namespace GerenciadorDeTarefas.WebApi.Controllers
         }
 
         [HttpGet]
+        [ProducesResponseType(typeof(UsuarioModel), 200)]
         public async Task<ActionResult> BuscarUsuarioPorEmail(string email)
         {
-            var usuario = _contexto.Usuarios.FirstOrDefault(u => u.Pessoa.Email == email);
+            var usuario = _contexto.Usuarios.FirstOrDefault(u => u.Email == email);
 
             if (usuario == null)
                 return NotFound();
@@ -49,33 +51,21 @@ namespace GerenciadorDeTarefas.WebApi.Controllers
             return Ok(_mapper.Map<UsuarioModel>(usuario));
         }
 
-        [HttpGet, Route("verifica/email")]
-        public Task<bool> VerificaEmail(string email)
-        {
-            return Task.FromResult(_contexto.Pessoas.Any(p => p.Email == email));
-        }
+        //[HttpGet, Route("permissao/{idUsuario}/{idEquipe}")]
+        //public async Task<ActionResult> PermissaoUsuario(int idUsuario, int idEquipe)
+        //{
+        //    EquipeUsuario equipeUsuario = _contexto.EquipeUsuario.FirstOrDefault(eu => eu.IdUsuario == idUsuario && eu.IdEquipe == idEquipe);
 
-        [HttpGet, Route("verifica/login")]
-        public Task<bool> VerificaLogin(string login)
-        {
-            return Task.FromResult(_contexto.Usuarios.Any(u => u.Login == login));
-        }
+        //    if (equipeUsuario == null)
+        //        return NotFound();
 
-        [HttpGet, Route("permissao/{idUsuario}/{idEquipe}")]
-        public async Task<ActionResult> PermissaoUsuario(int idUsuario, int idEquipe)
-        {
-            EquipeUsuario equipeUsuario = _contexto.EquipeUsuario.FirstOrDefault(eu => eu.IdUsuario == idUsuario && eu.IdEquipe == idEquipe);
+        //    UsuarioModel usuarioModel = _mapper.Map<UsuarioModel>(equipeUsuario.Usuario);
+        //    usuarioModel.Permissao = (Common.Permissao?)equipeUsuario.PermissaoUsuario;
 
-            if (equipeUsuario == null)
-                return NotFound();
+        //    await Task.CompletedTask;
 
-            UsuarioModel usuarioModel = _mapper.Map<UsuarioModel>(equipeUsuario.Usuario);
-            usuarioModel.Permissao = (Common.Permissao?)equipeUsuario.PermissaoUsuario;
-
-            await Task.CompletedTask;
-
-            return Ok(usuarioModel);
-        }
+        //    return Ok(usuarioModel);
+        //}
 
         [HttpPut]
         public async Task<ActionResult> AtualizarUsuario([FromBody] UsuarioModel usuarioModel)
@@ -95,8 +85,8 @@ namespace GerenciadorDeTarefas.WebApi.Controllers
                 //existente.Pessoa = _contexto.Pessoas.Find(existente.IdPessoa);
 
                 usuario.Senha = existente.Senha;
-                if (usuario.Pessoa != null && usuario.Pessoa.Email != existente.Pessoa.Email)
-                    if (_contexto.Pessoas.Any(p => p.Email == usuario.Pessoa.Email))
+                if (usuario.Pessoa != null && usuario.Email != existente.Email)
+                    if (_contexto.Usuarios.Any(p => p.Email == usuario.Email))
                         return BadRequest("Este email já está sendo utilizado.");
 
                 usuario.IdPessoa = existente.IdPessoa;
@@ -125,13 +115,13 @@ namespace GerenciadorDeTarefas.WebApi.Controllers
             if (usuarioModel.Senha == null)
                 return BadRequest("A senha não deve ser nula!");
 
-            if (usuarioModel.Pessoa == null || usuarioModel.Pessoa.Email == null)
+            if (usuarioModel.Email == null)
                 return BadRequest("Email não deve ser nulo!");
 
-            if (_contexto.Usuarios.Any(u => u.Login == usuarioModel.Login))
+            if (await LoginExiste(usuarioModel.Login))
                 return BadRequest("Este login já está sendo utilizado.");
 
-            if (usuarioModel.Pessoa == null || _contexto.Pessoas.Any(p => p.Email == usuarioModel.Pessoa.Email))
+            if (await EmailExiste(usuarioModel.Email))
                 return BadRequest("Este email já está sendo utilizado.");
 
             Usuario usuario = _mapper.Map<Usuario>(usuarioModel);
@@ -142,6 +132,15 @@ namespace GerenciadorDeTarefas.WebApi.Controllers
             await Task.CompletedTask;
 
             return Ok();
+        }
+        internal Task<bool> EmailExiste(string email)
+        {
+            return Task.FromResult(_contexto.Usuarios.Any(p => p.Email == email));
+        }
+
+        internal Task<bool> LoginExiste(string login)
+        {
+            return Task.FromResult(_contexto.Usuarios.Any(u => u.Login == login));
         }
 
     }

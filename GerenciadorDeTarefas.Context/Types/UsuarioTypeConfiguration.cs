@@ -13,7 +13,9 @@ namespace GerenciadorDeTarefas.Context.Types
 
             builder.HasOne(u => u.Pessoa).WithMany().HasForeignKey(u => u.IdPessoa);
 
+            builder.HasIndex(p => p.Email).IsUnique();
             builder.HasIndex(u => u.Login).IsUnique();
+
         }
     }
 }

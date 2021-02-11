@@ -31,17 +31,22 @@ namespace GerenciadorDeTarefas.WebApi.Controllers
         }
 
         [HttpGet, Route("{id}")]
-        public async Task<EquipeModel> BuscarEquipe(int id)
+        [ProducesResponseType(typeof(EquipeModel), 200)]
+        public async Task<ActionResult> BuscarEquipe(int id)
         {
             Equipe equipe = _contexto.Equipes.Find(id);
 
+            if (equipe == null)
+                return NotFound();
+
             await Task.CompletedTask;
 
-            return _mapper.Map<EquipeModel>(equipe);
+            return Ok(_mapper.Map<EquipeModel>(equipe));
         }
 
         [HttpGet, Route("usuarios/{idEquipe}")]
-        public async Task<List<UsuarioModel>> UsuariosDaEquipe(int idEquipe)
+        [ProducesResponseType(typeof(List<UsuarioModel>), 200)]
+        public async Task<ActionResult> UsuariosDaEquipe(int idEquipe)
         {
             List<Usuario> usuarios = _contexto.EquipeUsuario
                 .Where(eu => eu.IdEquipe == idEquipe)
@@ -58,11 +63,12 @@ namespace GerenciadorDeTarefas.WebApi.Controllers
             }
 
             await Task.CompletedTask;
-            return models;
+            return Ok(models);
         }
 
         [HttpGet, Route("projetos/{idEquipe}")]
-        public async Task<List<ProjetoModel>> ProjetosDaEquipe(int idEquipe)
+        [ProducesResponseType(typeof(List<ProjetoModel>), 200)]
+        public async Task<ActionResult> ProjetosDaEquipe(int idEquipe)
         {
             Equipe equipe = _contexto.Equipes.Find(idEquipe);
 
@@ -78,7 +84,24 @@ namespace GerenciadorDeTarefas.WebApi.Controllers
                 models.Add(model);
             }
 
-            return models;
+            await Task.CompletedTask;
+
+            return Ok(models);
+        }
+
+        [HttpGet]
+        [ProducesResponseType(typeof(List<EquipeModel>), 200)]
+        public async Task<ActionResult> EquipesDoUsuario()
+        {
+            IQueryable<Equipe> equipes = _contexto.EquipeUsuario.Where(eu => eu.IdUsuario == _usuarioLogado.IdPessoa).Select(e => e.Equipe);
+
+            List<EquipeModel> models = new List<EquipeModel>();
+
+            foreach (var equipe in equipes)
+                models.Add(_mapper.Map<EquipeModel>(equipe));
+
+            await Task.CompletedTask;
+            return Ok(models);
         }
 
         [HttpPut, Route("adicionar/usuario/{idEquipe}")]
@@ -87,7 +110,7 @@ namespace GerenciadorDeTarefas.WebApi.Controllers
             Equipe equipe = _contexto.Equipes.Find(idEquipe);
             Usuario usuario = _contexto.Usuarios.FirstOrDefault(u => u.Login == usuarioModel.Login);
 
-            await UsuarioPertenceEquipe(idEquipe);
+            UsuarioPertenceEquipe(idEquipe);
 
             var permissao = _contexto.EquipeUsuario.FirstOrDefault(eu => eu.IdEquipe == idEquipe && eu.IdUsuario == _usuarioLogado.IdPessoa).PermissaoUsuario;
 
@@ -120,6 +143,9 @@ namespace GerenciadorDeTarefas.WebApi.Controllers
             {
                 return NotFound();
             }
+
+            if (UsuarioPertenceEquipe(equipe.Id))
+                return Unauthorized();
 
             var permissao = _contexto.EquipeUsuario.FirstOrDefault(eu => eu.IdEquipe == equipeModel.Id && eu.IdUsuario == _usuarioLogado.IdPessoa).PermissaoUsuario;
 
@@ -176,7 +202,8 @@ namespace GerenciadorDeTarefas.WebApi.Controllers
             if (equipe == null)
                 return NotFound();
 
-            await UsuarioPertenceEquipe(idEquipe);
+            if (UsuarioPertenceEquipe(idEquipe))
+                return Unauthorized();
 
             var permissao = _contexto.EquipeUsuario.FirstOrDefault(eu => eu.IdEquipe == idEquipe && eu.IdUsuario == _usuarioLogado.IdPessoa).PermissaoUsuario;
 
@@ -187,9 +214,9 @@ namespace GerenciadorDeTarefas.WebApi.Controllers
             return Ok();
         }
 
-        private Task<bool> UsuarioPertenceEquipe(int idEquipe)
+        private bool UsuarioPertenceEquipe(int idEquipe)
         {
-            return _contexto.EquipeUsuario.Any(e => e.IdEquipe == idEquipe && e.IdUsuario == _usuarioLogado.IdPessoa) ? Task.FromResult(true) : throw new Exception("Usuario não pertence a equipe.");
+            return _contexto.EquipeUsuario.Any(e => e.IdEquipe == idEquipe && e.IdUsuario == _usuarioLogado.IdPessoa);
         }
 
     }
