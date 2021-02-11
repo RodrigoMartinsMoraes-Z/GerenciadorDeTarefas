@@ -20,8 +20,7 @@ namespace GerenciadorDeTarefas.WebApi
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
-                    new Claim(ClaimTypes.Name, usuario.Login.ToString()),
-                    new Claim(ClaimTypes.Role, usuario.Permissao.ToString())
+                    new Claim(ClaimTypes.Name, usuario.Login.ToString())
                 }),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };

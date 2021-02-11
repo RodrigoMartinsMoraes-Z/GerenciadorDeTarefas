@@ -6,6 +6,7 @@ using GerenciadorDeTarefas.Domain.Tarefas;
 
 using Microsoft.AspNetCore.Mvc;
 
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace GerenciadorDeTarefas.WebApi.Controllers
@@ -60,6 +61,8 @@ namespace GerenciadorDeTarefas.WebApi.Controllers
 
             if (tarefa == null)
                 return NotFound();
+
+            tarefa.SubTarefas = _contexto.Tarefas.Where(t => t.IdTarefaPrincipal == tarefa.Id).ToList();
 
             if (tarefa.SubTarefas.Count > 0)
             {

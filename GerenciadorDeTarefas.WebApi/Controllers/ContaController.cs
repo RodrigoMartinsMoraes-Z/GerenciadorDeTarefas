@@ -18,7 +18,7 @@ namespace GerenciadorDeTarefas.WebApi.Controllers
 {
     [Route("api/conta")]
     [ApiController]
-    public class ContaController : ControllerBase
+    public class ContaController : BaseApiController
     {
         private readonly IContextoDeDados _contexto;
         private readonly IMapper _mapper;
@@ -30,24 +30,26 @@ namespace GerenciadorDeTarefas.WebApi.Controllers
         }
 
         [HttpPost, Route("logar"), AllowAnonymous]
-        public async Task<ActionResult> Logar(string login, string senha)
+        public async Task<UsuarioModel> Logar(string login, string senha)
         {
             senha = EncriptarSenha(login, senha);
 
             Domain.Usuarios.Usuario user = _contexto.Usuarios.FirstOrDefault(u => u.Login == login && u.Senha == senha);
 
+            _usuarioLogado = user;
+
             if (user == null)
-                return NotFound();
+                throw new Exception("user not found.");
 
             UsuarioModel usuarioModel = _mapper.Map<UsuarioModel>(user);
             usuarioModel.Token = TokenService.GenerateToken(usuarioModel);
 
             await Task.CompletedTask;
 
-            return Ok(usuarioModel);
+            return usuarioModel;
         }
 
-        private string EncriptarSenha(string login, string senha)
+        private static string EncriptarSenha(string login, string senha)
         {
             byte[] salt = Encoding.UTF8.GetBytes(login);
             byte[] senhaByte = Encoding.UTF8.GetBytes(senha);
