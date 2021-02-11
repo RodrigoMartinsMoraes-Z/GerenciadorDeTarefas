@@ -120,6 +120,7 @@ namespace GerenciadorDeTarefas.WebApi
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "API Gerenciador De Tarefas");
                 c.RoutePrefix = string.Empty;
+                
             });
 
             app.UseRouting();

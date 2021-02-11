@@ -12,7 +12,7 @@ namespace Api.GerenciadorDeTarefas.Recursos
 {
     public static class Api
     {
-        public static HttpClient client = new HttpClient();
+        public static HttpClient client;
 
         public static async Task<object> ConsumirApi(string url, HttpMethod method, Type returnType, object objeto = null)
         {
