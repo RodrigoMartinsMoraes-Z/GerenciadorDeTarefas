@@ -13,6 +13,8 @@ using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.IdentityModel.Tokens;
 
+using Newtonsoft.Json.Converters;
+
 using SimpleInjector;
 using SimpleInjector.Integration.WebApi;
 
@@ -66,7 +68,11 @@ namespace GerenciadorDeTarefas.WebApi
                         ServiceLifetime.Scoped
                         );
 
-            services.AddControllers();
+            services.AddControllers()
+                    .AddNewtonsoftJson(options =>
+                    options.SerializerSettings.Converters.Add(new StringEnumConverter()));
+
+            services.AddSwaggerGenNewtonsoftSupport();
 
             services.AddSimpleInjector(_container, options =>
             {
@@ -88,6 +94,7 @@ namespace GerenciadorDeTarefas.WebApi
             services.AddSingleton(mapper);
 
             services.AddSwaggerGen();
+
 
             //services.AddMvc();
         }
@@ -120,7 +127,7 @@ namespace GerenciadorDeTarefas.WebApi
             {
                 c.SwaggerEndpoint("/swagger/v1/swagger.json", "API Gerenciador De Tarefas");
                 c.RoutePrefix = string.Empty;
-                
+
             });
 
             app.UseRouting();
