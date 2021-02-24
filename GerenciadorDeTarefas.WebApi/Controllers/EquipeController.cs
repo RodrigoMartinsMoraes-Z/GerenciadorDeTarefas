@@ -8,10 +8,8 @@ using GerenciadorDeTarefas.Domain.Equipes;
 using GerenciadorDeTarefas.Domain.ManyToMany;
 using GerenciadorDeTarefas.Domain.Usuarios;
 
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;

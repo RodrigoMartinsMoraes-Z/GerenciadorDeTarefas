@@ -22,6 +22,6 @@ namespace GerenciadorDeTarefas.Domain.Contexto
         DbSet<Projeto> Projetos { get; }
         DbSet<Tarefa> Tarefas { get; }
         DbSet<Usuario> Usuarios { get; }
-        DbSet<EquipeUsuario> EquipeUsuario { get;}
+        DbSet<EquipeUsuario> EquipeUsuario { get; }
     }
 }

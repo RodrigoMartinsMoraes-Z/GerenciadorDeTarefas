@@ -56,14 +56,14 @@ namespace Api.GerenciadorDeTarefas.Recursos
             }
         }
 
-        public async Task<UsuarioModel> Logar (string login, string senha)
+        public async Task<UsuarioModel> Logar(string login, string senha)
         {
-                object usuario = await Api.ConsumirApi($"{UrlDoSistema}conta?login={login}&senha={senha}", HttpMethod.Post, typeof(UsuarioModel));
+            object usuario = await Api.ConsumirApi($"{UrlDoSistema}conta?login={login}&senha={senha}", HttpMethod.Post, typeof(UsuarioModel));
 
-                return (UsuarioModel)usuario;   
+            return (UsuarioModel)usuario;
         }
 
-        public async Task NovoUsuario (UsuarioModel usuario)
+        public async Task NovoUsuario(UsuarioModel usuario)
         {
             await Api.ConsumirApi($"{UrlDoSistema}usuario", HttpMethod.Post, usuario);
         }

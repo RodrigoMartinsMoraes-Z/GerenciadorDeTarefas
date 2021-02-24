@@ -13,8 +13,6 @@ using GerenciadorDeTarefas.Domain.Projetos;
 using GerenciadorDeTarefas.Domain.Tarefas;
 using GerenciadorDeTarefas.Domain.Usuarios;
 
-using System.Linq;
-
 namespace GerenciadorDeTarefas.WebApi
 {
     public class WebApiAutoMapperConfig : Profile

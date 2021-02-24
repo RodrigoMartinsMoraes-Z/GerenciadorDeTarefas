@@ -16,10 +16,8 @@ using Microsoft.IdentityModel.Tokens;
 using Newtonsoft.Json.Converters;
 
 using SimpleInjector;
-using SimpleInjector.Integration.WebApi;
 
 using System.Text;
-using System.Web.Http;
 
 namespace GerenciadorDeTarefas.WebApi
 {

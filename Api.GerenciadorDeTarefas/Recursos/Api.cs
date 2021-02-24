@@ -38,7 +38,7 @@ namespace Api.GerenciadorDeTarefas.Recursos
                 throw new Exception("Can't get a success status response. " + resposta.StatusCode.ToString());
             }
 
-            if (method == HttpMethod.Post)
+            else if (method == HttpMethod.Post)
             {
                 HttpResponseMessage resposta = client.PostAsync($"{url}", GerarJson(objeto)).GetAwaiter().GetResult();
                 string conteudo = await resposta.Content.ReadAsStringAsync();
@@ -48,7 +48,7 @@ namespace Api.GerenciadorDeTarefas.Recursos
                 throw new Exception("Can't get a success status response. " + resposta.StatusCode.ToString());
             }
 
-            if (method == HttpMethod.Put)
+            else if (method == HttpMethod.Put)
             {
 
                 HttpResponseMessage resposta = client.PutAsync($"{url}", GerarJson(objeto)).GetAwaiter().GetResult();
@@ -59,7 +59,7 @@ namespace Api.GerenciadorDeTarefas.Recursos
                 throw new Exception("Can't get a success status response. " + resposta.StatusCode.ToString());
             }
 
-            if (method == HttpMethod.Delete)
+            else if (method == HttpMethod.Delete)
             {
                 HttpResponseMessage resposta = client.DeleteAsync($"{url}").GetAwaiter().GetResult();
                 string conteudo = await resposta.Content.ReadAsStringAsync();
@@ -69,7 +69,7 @@ namespace Api.GerenciadorDeTarefas.Recursos
                 throw new Exception("Can't get a success status response. " + resposta.StatusCode.ToString());
             }
 
-            throw new Exception();
+            return null;
         }
         public static async Task ConsumirApi(string url, HttpMethod method, object objeto = null)
         {
@@ -91,7 +91,7 @@ namespace Api.GerenciadorDeTarefas.Recursos
                     throw new Exception("Can't get a success status response. " + resposta.StatusCode.ToString());
             }
 
-            if (method == HttpMethod.Post)
+            else if (method == HttpMethod.Post)
             {
                 HttpResponseMessage resposta = client.PostAsync($"{url}", GerarJson(objeto)).GetAwaiter().GetResult();
                 string conteudo = await resposta.Content.ReadAsStringAsync();
@@ -102,7 +102,7 @@ namespace Api.GerenciadorDeTarefas.Recursos
                         throw new Exception("Can't get a success status response. " + resposta.StatusCode.ToString());
             }
 
-            if (method == HttpMethod.Put)
+            else if (method == HttpMethod.Put)
             {
 
                 HttpResponseMessage resposta = client.PutAsync($"{url}", GerarJson(objeto)).GetAwaiter().GetResult();
@@ -111,7 +111,7 @@ namespace Api.GerenciadorDeTarefas.Recursos
                     throw new Exception("Can't get a success status response. " + resposta.StatusCode.ToString());
             }
 
-            if (method == HttpMethod.Delete)
+            else if (method == HttpMethod.Delete)
             {
                 HttpResponseMessage resposta = client.DeleteAsync($"{url}").GetAwaiter().GetResult();
                 string conteudo = await resposta.Content.ReadAsStringAsync();
@@ -119,7 +119,7 @@ namespace Api.GerenciadorDeTarefas.Recursos
                     throw new Exception("Can't get a success status response. " + resposta.StatusCode.ToString());
             }
 
-            throw new Exception();
+            return;
         }
 
         internal static StringContent GerarJson(object objeto)

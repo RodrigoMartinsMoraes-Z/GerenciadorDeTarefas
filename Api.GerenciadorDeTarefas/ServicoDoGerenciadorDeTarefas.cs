@@ -1,6 +1,5 @@
 ﻿using GerenciadorDeTarefas.Common.Models.Usuarios;
 
-using System;
 using System.Threading.Tasks;
 
 namespace Api.GerenciadorDeTarefas

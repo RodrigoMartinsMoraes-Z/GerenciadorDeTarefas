@@ -2,7 +2,6 @@
 
 using GerenciadorDeTarefas.Common.Models.Usuarios;
 using GerenciadorDeTarefas.Domain.Contexto;
-using GerenciadorDeTarefas.Domain.ManyToMany;
 using GerenciadorDeTarefas.Domain.Usuarios;
 
 using Microsoft.AspNetCore.Authorization;

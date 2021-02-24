@@ -1,7 +1,4 @@
-﻿using GerenciadorDeTarefas.WebApi.Controllers;
-
-using Microsoft.Extensions.Configuration;
-
+﻿
 using SimpleInjector;
 
 namespace GerenciadorDeTarefas.WebApi

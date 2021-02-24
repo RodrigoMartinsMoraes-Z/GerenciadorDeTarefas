@@ -43,11 +43,16 @@ namespace GerenciadorDeTarefas.Teste
         {
             CriarCabecalho();
 
-           foreach(var relatorio in _relatorios)
+            foreach (var relatorio in _relatorios)
             {
-                Console.WriteLine($"|{relatorio.Metodo,-23}|{relatorio.Resposta,-49}|{(relatorio.Sucesso?"Ok":"Erro"),-9}|");
+                Console.WriteLine($"|{relatorio.Metodo,-23}|{relatorio.Resposta,-49}|{(relatorio.Sucesso ? "Ok" : "Erro"),-9}|");
                 SepararLinha();
             }
+
+            Console.WriteLine("");
+            Console.WriteLine("Processo finalizado.");
+            Console.WriteLine("Pressione alguma tecla para sair.");
+            Console.ReadKey();
 
             Environment.Exit(0);
         }
@@ -58,12 +63,12 @@ namespace GerenciadorDeTarefas.Teste
             SepararLinha();
         }
 
-        private static void SepararLinha() => Console.WriteLine("|".PadRight(24, '_') + "|".PadRight(50, '_') + "|".PadRight(10, '_') + "|");
+        private static void SepararLinha() => Console.WriteLine("|".PadRight(24, '-') + "|".PadRight(50, '-') + "|".PadRight(10, '-') + "|");
 
         private static void Testes()
         {
             Console.WriteLine("Selecione o que deseja testar");
-            Console.WriteLine("1 - ContaController");
+            Console.WriteLine("1 - Conta Controller");
             //Console.WriteLine("Selecione o que deseja testar");
             //Console.WriteLine("Selecione o que deseja testar");
             //Console.WriteLine("Selecione o que deseja testar");

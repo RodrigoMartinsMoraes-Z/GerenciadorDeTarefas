@@ -10,13 +10,6 @@ using GerenciadorDeTarefas.Domain.Tarefas;
 using GerenciadorDeTarefas.Domain.Usuarios;
 
 using Microsoft.EntityFrameworkCore;
-using Microsoft.EntityFrameworkCore.ChangeTracking;
-
-using Starlight.Core.DbHelper;
-
-using System;
-using System.Threading;
-using System.Threading.Tasks;
 
 namespace GerenciadorDeTarefas.Context
 {

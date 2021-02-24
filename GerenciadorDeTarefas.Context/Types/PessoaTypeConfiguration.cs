@@ -9,7 +9,7 @@ namespace GerenciadorDeTarefas.Context.Types
     {
         public void Configure(EntityTypeBuilder<Pessoa> builder)
         {
-            builder.HasKey(p => p.Id);            
+            builder.HasKey(p => p.Id);
 
         }
     }

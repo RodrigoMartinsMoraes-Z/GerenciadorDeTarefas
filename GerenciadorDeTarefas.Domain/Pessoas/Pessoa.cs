@@ -1,5 +1,4 @@
-﻿using GerenciadorDeTarefas.Domain.Usuarios;
-
+﻿
 using System;
 
 namespace GerenciadorDeTarefas.Domain.Pessoas
@@ -8,7 +7,7 @@ namespace GerenciadorDeTarefas.Domain.Pessoas
     {
         public int Id { get; set; }
         public string Nome { get; set; }
-        public DateTime Nascimento { get; set; }      
+        public DateTime Nascimento { get; set; }
 
     }
 }

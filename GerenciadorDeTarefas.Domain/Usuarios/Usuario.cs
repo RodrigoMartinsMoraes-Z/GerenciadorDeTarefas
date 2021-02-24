@@ -31,6 +31,6 @@ namespace GerenciadorDeTarefas.Domain.Usuarios
             byte[] senhaByte = Encoding.UTF8.GetBytes(value);
             byte[] sha256 = new SHA256Managed().ComputeHash(senhaByte.Concat(salt).ToArray());
             return Convert.ToBase64String(sha256);
-        }       
+        }
     }
 }
