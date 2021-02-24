@@ -1,18 +1,27 @@
-﻿using Starlight.Standard;
+﻿using GerenciadorDeTarefas.Common.Models.Usuarios;
+
+using Newtonsoft.Json;
+
+using Starlight.Standard;
 
 using System;
 using System.Collections.Generic;
+using System.Linq;
+using System.Net.Http;
 using System.Net.Http.Headers;
 using System.Text;
 using System.Threading.Tasks;
+using System.Web;
 
 namespace Api.GerenciadorDeTarefas.Recursos
 {
     public class Recursos
     {
+        public string UrlDoSistema { get; set; }
+
         public Recursos()
         {
-            Api.client = new System.Net.Http.HttpClient();
+            Api.client = new HttpClient();
         }
 
         public Task AdicionarHeaders(Header[] headers)
@@ -45,6 +54,33 @@ namespace Api.GerenciadorDeTarefas.Recursos
                     Api.client.DefaultRequestHeaders.Authorization = new AuthenticationHeaderValue("Bearer", authorization.Key);
                     break;
             }
+        }
+
+        public async Task<UsuarioModel> Logar (string login, string senha)
+        {
+                object usuario = await Api.ConsumirApi($"{UrlDoSistema}conta?login={login}&senha={senha}", HttpMethod.Post, typeof(UsuarioModel));
+
+                return (UsuarioModel)usuario;   
+        }
+
+        public async Task NovoUsuario (UsuarioModel usuario)
+        {
+            await Api.ConsumirApi($"{UrlDoSistema}usuario", HttpMethod.Post, usuario);
+        }
+
+        internal Task<string> GenerateQueryString(object obj)
+        {
+            IEnumerable<string> properties = from p in obj.GetType().GetProperties()
+                                             where p.GetValue(obj, null) != null
+                                             select p.Name + "=" + HttpUtility.UrlEncode(p.GetValue(obj, null).ToString());
+
+            return Task.FromResult('?' + string.Join("&", properties.ToArray()));
+        }
+
+        internal StringContent GenerateJson(object objeto)
+        {
+            string serializedObject = $"{JsonConvert.SerializeObject(objeto)}";
+            return new StringContent(serializedObject, Encoding.UTF8, "application/json");
         }
     }
 }

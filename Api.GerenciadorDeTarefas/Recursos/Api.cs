@@ -1,5 +1,7 @@
 ﻿using Newtonsoft.Json;
 
+using Starlight.Standard;
+
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -94,7 +96,10 @@ namespace Api.GerenciadorDeTarefas.Recursos
                 HttpResponseMessage resposta = client.PostAsync($"{url}", GerarJson(objeto)).GetAwaiter().GetResult();
                 string conteudo = await resposta.Content.ReadAsStringAsync();
                 if (!resposta.IsSuccessStatusCode)
-                    throw new Exception("Can't get a success status response. " + resposta.StatusCode.ToString());
+                    if (await conteudo.IsValidString())
+                        throw new Exception(conteudo);
+                    else
+                        throw new Exception("Can't get a success status response. " + resposta.StatusCode.ToString());
             }
 
             if (method == HttpMethod.Put)
