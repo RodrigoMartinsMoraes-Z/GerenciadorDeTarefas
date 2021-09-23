@@ -132,6 +132,7 @@ namespace GerenciadorDeTarefas.WebApi.Controllers
 
             return Ok();
         }
+
         internal Task<bool> EmailExiste(string email)
         {
             return Task.FromResult(_contexto.Usuarios.Any(p => p.Email == email));
