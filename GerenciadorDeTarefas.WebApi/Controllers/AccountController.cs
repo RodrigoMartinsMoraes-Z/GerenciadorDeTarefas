@@ -18,10 +18,10 @@ namespace GerenciadorDeTarefas.WebApi.Controllers
     [ApiController]
     public class AccountController : BaseApiController
     {
-        private readonly IContextoDeDados _contexto;
+        private readonly IContext _contexto;
         private readonly IMapper _mapper;
 
-        public AccountController(IContextoDeDados contexto, IMapper mapper)
+        public AccountController(IContext contexto, IMapper mapper)
         {
             _contexto = contexto;
             _mapper = mapper;
@@ -33,7 +33,7 @@ namespace GerenciadorDeTarefas.WebApi.Controllers
         {
             senha = EncriptarSenha(login, senha);
 
-            Domain.Usuarios.Usuario user = _contexto.Usuarios.FirstOrDefault(u => u.Login == login && u.Senha == senha);
+            Domain.Usuarios.Usuario user = _contexto.Users.FirstOrDefault(u => u.Login == login && u.Senha == senha);
 
             _usuarioLogado = user;
 

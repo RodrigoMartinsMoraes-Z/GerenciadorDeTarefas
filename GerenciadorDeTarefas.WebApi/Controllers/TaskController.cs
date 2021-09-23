@@ -2,7 +2,7 @@
 
 using GerenciadorDeTarefas.Common.Models.Tarefas;
 using GerenciadorDeTarefas.Domain.Contexto;
-using GerenciadorDeTarefas.Domain.Tarefas;
+using GerenciadorDeTarefas.Domain.Tasks;
 
 using Microsoft.AspNetCore.Mvc;
 
@@ -14,10 +14,10 @@ namespace GerenciadorDeTarefas.WebApi.Controllers
     [Route("api/task")]
     public class TaskController : BaseApiController
     {
-        private readonly IContextoDeDados _contexto;
+        private readonly IContext _contexto;
         private readonly IMapper _mapper;
 
-        public TaskController(IContextoDeDados contexto, IMapper mapper)
+        public TaskController(IContext contexto, IMapper mapper)
         {
             _contexto = contexto;
             _mapper = mapper;
@@ -27,12 +27,12 @@ namespace GerenciadorDeTarefas.WebApi.Controllers
         [ProducesResponseType(typeof(TarefaModel), 200)]
         public async Task<ActionResult> GetTask(int id)
         {
-            Tarefa task = _contexto.Tarefas.Find(id);
+            Domain.Tasks.Task task = _contexto.Tasks.Find(id);
 
             if (task == null)
                 return NotFound();
 
-            await Task.CompletedTask;
+            await System.Threading.Tasks.Task.CompletedTask;
 
             return Ok(_mapper.Map<TarefaModel>(task));
         }
@@ -43,17 +43,17 @@ namespace GerenciadorDeTarefas.WebApi.Controllers
             if (model.IdObjetivo < 0 || model.IdProjeto < 0)
                 return BadRequest("Objective or Project is required!.");
 
-            Tarefa task = _mapper.Map<Tarefa>(model);
-            Tarefa exist = _contexto.Tarefas.Find(model.Id);
+            Domain.Tasks.Task task = _mapper.Map<Domain.Tasks.Task>(model);
+            Domain.Tasks.Task exist = _contexto.Tasks.Find(model.Id);
 
             if (exist != null)
-                _contexto.Tarefas.Update(task);
+                _contexto.Tasks.Update(task);
             else
-                _contexto.Tarefas.Add(task);
+                _contexto.Tasks.Add(task);
 
             _contexto.SaveChanges();
 
-            await Task.CompletedTask;
+            await System.Threading.Tasks.Task.CompletedTask;
 
             return Ok();
         }
@@ -61,26 +61,26 @@ namespace GerenciadorDeTarefas.WebApi.Controllers
         [HttpDelete, Route("{id}")]
         public async Task<ActionResult> DeleteTask(int id)
         {
-            Tarefa task = _contexto.Tarefas.Find(id);
+            Domain.Tasks.Task task = _contexto.Tasks.Find(id);
 
             if (task == null)
                 return NotFound();
 
-            task.SubTarefas = _contexto.Tarefas.Where(t => t.IdTarefaPrincipal == task.Id).ToList();
+            task.SubTask = _contexto.Tasks.Where(t => t.IdTarefaPrincipal == task.Id).ToList();
 
-            if (task.SubTarefas.Count > 0)
+            if (task.SubTask.Count > 0)
             {
-                foreach (Tarefa subTask in task.SubTarefas)
+                foreach (Domain.Tasks.Task subTask in task.SubTask)
                 {
-                    _contexto.Tarefas.Remove(subTask);
+                    _contexto.Tasks.Remove(subTask);
                 }
             }
 
-            _contexto.Tarefas.Remove(task);
+            _contexto.Tasks.Remove(task);
 
             _contexto.SaveChanges();
 
-            await Task.CompletedTask;
+            await System.Threading.Tasks.Task.CompletedTask;
             return Ok();
         }
     }

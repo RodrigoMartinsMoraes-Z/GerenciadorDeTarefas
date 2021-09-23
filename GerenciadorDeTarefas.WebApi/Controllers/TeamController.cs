@@ -6,7 +6,8 @@ using GerenciadorDeTarefas.Common.Models.Usuarios;
 using GerenciadorDeTarefas.Domain.Contexto;
 using GerenciadorDeTarefas.Domain.Equipes;
 using GerenciadorDeTarefas.Domain.ManyToMany;
-using GerenciadorDeTarefas.Domain.Usuarios;
+using GerenciadorDeTarefas.Domain.Projects;
+using GerenciadorDeTarefas.Domain.Users;
 
 using Microsoft.AspNetCore.Mvc;
 
@@ -19,10 +20,10 @@ namespace GerenciadorDeTarefas.WebApi.Controllers
     [Route("api/team")]
     public class TeamController : BaseApiController
     {
-        private readonly IContextoDeDados _contexto;
+        private readonly IContext _contexto;
         private readonly IMapper _mapper;
 
-        public TeamController(IContextoDeDados contexto, IMapper mapper)
+        public TeamController(IContext contexto, IMapper mapper)
         {
             _contexto = contexto;
             _mapper = mapper;
@@ -32,7 +33,7 @@ namespace GerenciadorDeTarefas.WebApi.Controllers
         [ProducesResponseType(typeof(EquipeModel), 200)]
         public async Task<ActionResult> GetTeam(int id)
         {
-            Equipe equipe = _contexto.Equipes.Find(id);
+            Team equipe = _contexto.Teams.Find(id);
 
             if (equipe == null)
                 return NotFound();
@@ -46,9 +47,9 @@ namespace GerenciadorDeTarefas.WebApi.Controllers
         [ProducesResponseType(typeof(List<UsuarioModel>), 200)]
         public async Task<ActionResult> GetTeamUsers(int teamId)
         {
-            List<Usuario> users = _contexto.EquipeUsuario
-                .Where(eu => eu.IdEquipe == teamId)
-                .Select(e => e.Usuario)
+            List<Domain.ManyToMany.User> users = _contexto.TeamUser
+                .Where((object eu) => eu.IdEquipe == teamId)
+                .Select((object e) => e.Usuario)
                 .ToList();
 
             List<UsuarioModel> models = new List<UsuarioModel>();
@@ -68,11 +69,11 @@ namespace GerenciadorDeTarefas.WebApi.Controllers
         [ProducesResponseType(typeof(List<ProjetoModel>), 200)]
         public async Task<ActionResult> TeamProjects(int teamId)
         {
-            Equipe team = _contexto.Equipes.Find(teamId);
+            Team team = _contexto.Teams.Find(teamId);
 
             UserHasTeam(teamId);
 
-            IQueryable<Domain.Projetos.Projeto> projects = _contexto.Projetos.Where(p => p.IdEquipe == teamId);
+            IQueryable<Project> projects = _contexto.Projects.Where(p => p.IdEquipe == teamId);
 
             List<ProjetoModel> models = new List<ProjetoModel>();
 
@@ -91,7 +92,7 @@ namespace GerenciadorDeTarefas.WebApi.Controllers
         [ProducesResponseType(typeof(List<EquipeModel>), 200)]
         public async Task<ActionResult> UserTeams()
         {
-            IQueryable<Equipe> teams = _contexto.EquipeUsuario.Where(eu => eu.IdUsuario == _usuarioLogado.IdPessoa).Select(e => e.Equipe);
+            IQueryable<Team> teams = _contexto.TeamUser.Where(eu => eu.IdUsuario == _usuarioLogado.IdPessoa).Select(e => e.Equipe);
 
             List<EquipeModel> models = new List<EquipeModel>();
 
@@ -105,27 +106,27 @@ namespace GerenciadorDeTarefas.WebApi.Controllers
         [HttpPut, Route("{teamId}/add-user")]
         public async Task<ActionResult> AddUser([FromBody] UsuarioModel usuarioModel, int teamId)
         {
-            Role role = _contexto.EquipeUsuario.FirstOrDefault(eu => eu.IdEquipe == teamId && eu.IdUsuario == _usuarioLogado.IdPessoa).PermissaoUsuario;
+            Role role = _contexto.TeamUser.FirstOrDefault(eu => eu.IdEquipe == teamId && eu.IdUsuario == _usuarioLogado.IdPessoa).PermissaoUsuario;
 
             if (role == Role.User)
                 return Unauthorized();
 
-            Equipe team = _contexto.Equipes.Find(teamId);
-            Usuario user = _contexto.Usuarios.FirstOrDefault(u => u.Login == usuarioModel.Login);
+            Team team = _contexto.Teams.Find(teamId);
+            Domain.ManyToMany.User user = _contexto.Users.FirstOrDefault((object u) => u.Login == usuarioModel.Login);
 
             UserHasTeam(teamId);
 
 
-            EquipeUsuario userTeam = new()
+            TeamUser userTeam = new()
             {
-                Equipe = team,
-                IdEquipe = team.Id,
-                IdUsuario = user.IdPessoa,
-                Usuario = user,
-                PermissaoUsuario = (Role)usuarioModel.Permissao
+                Team = team,
+                TeamId = team.Id,
+                UserId = user.IdPessoa,
+                User = user,
+                UserRole = (Role)usuarioModel.Permissao
             };
 
-            team.Usuarios.Add(userTeam);
+            team.TeamUsers.Add(userTeam);
             _contexto.SaveChanges();
 
             await Task.CompletedTask;
@@ -136,7 +137,7 @@ namespace GerenciadorDeTarefas.WebApi.Controllers
         [HttpPut]
         public async Task<ActionResult> UpdateTeam([FromBody] EquipeModel teamModel)
         {
-            Equipe team = _contexto.Equipes.FirstOrDefault(e => e.Id == teamModel.Id);
+            Team team = _contexto.Teams.FirstOrDefault(e => e.Id == teamModel.Id);
 
             if (team == null)
             {
@@ -146,12 +147,12 @@ namespace GerenciadorDeTarefas.WebApi.Controllers
             if (UserHasTeam(team.Id))
                 return Unauthorized();
 
-            var role = _contexto.EquipeUsuario.FirstOrDefault(eu => eu.IdEquipe == teamModel.Id && eu.IdUsuario == _usuarioLogado.IdPessoa).PermissaoUsuario;
+            var role = _contexto.TeamUser.FirstOrDefault(eu => eu.IdEquipe == teamModel.Id && eu.IdUsuario == _usuarioLogado.IdPessoa).PermissaoUsuario;
 
             if (role == Role.User)
                 return Unauthorized();
 
-            team.Nome = teamModel.Nome;
+            team.Name = teamModel.Nome;
 
             _contexto.Update(team);
             _contexto.SaveChanges();
@@ -165,26 +166,26 @@ namespace GerenciadorDeTarefas.WebApi.Controllers
         public async Task<ActionResult> NewTeam([FromBody] EquipeModel teamModel)
         {
 
-            Equipe team = _mapper.Map<Equipe>(teamModel);
+            Team team = _mapper.Map<Team>(teamModel);
 
             await team.Validate();
 
-            Usuario user = _contexto.Usuarios.FirstOrDefault(u => u.Login == User.Identity.Name);
+            Domain.ManyToMany.User user = _contexto.Users.FirstOrDefault((object u) => u.Login == User.Identity.Name);
 
             _contexto.Add(team);
             _contexto.SaveChanges();
 
-            EquipeUsuario userTeam = new EquipeUsuario
+            TeamUser userTeam = new TeamUser
             {
-                Usuario = user,
-                IdUsuario = user.IdPessoa,
-                Equipe = team,
-                IdEquipe = team.Id,
-                PermissaoUsuario = Role.Administrator
+                User = user,
+                UserId = user.IdPessoa,
+                Team = team,
+                TeamId = team.Id,
+                UserRole = Role.Administrator
             };
 
             user.Equipes.Add(userTeam);
-            team.Usuarios.Add(userTeam);
+            team.TeamUsers.Add(userTeam);
 
             _contexto.Update(user);
             _contexto.Update(team);
@@ -196,12 +197,12 @@ namespace GerenciadorDeTarefas.WebApi.Controllers
         [HttpDelete, Route("{teamId}")]
         public async Task<ActionResult> DeleteTeam(int teamId)
         {
-            Equipe team = _contexto.Equipes.Find(teamId);
+            Team team = _contexto.Teams.Find(teamId);
 
             if (team == null)
                 return NotFound();
 
-            var role = _contexto.EquipeUsuario.FirstOrDefault(eu => eu.IdEquipe == teamId && eu.IdUsuario == _usuarioLogado.IdPessoa).PermissaoUsuario;
+            var role = _contexto.TeamUser.FirstOrDefault(eu => eu.IdEquipe == teamId && eu.IdUsuario == _usuarioLogado.IdPessoa).PermissaoUsuario;
 
             if (!UserHasTeam(teamId) || role != Role.Administrator)
                 return Unauthorized();
@@ -215,7 +216,7 @@ namespace GerenciadorDeTarefas.WebApi.Controllers
         [HttpDelete, Route("{teamId}/remove-user/{userId}")]
         public async Task<ActionResult> RemoveUser(int teamId, int userId)
         {
-            var temUsers = _contexto.EquipeUsuario.FirstOrDefault(x => x.IdEquipe == teamId && x.IdUsuario == userId);
+            var temUsers = _contexto.TeamUser.FirstOrDefault(x => x.IdEquipe == teamId && x.IdUsuario == userId);
 
             if (temUsers == null)
                 return NotFound();
@@ -230,7 +231,7 @@ namespace GerenciadorDeTarefas.WebApi.Controllers
 
         private bool UserHasTeam(int teamId)
         {
-            return _contexto.EquipeUsuario.Any(e => e.IdEquipe == teamId && e.IdUsuario == _usuarioLogado.IdPessoa);
+            return _contexto.TeamUser.Any(e => e.IdEquipe == teamId && e.IdUsuario == _usuarioLogado.IdPessoa);
         }
 
     }

@@ -5,14 +5,14 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace GerenciadorDeTarefas.Context.Types.ManyToMany
 {
-    class EquipeUsuarioTypeConfiguration : IEntityTypeConfiguration<EquipeUsuario>
+    class EquipeUsuarioTypeConfiguration : IEntityTypeConfiguration<TeamUser>
     {
-        public void Configure(EntityTypeBuilder<EquipeUsuario> builder)
+        public void Configure(EntityTypeBuilder<TeamUser> builder)
         {
-            builder.HasKey(eu => new { eu.IdEquipe, eu.IdUsuario });
+            builder.HasKey(eu => new { eu.TeamId, eu.UserId });
 
-            builder.HasOne(eu => eu.Equipe).WithMany(e => e.Usuarios).HasForeignKey(eu => eu.IdEquipe);
-            builder.HasOne(eu => eu.Usuario).WithMany(e => e.Equipes).HasForeignKey(eu => eu.IdUsuario);
+            builder.HasOne(eu => eu.Team).WithMany(e => e.TeamUsers).HasForeignKey(eu => eu.TeamId);
+            builder.HasOne(eu => eu.User).WithMany(e => e.Equipes).HasForeignKey(eu => eu.IdUsuario);
         }
     }
 }

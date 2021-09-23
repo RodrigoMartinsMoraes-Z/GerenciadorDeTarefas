@@ -5,27 +5,27 @@ using GerenciadorDeTarefas.Domain.Equipes;
 using GerenciadorDeTarefas.Domain.ManyToMany;
 using GerenciadorDeTarefas.Domain.Objetivos;
 using GerenciadorDeTarefas.Domain.Pessoas;
-using GerenciadorDeTarefas.Domain.Projetos;
-using GerenciadorDeTarefas.Domain.Tarefas;
+using GerenciadorDeTarefas.Domain.Projects;
+using GerenciadorDeTarefas.Domain.Tasks;
 using GerenciadorDeTarefas.Domain.Usuarios;
 
 using Microsoft.EntityFrameworkCore;
 
 namespace GerenciadorDeTarefas.Context
 {
-    public class ContextoDeDados : DbContext, IContextoDeDados
+    public class ContextoDeDados : DbContext, IContext
     {
         public ContextoDeDados(DbContextOptions<ContextoDeDados> options) : base(options)
         {
         }
 
-        public DbSet<Equipe> Equipes { get; set; }
-        public DbSet<Objetivo> Objetivos { get; set; }
-        public DbSet<Pessoa> Pessoas { get; set; }
-        public DbSet<Projeto> Projetos { get; set; }
-        public DbSet<Tarefa> Tarefas { get; set; }
-        public DbSet<Usuario> Usuarios { get; set; }
-        public DbSet<EquipeUsuario> EquipeUsuario { get; set; }
+        public DbSet<Team> Teams { get; set; }
+        public DbSet<Objective> Objectives { get; set; }
+        public DbSet<Person> People { get; set; }
+        public DbSet<Project> Projects { get; set; }
+        public DbSet<Task> Tasks { get; set; }
+        public DbSet<User> Users { get; set; }
+        public DbSet<TeamUser> TeamUser { get; set; }
 
         protected override void OnModelCreating(ModelBuilder builder)
         {

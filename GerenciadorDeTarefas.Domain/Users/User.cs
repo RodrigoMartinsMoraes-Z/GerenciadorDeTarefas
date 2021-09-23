@@ -7,25 +7,26 @@ using System.Linq;
 using System.Security.Cryptography;
 using System.Text;
 
-namespace GerenciadorDeTarefas.Domain.Usuarios
+namespace GerenciadorDeTarefas.Domain.Users
 {
-    public class Usuario
+    public class User
     {
-        private string _senha;
+        private string _pass;
 
-        public Usuario()
+        public User()
         {
-            Equipes = new List<EquipeUsuario>();
+            Team = new List<TeamUser>();
         }
-        public int IdPessoa { get; set; }
+
+        public int PersonId { get; set; }
         public string Email { get; set; }
         public string Login { get; set; }
-        public string Senha { get => _senha; set => _senha = EncriptarSenha(value); }
-        public virtual Pessoa Pessoa { get; set; }
+        public string Pass { get => _pass; set => _pass = EncryptPass(value); }
+        public virtual Person Person { get; set; }
 
-        public virtual ICollection<EquipeUsuario> Equipes { get; set; }
+        public virtual ICollection<TeamUser> Team { get; set; }
 
-        private string EncriptarSenha(string value)
+        private string EncryptPass(string value)
         {
             byte[] salt = Encoding.UTF8.GetBytes(Login);
             byte[] senhaByte = Encoding.UTF8.GetBytes(value);

@@ -16,10 +16,10 @@ namespace GerenciadorDeTarefas.WebApi.Controllers
     [Route("api/user")]
     public class UserController : BaseApiController
     {
-        private readonly IContextoDeDados _contexto;
+        private readonly IContext _contexto;
         private readonly IMapper _mapper;
 
-        public UserController(IContextoDeDados contexto, IMapper mapper)
+        public UserController(IContext contexto, IMapper mapper)
         {
             _contexto = contexto;
             _mapper = mapper;
@@ -29,7 +29,7 @@ namespace GerenciadorDeTarefas.WebApi.Controllers
         [ProducesResponseType(typeof(UsuarioModel), 200)]
         public async Task<ActionResult> GetUser(int id)
         {
-            Usuario user = _contexto.Usuarios.Find(id);
+            Usuario user = _contexto.Users.Find(id);
 
             await Task.CompletedTask;
 
@@ -40,7 +40,7 @@ namespace GerenciadorDeTarefas.WebApi.Controllers
         [ProducesResponseType(typeof(UsuarioModel), 200)]
         public async Task<ActionResult> GetUserByEmail(string email)
         {
-            var user = _contexto.Usuarios.FirstOrDefault(u => u.Email == email);
+            var user = _contexto.Users.FirstOrDefault(u => u.Email == email);
 
             if (user == null)
                 return NotFound();
@@ -61,7 +61,7 @@ namespace GerenciadorDeTarefas.WebApi.Controllers
             if (user.Senha == null)
                 throw new Exception("Senha não pode ser nula");
 
-            Usuario existente = _contexto.Usuarios.FirstOrDefault(u => u.Login == user.Login);
+            Usuario existente = _contexto.Users.FirstOrDefault(u => u.Login == user.Login);
 
             if (existente != null)
             {
@@ -69,17 +69,17 @@ namespace GerenciadorDeTarefas.WebApi.Controllers
 
                 user.Senha = existente.Senha;
                 if (user.Pessoa != null && user.Email != existente.Email)
-                    if (_contexto.Usuarios.Any(p => p.Email == user.Email))
+                    if (_contexto.Users.Any(p => p.Email == user.Email))
                         return BadRequest("Este email já está sendo utilizado.");
 
                 user.IdPessoa = existente.IdPessoa;
                 user.Pessoa.Id = existente.IdPessoa;
 
-                _contexto.Usuarios.Update(user);
+                _contexto.Users.Update(user);
             }
             else
             {
-                _contexto.Usuarios.Add(user);
+                _contexto.Users.Add(user);
             }
 
             await Task.CompletedTask;
@@ -119,12 +119,12 @@ namespace GerenciadorDeTarefas.WebApi.Controllers
 
         internal Task<bool> EmailExist(string email)
         {
-            return Task.FromResult(_contexto.Usuarios.Any(p => p.Email == email));
+            return Task.FromResult(_contexto.Users.Any(p => p.Email == email));
         }
 
         internal Task<bool> LoginExist(string login)
         {
-            return Task.FromResult(_contexto.Usuarios.Any(u => u.Login == login));
+            return Task.FromResult(_contexto.Users.Any(u => u.Login == login));
         }
 
     }

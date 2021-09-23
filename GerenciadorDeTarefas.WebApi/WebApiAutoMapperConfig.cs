@@ -9,8 +9,8 @@ using GerenciadorDeTarefas.Common.Models.Usuarios;
 using GerenciadorDeTarefas.Domain.Equipes;
 using GerenciadorDeTarefas.Domain.Objetivos;
 using GerenciadorDeTarefas.Domain.Pessoas;
-using GerenciadorDeTarefas.Domain.Projetos;
-using GerenciadorDeTarefas.Domain.Tarefas;
+using GerenciadorDeTarefas.Domain.Projects;
+using GerenciadorDeTarefas.Domain.Tasks;
 using GerenciadorDeTarefas.Domain.Usuarios;
 
 namespace GerenciadorDeTarefas.WebApi
@@ -20,24 +20,24 @@ namespace GerenciadorDeTarefas.WebApi
         public WebApiAutoMapperConfig()
         {
             //Equipes
-            CreateMap<Equipe, EquipeModel>()
+            CreateMap<Team, EquipeModel>()
                 .ForMember(e => e.Usuarios, dest => dest.Ignore())
                 .ReverseMap();
 
             //Objetivos
-            CreateMap<Objetivo, ObjetivoModel>()
+            CreateMap<Objective, ObjetivoModel>()
                 .ReverseMap();
 
             //Pessoas
-            CreateMap<Pessoa, PessoaModel>()
+            CreateMap<Person, PessoaModel>()
                 .ReverseMap();
 
             //Projetos
-            CreateMap<Projeto, ProjetoModel>()
+            CreateMap<Project, ProjetoModel>()
                 .ReverseMap();
 
             //Tarefas
-            CreateMap<Tarefa, TarefaModel>()
+            CreateMap<Task, TarefaModel>()
                 .ReverseMap();
 
             //Usuarios

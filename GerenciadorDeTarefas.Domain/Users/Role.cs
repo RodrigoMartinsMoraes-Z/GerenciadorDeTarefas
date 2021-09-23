@@ -1,4 +1,4 @@
-﻿namespace GerenciadorDeTarefas.Domain.Usuarios
+﻿namespace GerenciadorDeTarefas.Domain.Users
 {
     public enum Role
     {
