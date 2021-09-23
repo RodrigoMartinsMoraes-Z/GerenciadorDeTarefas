@@ -1,4 +1,4 @@
-﻿using GerenciadorDeTarefas.Common.Models.Usuarios;
+﻿using GerenciadorDeTarefas.Common.Models.Users;
 
 using Microsoft.IdentityModel.Tokens;
 
@@ -10,13 +10,13 @@ namespace GerenciadorDeTarefas.WebApi
 {
     public class TokenService
     {
-        public static string Secret = "arrobameiameia6meia9";
+        public static readonly string Secret = "arrobameiameia6meia9";
 
-        public static string GenerateToken(UsuarioModel usuario)
+        public static string GenerateToken(UserModel usuario)
         {
-            var tokenHandler = new JwtSecurityTokenHandler();
-            var key = Encoding.ASCII.GetBytes(Secret);
-            var tokenDescriptor = new SecurityTokenDescriptor
+            JwtSecurityTokenHandler tokenHandler = new JwtSecurityTokenHandler();
+            byte[] key = Encoding.ASCII.GetBytes(Secret);
+            SecurityTokenDescriptor tokenDescriptor = new SecurityTokenDescriptor
             {
                 Subject = new ClaimsIdentity(new Claim[]
                 {
@@ -24,7 +24,7 @@ namespace GerenciadorDeTarefas.WebApi
                 }),
                 SigningCredentials = new SigningCredentials(new SymmetricSecurityKey(key), SecurityAlgorithms.HmacSha256Signature)
             };
-            var token = tokenHandler.CreateToken(tokenDescriptor);
+            SecurityToken token = tokenHandler.CreateToken(tokenDescriptor);
             return tokenHandler.WriteToken(token);
         }
     }

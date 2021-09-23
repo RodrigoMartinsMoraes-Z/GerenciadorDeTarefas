@@ -5,15 +5,13 @@ using Microsoft.Extensions.Logging;
 
 namespace GerenciadorDeTarefas.Context.Migrations
 {
-    class Configuration
+    internal class Configuration
     {
-        public void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
+        public static void Configure(IApplicationBuilder app, IHostingEnvironment env, ILoggerFactory loggerFactory)
         {
-            using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
-            {
-                var context = serviceScope.ServiceProvider.GetRequiredService<DbContext>();
-                context.Database.EnsureCreated();
-            }
+            using IServiceScope serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope();
+            DbContext context = serviceScope.ServiceProvider.GetRequiredService<DbContext>();
+            context.Database.EnsureCreated();
         }
     }
 }

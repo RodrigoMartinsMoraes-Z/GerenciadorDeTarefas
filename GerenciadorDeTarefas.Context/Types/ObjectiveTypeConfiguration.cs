@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace GerenciadorDeTarefas.Context.Types
 {
-    class ObjectiveTypeConfiguration : IEntityTypeConfiguration<Objective>
+    internal class ObjectiveTypeConfiguration : IEntityTypeConfiguration<Objective>
     {
         public void Configure(EntityTypeBuilder<Objective> builder)
         {

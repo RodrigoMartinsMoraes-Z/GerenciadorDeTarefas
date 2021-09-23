@@ -6,7 +6,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace GerenciadorDeTarefas.Context.Types
 {
-    class TeamTypeConfiguration : IEntityTypeConfiguration<Team>
+    internal class TeamTypeConfiguration : IEntityTypeConfiguration<Team>
     {
         public void Configure(EntityTypeBuilder<Team> builder)
         {

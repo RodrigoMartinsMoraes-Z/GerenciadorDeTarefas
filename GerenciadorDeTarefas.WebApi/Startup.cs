@@ -1,8 +1,7 @@
 using AutoMapper;
 
-using GerenciadorDeTarefas.Context;
-using GerenciadorDeTarefas.Domain;
-using GerenciadorDeTarefas.Domain.Contexto;
+using GerenciadorDeTarefas.Domain.Context;
+using GerenciadorDeTarefas.WebApi.Services;
 
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
@@ -15,25 +14,16 @@ using Microsoft.IdentityModel.Tokens;
 
 using Newtonsoft.Json.Converters;
 
-using SimpleInjector;
-
 using System.Text;
 
 namespace GerenciadorDeTarefas.WebApi
 {
     public class Startup
     {
-        private readonly Container _container = new Container();
-
-        private readonly WebApiInjectionConfig _webApiInjectionConfig = new WebApiInjectionConfig();
-        private readonly DomainInjectionConfig _domainInjectionConfig = new DomainInjectionConfig();
-        private readonly ContextInjectionConfig _contextInjectionConfig = new ContextInjectionConfig();
         public IConfiguration Configuration { get; }
 
         public Startup(IConfiguration configuration)
         {
-            _container.Options.ResolveUnregisteredConcreteTypes = false;
-
             Configuration = configuration;
         }
 
@@ -72,18 +62,10 @@ namespace GerenciadorDeTarefas.WebApi
 
             services.AddSwaggerGenNewtonsoftSupport();
 
-            services.AddSimpleInjector(_container, options =>
-            {
-                // AddAspNetCore() wraps web requests in a Simple Injector scope and
-                // allows request-scoped framework services to be resolved.
-                options.AddAspNetCore();
-
-            });
-
-            InitializeContainer();
+            services.AddServices();
 
             // Auto Mapper Configurations
-            var mapperConfig = new MapperConfiguration(mc =>
+            MapperConfiguration mapperConfig = new MapperConfiguration(mc =>
             {
                 mc.AddProfile(new WebApiAutoMapperConfig());
             });
@@ -97,17 +79,10 @@ namespace GerenciadorDeTarefas.WebApi
             //services.AddMvc();
         }
 
-        private void InitializeContainer()
-        {
-            _webApiInjectionConfig.Register(_container);
-            _domainInjectionConfig.Register(_container);
-            _contextInjectionConfig.Register(_container);
-        }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env)
         {
-            app.UseSimpleInjector(_container);
 
             if (env.IsDevelopment())
             {
@@ -136,9 +111,6 @@ namespace GerenciadorDeTarefas.WebApi
             {
                 endpoints.MapControllers();
             });
-
-
-            _container.Verify();
         }
     }
 }

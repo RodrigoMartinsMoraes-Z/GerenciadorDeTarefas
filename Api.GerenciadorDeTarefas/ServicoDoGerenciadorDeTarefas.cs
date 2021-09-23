@@ -1,4 +1,4 @@
-﻿using GerenciadorDeTarefas.Common.Models.Usuarios;
+﻿using GerenciadorDeTarefas.Common.Models.Users;
 
 using System.Threading.Tasks;
 
@@ -20,7 +20,7 @@ namespace Api.GerenciadorDeTarefas
             return Task.CompletedTask;
         }
 
-        public async Task NovoUsuario(UsuarioModel usuarioModel)
+        public async Task NovoUsuario(UserModel usuarioModel)
         {
             await _recursos.NovoUsuario(usuarioModel);
         }

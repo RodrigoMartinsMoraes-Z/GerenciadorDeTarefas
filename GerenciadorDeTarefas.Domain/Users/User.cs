@@ -15,7 +15,7 @@ namespace GerenciadorDeTarefas.Domain.Users
 
         public User()
         {
-            Team = new List<TeamUser>();
+            Teams = new List<TeamUser>();
         }
 
         public int PersonId { get; set; }
@@ -24,7 +24,7 @@ namespace GerenciadorDeTarefas.Domain.Users
         public string Pass { get => _pass; set => _pass = EncryptPass(value); }
         public virtual Person Person { get; set; }
 
-        public virtual ICollection<TeamUser> Team { get; set; }
+        public virtual ICollection<TeamUser> Teams { get; set; }
 
         private string EncryptPass(string value)
         {
