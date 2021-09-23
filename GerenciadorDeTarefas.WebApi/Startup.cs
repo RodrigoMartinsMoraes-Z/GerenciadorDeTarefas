@@ -58,7 +58,7 @@ namespace GerenciadorDeTarefas.WebApi
                 };
             });
 
-            services.AddDbContext<IContext, ContextoDeDados>(options =>
+            services.AddDbContext<IContext, Context.DbContext>(options =>
                      options
                      .UseLazyLoadingProxies()
                      .UseNpgsql(

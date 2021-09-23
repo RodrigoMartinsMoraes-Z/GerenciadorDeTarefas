@@ -1,11 +1,12 @@
-﻿using GerenciadorDeTarefas.Domain.Pessoas;
+﻿
+using GerenciadorDeTarefas.Domain.People;
 
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace GerenciadorDeTarefas.Context.Types
 {
-    public class PessoaTypeConfiguration : IEntityTypeConfiguration<Person>
+    public class PersonTypeConfiguration : IEntityTypeConfiguration<Person>
     {
         public void Configure(EntityTypeBuilder<Person> builder)
         {

@@ -1,5 +1,5 @@
 ﻿using GerenciadorDeTarefas.Domain.ManyToMany;
-using GerenciadorDeTarefas.Domain.Pessoas;
+using GerenciadorDeTarefas.Domain.People;
 
 using System;
 using System.Collections.Generic;

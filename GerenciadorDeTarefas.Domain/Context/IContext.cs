@@ -1,12 +1,10 @@
-﻿
-
-using GerenciadorDeTarefas.Domain.Equipes;
-using GerenciadorDeTarefas.Domain.ManyToMany;
-using GerenciadorDeTarefas.Domain.Objetivos;
-using GerenciadorDeTarefas.Domain.Pessoas;
+﻿using GerenciadorDeTarefas.Domain.ManyToMany;
+using GerenciadorDeTarefas.Domain.Objectives;
+using GerenciadorDeTarefas.Domain.People;
 using GerenciadorDeTarefas.Domain.Projects;
 using GerenciadorDeTarefas.Domain.Tasks;
-using GerenciadorDeTarefas.Domain.Usuarios;
+using GerenciadorDeTarefas.Domain.Teams;
+using GerenciadorDeTarefas.Domain.Users;
 
 using Microsoft.EntityFrameworkCore;
 

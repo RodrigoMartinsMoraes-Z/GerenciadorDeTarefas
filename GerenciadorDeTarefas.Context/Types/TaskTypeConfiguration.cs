@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Builders;
 
 namespace GerenciadorDeTarefas.Context.Types
 {
-    public class TarefaTypeConfiguration : IEntityTypeConfiguration<Task>
+    public class TaskTypeConfiguration : IEntityTypeConfiguration<Task>
     {
         public void Configure(EntityTypeBuilder<Task> builder)
         {
@@ -13,7 +13,7 @@ namespace GerenciadorDeTarefas.Context.Types
 
             builder.HasMany(t => t.SubTask).WithOne(t => t.FatherTask).HasForeignKey(t => t.FatherTaskId);
 
-            builder.HasOne(t => t.Objective).WithMany(t => t.Tarefas).HasForeignKey(t => t.ObjectiveId);
+            builder.HasOne(t => t.Objective).WithMany(t => t.Tasks).HasForeignKey(t => t.ObjectiveId);
         }
     }
 }

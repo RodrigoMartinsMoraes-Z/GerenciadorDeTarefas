@@ -11,7 +11,7 @@ namespace GerenciadorDeTarefas.Context.Migrations
         {
             using (var serviceScope = app.ApplicationServices.GetService<IServiceScopeFactory>().CreateScope())
             {
-                var context = serviceScope.ServiceProvider.GetRequiredService<ContextoDeDados>();
+                var context = serviceScope.ServiceProvider.GetRequiredService<DbContext>();
                 context.Database.EnsureCreated();
             }
         }

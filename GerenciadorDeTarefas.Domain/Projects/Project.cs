@@ -11,15 +11,15 @@ namespace GerenciadorDeTarefas.Domain.Projects
     {
         public Project()
         {
-            Objetivos = new List<Objective>();
-            Tarefas = new List<Task>();
+            Objectives = new List<Objective>();
+            Tasks = new List<Task>();
         }
         public int Id { get; set; }
         public int IdEquipe { get; set; }
-        public string Nome { get; set; }
+        public string Name { get; set; }
 
-        public virtual Team Equipe { get; set; }
-        public virtual ICollection<Objective> Objetivos { get; set; }
-        public virtual ICollection<Task> Tarefas { get; set; }
+        public virtual Team Team { get; set; }
+        public virtual ICollection<Objective> Objectives { get; set; }
+        public virtual ICollection<Task> Tasks { get; set; }
     }
 }
