@@ -14,14 +14,14 @@ using System.Threading.Tasks;
 
 namespace GerenciadorDeTarefas.WebApi.Controllers
 {
-    [Route("api/conta")]
+    [Route("api/account")]
     [ApiController]
-    public class ContaController : BaseApiController
+    public class AccountController : BaseApiController
     {
         private readonly IContextoDeDados _contexto;
         private readonly IMapper _mapper;
 
-        public ContaController(IContextoDeDados contexto, IMapper mapper)
+        public AccountController(IContextoDeDados contexto, IMapper mapper)
         {
             _contexto = contexto;
             _mapper = mapper;
