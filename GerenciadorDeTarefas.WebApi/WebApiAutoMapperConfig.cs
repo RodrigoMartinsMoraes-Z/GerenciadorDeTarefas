@@ -21,26 +21,24 @@ namespace GerenciadorDeTarefas.WebApi
         {
             //Equipes
             CreateMap<Equipe, EquipeModel>()
-                .ForMember(e => e.Usuarios, dest => dest.Ignore());
-
-            CreateMap<EquipeModel, Equipe>()
-                .ForMember(e => e.Usuarios, dest => dest.Ignore());
+                .ForMember(e => e.Usuarios, dest => dest.Ignore())
+                .ReverseMap();
 
             //Objetivos
-            CreateMap<Objetivo, ObjetivoModel>();
-            CreateMap<ObjetivoModel, Objetivo>();
+            CreateMap<Objetivo, ObjetivoModel>()
+                .ReverseMap();
 
             //Pessoas
-            CreateMap<Pessoa, PessoaModel>();
-            CreateMap<PessoaModel, Pessoa>();
+            CreateMap<Pessoa, PessoaModel>()
+                .ReverseMap();
 
             //Projetos
-            CreateMap<Projeto, ProjetoModel>();
-            CreateMap<ProjetoModel, Projeto>();
+            CreateMap<Projeto, ProjetoModel>()
+                .ReverseMap();
 
             //Tarefas
-            CreateMap<Tarefa, TarefaModel>();
-            CreateMap<TarefaModel, Tarefa>();
+            CreateMap<Tarefa, TarefaModel>()
+                .ReverseMap();
 
             //Usuarios
             CreateMap<Usuario, UsuarioModel>()
