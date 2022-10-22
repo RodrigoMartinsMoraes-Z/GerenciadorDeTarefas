@@ -1,6 +1,5 @@
-﻿
-using GerenciadorDeTarefas.Common.Models.Equipes;
-using GerenciadorDeTarefas.Common.Models.Projetos;
+﻿using GerenciadorDeTarefas.Common.Models.Projects;
+using GerenciadorDeTarefas.Common.Models.Teams;
 
 using System;
 using System.Linq;
@@ -14,7 +13,7 @@ namespace GerenciadorDeTarefas.Paginas.Projetos
     public partial class PaginaNovoProjeto : ContentPage
     {
         private readonly IControleMenu _controleMenu = App.IoCConainer.GetInstance<IControleMenu>();
-        public static EquipeModel Equipe { get; set; }
+        public static TeamModel Equipe { get; set; }
 
         public PaginaNovoProjeto()
         {
@@ -23,17 +22,17 @@ namespace GerenciadorDeTarefas.Paginas.Projetos
 
         private void AdicionarProjeto(object sender, EventArgs args)
         {
-            ProjetoModel projeto = new ProjetoModel
+            ProjectModel projeto = new ProjectModel
             {
-                Nome = NomeProjeto.Text
+                Name = NomeProjeto.Text
             };
 
-            EquipeModel equipe = App.Usuario.Equipes.SingleOrDefault(e => e.Nome == Equipe.Nome);
+            TeamModel equipe = App.User.Teams.SingleOrDefault(e => e.Nome == Equipe.Nome);
             if (equipe != null)
             {
-                equipe.Projetos.Add(projeto);
-                App.Usuario.Equipes.Remove(equipe);
-                App.Usuario.Equipes.Add(equipe);
+                equipe.Projects.Add(projeto);
+                App.User.Teams.Remove(equipe);
+                App.User.Teams.Add(equipe);
                 //App.Usuario.Salvar();
                 _controleMenu.AtualizarListaEquipes();
             }

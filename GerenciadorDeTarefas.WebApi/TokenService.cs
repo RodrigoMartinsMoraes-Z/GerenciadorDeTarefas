@@ -12,7 +12,7 @@ namespace GerenciadorDeTarefas.WebApi
     {
         public static string Secret = "arrobameiameia6meia9";
 
-        public static string GenerateToken(UsuarioModel usuario)
+        public static string GenerateToken(UserModel usuario)
         {
             var tokenHandler = new JwtSecurityTokenHandler();
             var key = Encoding.ASCII.GetBytes(Secret);

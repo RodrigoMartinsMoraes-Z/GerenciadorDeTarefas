@@ -1,6 +1,6 @@
-﻿using GerenciadorDeTarefas.Common.Models.Equipes;
-using GerenciadorDeTarefas.Common.Models.Projetos;
+﻿using GerenciadorDeTarefas.Common.Models.Projects;
 using GerenciadorDeTarefas.Common.Models.Tarefas;
+using GerenciadorDeTarefas.Common.Models.Teams;
 using GerenciadorDeTarefas.Util;
 
 using System;
@@ -17,7 +17,7 @@ namespace GerenciadorDeTarefas.Paginas.Tarefas
     {
         private readonly IControleMenu _controleMenu = App.IoCConainer.GetInstance<IControleMenu>();
 
-        public static ProjetoModel Projeto { get; set; }
+        public static ProjectModel Projeto { get; set; }
 
         public PaginaNovaTarefa()
         {
@@ -29,7 +29,7 @@ namespace GerenciadorDeTarefas.Paginas.Tarefas
             }
         }
 
-        public List<string> Prioridades => Enum.GetNames(typeof(Prioridade)).Select(b => b.SplitCamelCase()).ToList();
+        public List<string> Prioridades => Enum.GetNames(typeof(Priority)).Select(b => b.SplitCamelCase()).ToList();
 
         private async void SalvarTarefa(object sender, EventArgs args)
         {
@@ -39,7 +39,7 @@ namespace GerenciadorDeTarefas.Paginas.Tarefas
                 return;
             }
 
-            Prioridade prioridade = Common.Models.Tarefas.Prioridade.Sugestão;
+            Priority prioridade = Common.Models.Tarefas.Priority.Suggestion;
 
             if (Prioridade.SelectedItem != null)
                 Enum.TryParse(Prioridade.SelectedItem.ToString(), out prioridade);
@@ -49,24 +49,24 @@ namespace GerenciadorDeTarefas.Paginas.Tarefas
                 return;
             }
 
-            TarefaModel tarefa = new TarefaModel
+            TaskModel tarefa = new TaskModel
             {
-                Adicionado = DateTime.Today,
-                Nome = NomeDaTarefa.Text,
-                Detalhes = DetalhesDaTarefa.Text,
-                Previsao = PrevisaoDeConclusao.Date,
-                Prioridade = prioridade,
-                Situacao = Situacao.Novo
+                Added = DateTime.Today,
+                Name = NomeDaTarefa.Text,
+                Details = DetalhesDaTarefa.Text,
+                Forecast = PrevisaoDeConclusao.Date,
+                Priority = prioridade,
+                Status = Status.New
             };
 
             try
             {
-                EquipeModel equipe = App.Usuario.Equipes.SingleOrDefault(e => e.Projetos.Any(p => p.Nome == Projeto.Nome));
-                ProjetoModel projeto = equipe.Projetos.SingleOrDefault(p => p.Nome == Projeto.Nome);
-                projeto.Tarefas.Add(tarefa);
+                TeamModel equipe = App.User.Teams.SingleOrDefault(e => e.Projects.Any(p => p.Name == Projeto.Name));
+                ProjectModel projeto = equipe.Projects.SingleOrDefault(p => p.Name == Projeto.Name);
+                projeto.Tasks.Add(tarefa);
 
-                App.Usuario.Equipes.Remove(equipe);
-                App.Usuario.Equipes.Add(equipe);
+                App.User.Teams.Remove(equipe);
+                App.User.Teams.Add(equipe);
                 //await App.Usuario.Salvar();
                 await _controleMenu.AtualizarListaEquipes();
             }

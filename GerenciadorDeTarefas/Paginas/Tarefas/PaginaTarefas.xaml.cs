@@ -1,6 +1,6 @@
 ﻿using FontAwesome;
 
-using GerenciadorDeTarefas.Common.Models.Projetos;
+using GerenciadorDeTarefas.Common.Models.Projects;
 using GerenciadorDeTarefas.Common.Models.Tarefas;
 
 using System;
@@ -15,7 +15,7 @@ namespace GerenciadorDeTarefas.Paginas.Tarefas
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class PaginaTarefas : ContentPage
     {
-        public static ProjetoModel Projeto { get; set; }
+        public static ProjectModel Projeto { get; set; }
 
         public PaginaTarefas()
         {
@@ -31,13 +31,13 @@ namespace GerenciadorDeTarefas.Paginas.Tarefas
 
         private async Task CarregarTarefas()
         {
-            Title = Projeto.Nome;
+            Title = Projeto.Name;
 
             int linha = 0;
 
             Grid grid = new Grid();
 
-            foreach (TarefaModel tarefa in Projeto.Tarefas)
+            foreach (TaskModel tarefa in Projeto.Tasks)
             {
                 List<View> views = await ListView(tarefa, layoutTarefas);
                 //layoutTarefas.Children.Add(stackLayout);
@@ -78,13 +78,13 @@ namespace GerenciadorDeTarefas.Paginas.Tarefas
         //    return;
         //}
 
-        private async Task<List<View>> ListView(TarefaModel tarefa, StackLayout layoutTarefas)
+        private async Task<List<View>> ListView(TaskModel tarefa, StackLayout layoutTarefas)
         {
             List<View> views = new List<View>
             {
                 new Label
                 {
-                    Text = tarefa.Nome
+                    Text = tarefa.Name
                 },
                 new Button
                 {

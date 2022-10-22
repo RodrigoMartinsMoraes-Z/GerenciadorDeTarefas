@@ -1,8 +1,8 @@
 ﻿using AutoMapper;
 
 using GerenciadorDeTarefas.Common.Models.Usuarios;
-using GerenciadorDeTarefas.Domain.Contexto;
-using GerenciadorDeTarefas.Domain.Usuarios;
+using GerenciadorDeTarefas.Domain.Context;
+using GerenciadorDeTarefas.Domain.Users;
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -26,18 +26,18 @@ namespace GerenciadorDeTarefas.WebApi.Controllers
         }
 
         [HttpGet, Route("{id}")]
-        [ProducesResponseType(typeof(UsuarioModel), 200)]
+        [ProducesResponseType(typeof(UserModel), 200)]
         public async Task<ActionResult> GetUser(int id)
         {
-            Usuario user = _contexto.Users.Find(id);
+            User user = _contexto.Users.Find(id);
 
             await Task.CompletedTask;
 
-            return Ok(_mapper.Map<UsuarioModel>(user));
+            return Ok(_mapper.Map<UserModel>(user));
         }
 
         [HttpGet]
-        [ProducesResponseType(typeof(UsuarioModel), 200)]
+        [ProducesResponseType(typeof(UserModel), 200)]
         public async Task<ActionResult> GetUserByEmail(string email)
         {
             var user = _contexto.Users.FirstOrDefault(u => u.Email == email);
@@ -47,33 +47,33 @@ namespace GerenciadorDeTarefas.WebApi.Controllers
 
             await Task.CompletedTask;
 
-            return Ok(_mapper.Map<UsuarioModel>(user));
+            return Ok(_mapper.Map<UserModel>(user));
         }
 
         [HttpPut]
-        public async Task<ActionResult> UpdateUser([FromBody] UsuarioModel userModel)
+        public async Task<ActionResult> UpdateUser([FromBody] UserModel userModel)
         {
-            Usuario user = _mapper.Map<Usuario>(userModel);
+            User user = _mapper.Map<User>(userModel);
 
             if (user.Login == null)
                 throw new Exception("Login não deve ser nulo");
 
-            if (user.Senha == null)
+            if (user.Pass == null)
                 throw new Exception("Senha não pode ser nula");
 
-            Usuario existente = _contexto.Users.FirstOrDefault(u => u.Login == user.Login);
+            User existente = _contexto.Users.FirstOrDefault(u => u.Login == user.Login);
 
             if (existente != null)
             {
                 //existente.Pessoa = _contexto.Pessoas.Find(existente.IdPessoa);
 
-                user.Senha = existente.Senha;
-                if (user.Pessoa != null && user.Email != existente.Email)
+                user.Pass = existente.Pass;
+                if (user.Person != null && user.Email != existente.Email)
                     if (_contexto.Users.Any(p => p.Email == user.Email))
                         return BadRequest("Este email já está sendo utilizado.");
 
-                user.IdPessoa = existente.IdPessoa;
-                user.Pessoa.Id = existente.IdPessoa;
+                user.PersonId = existente.PersonId;
+                user.Person.Id = existente.PersonId;
 
                 _contexto.Users.Update(user);
             }
@@ -90,12 +90,12 @@ namespace GerenciadorDeTarefas.WebApi.Controllers
         }
 
         [HttpPost, AllowAnonymous]
-        public async Task<ActionResult> NewUser([FromBody] UsuarioModel userModel)
+        public async Task<ActionResult> NewUser([FromBody] UserModel userModel)
         {
             if (userModel.Login == null)
                 return BadRequest("Login não deve ser nulo!");
 
-            if (userModel.Senha == null)
+            if (userModel.Password == null)
                 return BadRequest("A senha não deve ser nula!");
 
             if (userModel.Email == null)
@@ -107,7 +107,7 @@ namespace GerenciadorDeTarefas.WebApi.Controllers
             if (await EmailExist(userModel.Email))
                 return BadRequest("Este email já está sendo utilizado.");
 
-            Usuario user = _mapper.Map<Usuario>(userModel);
+            User user = _mapper.Map<User>(userModel);
 
             _contexto.Add(user);
             _contexto.SaveChanges();

@@ -20,7 +20,7 @@ namespace Api.GerenciadorDeTarefas
             return Task.CompletedTask;
         }
 
-        public async Task NovoUsuario(UsuarioModel usuarioModel)
+        public async Task NovoUsuario(UserModel usuarioModel)
         {
             await _recursos.NovoUsuario(usuarioModel);
         }

@@ -1,17 +1,17 @@
 ﻿using AutoMapper;
 
-using GerenciadorDeTarefas.Common.Models.Equipes;
-using GerenciadorDeTarefas.Common.Models.Objetivos;
+using GerenciadorDeTarefas.Common.Models.Objectives;
 using GerenciadorDeTarefas.Common.Models.Pessoas;
-using GerenciadorDeTarefas.Common.Models.Projetos;
+using GerenciadorDeTarefas.Common.Models.Projects;
 using GerenciadorDeTarefas.Common.Models.Tarefas;
+using GerenciadorDeTarefas.Common.Models.Teams;
 using GerenciadorDeTarefas.Common.Models.Usuarios;
-using GerenciadorDeTarefas.Domain.Equipes;
-using GerenciadorDeTarefas.Domain.Objetivos;
-using GerenciadorDeTarefas.Domain.Pessoas;
+using GerenciadorDeTarefas.Domain.Objectives;
+using GerenciadorDeTarefas.Domain.People;
 using GerenciadorDeTarefas.Domain.Projects;
 using GerenciadorDeTarefas.Domain.Tasks;
-using GerenciadorDeTarefas.Domain.Usuarios;
+using GerenciadorDeTarefas.Domain.Teams;
+using GerenciadorDeTarefas.Domain.Users;
 
 namespace GerenciadorDeTarefas.WebApi
 {
@@ -20,37 +20,37 @@ namespace GerenciadorDeTarefas.WebApi
         public WebApiAutoMapperConfig()
         {
             //Equipes
-            CreateMap<Team, EquipeModel>()
-                .ForMember(e => e.Usuarios, dest => dest.Ignore())
+            CreateMap<Team, TeamModel>()
+                .ForMember(e => e.Users, dest => dest.Ignore())
                 .ReverseMap();
 
             //Objetivos
-            CreateMap<Objective, ObjetivoModel>()
+            CreateMap<Objective, ObjectiveModel>()
                 .ReverseMap();
 
             //Pessoas
-            CreateMap<Person, PessoaModel>()
+            CreateMap<Person, PersonModel>()
                 .ReverseMap();
 
             //Projetos
-            CreateMap<Project, ProjetoModel>()
+            CreateMap<Project, ProjectModel>()
                 .ReverseMap();
 
             //Tarefas
-            CreateMap<Task, TarefaModel>()
+            CreateMap<Task, TaskModel>()
                 .ReverseMap();
 
             //Usuarios
-            CreateMap<Usuario, UsuarioModel>()
-                .ForMember(u => u.Senha, dest => dest.Ignore())
-                .ForMember(u => u.Equipes, dest => dest.Ignore());
+            CreateMap<User, UserModel>()
+                .ForMember(u => u.Password, dest => dest.Ignore())
+                .ForMember(u => u.Teams, dest => dest.Ignore());
             //.ForMember(
             //dest => dest.Equipes,
             //src => src.MapFrom( 
             //    s => s.Equipes.Where(
             //        eu => eu.IdUsuario == s.IdPessoa).Select(u => u.Equipe).ToList()));
-            CreateMap<UsuarioModel, Usuario>()
-                .ForMember(u => u.Equipes, dest => dest.Ignore());
+            CreateMap<UserModel, User>()
+                .ForMember(u => u.Team, dest => dest.Ignore());
         }
     }
 }

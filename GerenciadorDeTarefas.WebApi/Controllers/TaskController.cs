@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 
 using GerenciadorDeTarefas.Common.Models.Tarefas;
-using GerenciadorDeTarefas.Domain.Contexto;
+using GerenciadorDeTarefas.Domain.Context;
 using GerenciadorDeTarefas.Domain.Tasks;
 
 using Microsoft.AspNetCore.Mvc;
@@ -24,7 +24,7 @@ namespace GerenciadorDeTarefas.WebApi.Controllers
         }
 
         [HttpGet, Route("{id}")]
-        [ProducesResponseType(typeof(TarefaModel), 200)]
+        [ProducesResponseType(typeof(TaskModel), 200)]
         public async Task<ActionResult> GetTask(int id)
         {
             Domain.Tasks.Task task = _contexto.Tasks.Find(id);
@@ -34,13 +34,13 @@ namespace GerenciadorDeTarefas.WebApi.Controllers
 
             await System.Threading.Tasks.Task.CompletedTask;
 
-            return Ok(_mapper.Map<TarefaModel>(task));
+            return Ok(_mapper.Map<TaskModel>(task));
         }
 
         [HttpPut]
-        public async Task<ActionResult> UpdateTask(TarefaModel model)
+        public async Task<ActionResult> UpdateTask(TaskModel model)
         {
-            if (model.IdObjetivo < 0 || model.IdProjeto < 0)
+            if (model.ObjectiveId < 0 || model.ProjectId < 0)
                 return BadRequest("Objective or Project is required!.");
 
             Domain.Tasks.Task task = _mapper.Map<Domain.Tasks.Task>(model);
@@ -66,7 +66,7 @@ namespace GerenciadorDeTarefas.WebApi.Controllers
             if (task == null)
                 return NotFound();
 
-            task.SubTask = _contexto.Tasks.Where(t => t.IdTarefaPrincipal == task.Id).ToList();
+            task.SubTask = _contexto.Tasks.Where(t => t.FatherTaskId == task.Id).ToList();
 
             if (task.SubTask.Count > 0)
             {

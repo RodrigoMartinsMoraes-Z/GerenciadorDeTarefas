@@ -27,7 +27,7 @@ namespace GerenciadorDeTarefas
         }
 
         public static Container IoCConainer { get; set; }
-        public static UsuarioModel Usuario { get; set; }
+        public static UserModel User { get; set; }
         public static string FontAwesomeBrands { get; set; }
         public static string FontAwesomeSolid { get; set; }
         public static string FontAwesomeRegular { get; set; }
@@ -69,11 +69,11 @@ namespace GerenciadorDeTarefas
         {
             if (App.Current.Properties.ContainsKey("Usuario"))
             {
-                Usuario = JsonConvert.DeserializeObject<UsuarioModel>(Current.Properties["Usuario"].ToString());
+                User = JsonConvert.DeserializeObject<UserModel>(Current.Properties["Usuario"].ToString());
             }
             else
             {
-                Usuario = new UsuarioModel();
+                User = new UserModel();
             }
 
             return Task.CompletedTask;

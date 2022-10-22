@@ -1,5 +1,4 @@
-﻿
-using GerenciadorDeTarefas.Common.Models.Equipes;
+﻿using GerenciadorDeTarefas.Common.Models.Teams;
 
 using System;
 
@@ -23,9 +22,9 @@ namespace GerenciadorDeTarefas.Paginas.Equipes
 
         public async void AdicionarEquipe(object sender, EventArgs args)
         {
-            EquipeModel novaEquipe = new EquipeModel { Nome = NomeEquipe.Text };
+            TeamModel novaEquipe = new TeamModel { Nome = NomeEquipe.Text };
 
-            App.Usuario.Equipes.Add(novaEquipe);
+            App.User.Teams.Add(novaEquipe);
             //await App.Usuario.Salvar();
 
             await _controleMenu.AtualizarListaEquipes();

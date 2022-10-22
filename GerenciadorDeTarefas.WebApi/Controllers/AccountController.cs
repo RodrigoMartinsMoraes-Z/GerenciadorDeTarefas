@@ -1,7 +1,7 @@
 ﻿using AutoMapper;
 
 using GerenciadorDeTarefas.Common.Models.Usuarios;
-using GerenciadorDeTarefas.Domain.Contexto;
+using GerenciadorDeTarefas.Domain.Context;
 
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -28,19 +28,19 @@ namespace GerenciadorDeTarefas.WebApi.Controllers
         }
 
         [HttpPost, Route("logar"), AllowAnonymous]
-        [ProducesResponseType(typeof(UsuarioModel), 200)]
-        public async Task<ActionResult> Logar(string login, string senha)
+        [ProducesResponseType(typeof(UserModel), 200)]
+        public async Task<ActionResult> Logar(string login, string password)
         {
-            senha = EncriptarSenha(login, senha);
+            password = EncriptarSenha(login, password);
 
-            Domain.Usuarios.Usuario user = _contexto.Users.FirstOrDefault(u => u.Login == login && u.Senha == senha);
+            Domain.Users.User user = _contexto.Users.FirstOrDefault(u => u.Login == login && u.Pass == password);
 
             _usuarioLogado = user;
 
             if (user == null)
                 return NotFound();
 
-            UsuarioModel usuarioModel = _mapper.Map<UsuarioModel>(user);
+            UserModel usuarioModel = _mapper.Map<UserModel>(user);
             usuarioModel.Token = TokenService.GenerateToken(usuarioModel);
 
             await Task.CompletedTask;

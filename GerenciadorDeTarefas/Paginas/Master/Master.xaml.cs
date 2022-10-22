@@ -1,5 +1,5 @@
-﻿using GerenciadorDeTarefas.Common.Models.Equipes;
-using GerenciadorDeTarefas.Common.Models.Projetos;
+﻿using GerenciadorDeTarefas.Common.Models.Projects;
+using GerenciadorDeTarefas.Common.Models.Teams;
 using GerenciadorDeTarefas.Paginas.Equipes;
 using GerenciadorDeTarefas.Paginas.Novidades;
 using GerenciadorDeTarefas.Paginas.Projetos;
@@ -17,8 +17,8 @@ namespace GerenciadorDeTarefas.Paginas.Master
     [XamlCompilation(XamlCompilationOptions.Compile)]
     public partial class Master : MasterDetailPage
     {
-        public static EquipeModel EquipeSelecionada { get; set; }
-        public static ProjetoModel ProjetoSelecionado { get; set; }
+        public static TeamModel EquipeSelecionada { get; set; }
+        public static ProjectModel ProjetoSelecionado { get; set; }
 
         public Master()
         {
@@ -53,12 +53,12 @@ namespace GerenciadorDeTarefas.Paginas.Master
 
             ListaEquipes.Children.Add(btnNovaEquipe);
 
-            CarregarEquipes(App.Usuario.Equipes);
+            CarregarEquipes(App.User.Teams);
         }
 
-        private void CarregarEquipes(ICollection<EquipeModel> equipes)
+        private void CarregarEquipes(ICollection<TeamModel> equipes)
         {
-            foreach (EquipeModel equipe in App.Usuario.Equipes.OrderBy(e => e.Nome))
+            foreach (TeamModel equipe in App.User.Teams.OrderBy(e => e.Nome))
             {
                 StackLayout layoutEquipe = new StackLayout() { IsVisible = false, Margin = 10 };
                 Button btnMostrarEquipe = new Button
@@ -81,11 +81,11 @@ namespace GerenciadorDeTarefas.Paginas.Master
                 layoutEquipe.Children.Add(btnNovoProjeto);
 
                 StackLayout layoutProjeto = new StackLayout();
-                foreach (ProjetoModel projeto in equipe.Projetos.OrderBy(e => e.Nome))
+                foreach (ProjectModel projeto in equipe.Projects.OrderBy(e => e.Name))
                 {
                     Button btnMostrarProjeto = new Button
                     {
-                        Text = projeto.Nome
+                        Text = projeto.Name
                     };
                     btnMostrarProjeto.Clicked += (object sender, EventArgs args) =>
                     {
@@ -105,7 +105,7 @@ namespace GerenciadorDeTarefas.Paginas.Master
                 };
                 btnExcluirEquipe.Clicked += (sender, args) =>
                 {
-                    EquipeModel Equipes = App.Usuario.Equipes.FirstOrDefault(e => e.Nome == equipe.Nome);
+                    TeamModel Equipes = App.User.Teams.FirstOrDefault(e => e.Nome == equipe.Nome);
                     equipes.Remove(equipe);
 
                     //await App.Usuario.Salvar();

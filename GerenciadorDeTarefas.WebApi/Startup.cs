@@ -2,7 +2,7 @@ using AutoMapper;
 
 using GerenciadorDeTarefas.Context;
 using GerenciadorDeTarefas.Domain;
-using GerenciadorDeTarefas.Domain.Contexto;
+using GerenciadorDeTarefas.Domain.Context;
 
 using Microsoft.AspNetCore.Authentication.JwtBearer;
 using Microsoft.AspNetCore.Builder;
